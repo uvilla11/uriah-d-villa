@@ -111,16 +111,20 @@ img,svg{display:block;max-width:100%}
 .skip-link:focus{transform:none}
 .site-header{position:fixed;inset:14px 0 auto;z-index:100}
 .nav-shell{
-  width:var(--shell);
+  width:min(1240px,calc(100% - 28px));
   min-height:58px;
   margin-inline:auto;
-  padding:8px 0;
+  padding:8px 10px 8px 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:20px;
-  border-block:1px solid var(--line);
-  background:var(--bg);
+  border:1px solid color-mix(in oklch,var(--line) 88%,transparent);
+  border-radius:12px;
+  background:color-mix(in oklch,var(--bg-raised) 88%,transparent);
+  box-shadow:0 10px 30px oklch(20% .03 278 / .07);
+  backdrop-filter:blur(16px) saturate(130%);
+  -webkit-backdrop-filter:blur(16px) saturate(130%);
 }
 .brand{display:inline-flex;align-items:center;gap:11px;font:600 12px/1 var(--mono);letter-spacing:.055em;white-space:nowrap}
 .brand-mark{width:25px;height:25px;border:1px solid var(--line-strong);border-radius:5px;display:grid;place-items:center;position:relative}
@@ -250,10 +254,12 @@ section{scroll-margin-top:100px}
 a:hover .arrow{transform:translateX(3px)}
 .availability{display:flex;align-items:center;gap:8px;margin-top:22px;color:var(--faint);font:500 11px/1.5 var(--mono)}
 .hero-dossier{
-  border-block:1px solid var(--line);
-  border-inline:0;
-  border-radius:0;
-  background:transparent;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:color-mix(in oklch,var(--bg-raised) 90%,transparent);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(12px) saturate(115%);
+  -webkit-backdrop-filter:blur(12px) saturate(115%);
   overflow:hidden;
 }
 .dossier-bar{min-height:43px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);font:500 10px/1 var(--mono);letter-spacing:.06em;color:var(--muted)}
