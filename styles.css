@@ -280,8 +280,6 @@ a:hover .arrow{transform:translateX(3px)}
 .case-card-media{height:auto;aspect-ratio:16/9;background:var(--surface);overflow:hidden;position:relative}
 .case-card-media img{width:100%;height:100%;object-fit:cover;transition:transform .55s var(--ease)}
 .case-card:hover .case-card-media img{transform:scale(1.025)}
-.case-card-media.schematic{display:grid;place-items:center;padding:40px;color:var(--muted);background:var(--surface)}
-.case-card-media.schematic svg{width:min(340px,86%);color:var(--accent)}
 .case-card-body{padding:28px 0 30px 34px;display:flex;flex-direction:column;min-height:230px}
 .case-card-body .project-topline{margin-bottom:26px}
 .case-card h3{font-size:clamp(1.55rem,2.7vw,2.15rem);line-height:1.05;letter-spacing:-.035em}
