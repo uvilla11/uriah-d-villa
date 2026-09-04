@@ -33,7 +33,7 @@
 
   document.querySelector('.skip-link').addEventListener('click', event => {
     event.preventDefault();
-    const visiblePage = pages.find(page => !page.hidden);
+    const visiblePage = pages.find(page => page.classList.contains('is-active'));
     const target = visiblePage ? visiblePage.querySelector('h1') : document.getElementById('hero-title');
     if (!target) return;
     target.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
@@ -62,11 +62,10 @@
       return;
     }
 
-    pages.forEach(item => item.hidden = true);
+    pages.forEach(item => item.classList.remove('is-active'));
 
     if (page) {
-      home.hidden = true;
-      page.hidden = false;
+      page.classList.add('is-active');
       body.classList.add('in-case');
       document.title = page.dataset.title + ' — Uriah Villa';
       scrollTo({top: 0, behavior: 'auto'});
@@ -74,7 +73,6 @@
       return;
     }
 
-    home.hidden = false;
     body.classList.remove('in-case');
     document.title = baseTitle;
 
@@ -116,7 +114,7 @@
   updateProgress();
 
   document.getElementById('footerTop').addEventListener('click', () => {
-    const visiblePage = pages.find(page => !page.hidden);
+    const visiblePage = pages.find(page => page.classList.contains('is-active'));
     const heading = visiblePage ? visiblePage.querySelector('h1') : document.getElementById('hero-title');
     scrollTo({top: 0, behavior: reduceMotion ? 'auto' : 'smooth'});
     if (heading) setTimeout(() => heading.focus({preventScroll: true}), reduceMotion ? 0 : 260);

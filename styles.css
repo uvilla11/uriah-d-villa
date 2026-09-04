@@ -423,6 +423,9 @@ a.build-row:hover{color:var(--accent)}
 .resource-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .resource-links a{padding:0 0 4px;border:0;border-bottom:1px solid var(--line-strong);border-radius:0;color:var(--muted);font:600 10px/1.4 var(--mono);transition:border-color .16s ease,color .16s ease}
 .resource-links a:hover{border-color:var(--accent);color:var(--accent)}
+html.js .case-page{display:none}
+html.js .case-page.is-active{display:block}
+html.js body.in-case #home{display:none}
 @media(max-width:1020px){
   .hero{min-height:auto}
   .hero-grid{grid-template-columns:1fr .72fr;gap:42px}
