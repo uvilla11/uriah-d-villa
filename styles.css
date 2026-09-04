@@ -325,6 +325,8 @@ a:hover .arrow{transform:translateX(3px)}
 }
 a.build-row{transition:color .16s ease}
 a.build-row:hover{color:var(--accent)}
+article.build-row{cursor:default}
+article.build-row .build-number{color:var(--faint)}
 .build-number{color:var(--accent);font:600 11px/1 var(--mono)}
 .build-row h4{font-size:1.2rem;line-height:1.2;letter-spacing:-.02em}
 .build-row p{color:var(--muted);font-size:14px;line-height:1.55;text-wrap:pretty}

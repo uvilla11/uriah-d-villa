@@ -153,6 +153,8 @@
     const submitButton = document.getElementById('submitButton');
     if (!form || !formStatus || !submitButton) return;
 
+    const originalLabel = submitButton.innerHTML;
+
     form.addEventListener('submit', async event => {
       event.preventDefault();
       submitButton.disabled = true;
@@ -175,7 +177,7 @@
         formStatus.textContent = 'The form could not send. Please email me directly at uvilla11@gmail.com.';
       } finally {
         submitButton.disabled = false;
-        submitButton.innerHTML = 'Send message <span aria-hidden="true">↗</span>';
+        submitButton.innerHTML = originalLabel;
       }
     });
   };
