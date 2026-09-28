@@ -1,0 +1,735 @@
+/* ==========================================================================
+   Precision Signal — case study template (§44)
+   ========================================================================== */
+
+.header {
+  padding-block: var(--space-8) var(--space-7);
+  border-bottom: 1px solid var(--line);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  margin-bottom: var(--space-6);
+  font-size: var(--body-sm);
+  color: var(--ink-secondary);
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.backLink:hover {
+  color: var(--accent);
+}
+
+.headerEyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  color: var(--ink-tertiary);
+}
+
+.headerTitle {
+  font-size: var(--page-h1);
+  max-width: 18ch;
+}
+
+.headerResult {
+  margin-top: var(--space-4);
+  max-width: 56ch;
+  font-size: var(--body-lg);
+  line-height: 1.5;
+  color: var(--ink-secondary);
+}
+
+/* Metadata strip (§45): a row of labelled facts, not a card. */
+.metaStrip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4) var(--space-5);
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 860px) {
+  .metaStrip {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.metaLabel {
+  color: var(--ink-tertiary);
+}
+
+.metaValue {
+  font-size: var(--body-sm);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ---- Measurements (§53) ---- */
+
+.measureStrip {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 700px) {
+  .measureStrip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.measure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-5) var(--space-4) var(--space-5) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 700px) {
+  .measure {
+    border-right: 1px solid var(--line);
+    padding-right: var(--space-5);
+  }
+
+  .measure:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 699px) {
+  .measure:last-child {
+    border-bottom: none;
+  }
+}
+
+.measureValue {
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Units sit at half the value size so the number stays dominant (§53). */
+.measureUnit {
+  font-size: 0.45em;
+  margin-left: 0.18em;
+  color: var(--ink-secondary);
+  letter-spacing: 0;
+}
+
+.measureLabel {
+  margin-top: var(--space-2);
+  color: var(--ink-tertiary);
+}
+
+.measureCondition {
+  font-size: var(--body-sm);
+  color: var(--ink-secondary);
+}
+
+.measureInterpretation {
+  font-size: var(--body-sm);
+  color: var(--ink-tertiary);
+}
+
+/* ---- Body grid: facts rail + narrative (§45) ---- */
+
+.caseGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+  padding-block: var(--space-8);
+}
+
+@media (min-width: 960px) {
+  .caseGrid {
+    grid-template-columns: 232px minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+/*
+ * Stacked below the sidebar breakpoint, the rail becomes a spec table rather
+ * than a tall single-column list, so the narrative is not pushed a full screen
+ * down by six items.
+ */
+.facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4) var(--space-5);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 560px) {
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 760px) and (max-width: 959px) {
+  .facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .facts {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+    border-bottom: none;
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.factLabel {
+  color: var(--ink-tertiary);
+}
+
+.factValue {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--body-sm);
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+/*
+ * Below the sidebar breakpoint the spec items wrap as inline chips instead of
+ * stacking. A six-item rail becomes two short rows rather than a full screen
+ * of scrolling before the narrative starts.
+ */
+@media (max-width: 559px) {
+  .fact {
+    gap: var(--space-2);
+  }
+
+  .factValue {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+  }
+
+  .factValue li {
+    font-family: var(--font-mono);
+    font-size: var(--meta);
+    letter-spacing: 0.02em;
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xs);
+    color: var(--ink-secondary);
+  }
+}
+
+/* ---- Decision blocks (§11, §44) ---- */
+
+.decisions {
+  display: flex;
+  flex-direction: column;
+  margin-block: var(--space-7);
+  border-top: 1px solid var(--line);
+}
+
+.decision {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 860px) {
+  .decision {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--space-5);
+  }
+}
+
+.decisionTitle {
+  font-size: 1.0625rem;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.decisionBody {
+  color: var(--ink-secondary);
+  max-width: var(--measure);
+}
+
+.decisionIndex {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+/* ---- Two-column narrative lists ---- */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-7);
+  }
+}
+
+.splitTitle {
+  margin: 0 0 var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: 1.0625rem;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+}
+
+.splitBody {
+  color: var(--ink-secondary);
+  max-width: 52ch;
+}
+
+/* ---- Sections within the case (§44) ---- */
+
+.caseSection {
+  margin-top: var(--space-8);
+}
+
+.caseSectionTitle {
+  margin: 0 0 var(--space-3);
+  font-size: 1.375rem;
+  letter-spacing: -0.03em;
+  scroll-margin-top: calc(var(--header-height) + var(--space-5));
+}
+
+.caseSectionLead {
+  color: var(--ink-secondary);
+  max-width: var(--measure-doc);
+  font-size: var(--body-lg);
+}
+
+/* Paragraphs inside one section, so they read as a single block. */
+.caseSectionLead + .caseSectionLead {
+  margin-top: var(--space-4);
+}
+
+/*
+ * A list directly after its heading has no paragraph above it to separate from,
+ * so the gap collapses to the heading's own margin.
+ */
+.caseSectionTitle + .proseList {
+  margin-top: 0;
+}
+
+/* ---- Code slots (§51, §84) ---- */
+
+.codeSlots {
+  margin-top: var(--space-8);
+}
+
+.codeSlotsHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.codeSlot {
+  padding: var(--space-5);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.codeSlotTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.codeSlotId {
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.05em;
+  color: var(--ink-tertiary);
+}
+
+.codeSlotNote {
+  color: var(--ink-secondary);
+  font-size: var(--body-sm);
+  max-width: var(--measure);
+}
+
+.codeSlotPending {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  color: var(--attention);
+}
+
+/* ---- Artifacts (§44 item 19) ---- */
+
+.artifacts {
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.artifactList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  margin-top: var(--space-4);
+}
+
+.artifactLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-size: var(--body-sm);
+  color: var(--ink-secondary);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.artifactLink:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+/* ---- Limitations (§44 item 16) ---- */
+
+.limitations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--attention);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--surface);
+}
+
+.limitationsTitle {
+  color: var(--attention);
+}
+
+.limitationsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.limitationsList li {
+  position: relative;
+  padding-left: var(--space-4);
+  color: var(--ink-secondary);
+  font-size: var(--body-sm);
+  line-height: 1.55;
+}
+
+.limitationsList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 9px;
+  height: 1px;
+  background: var(--attention);
+}
+
+/* ---- Next / previous (§44 item 20) ---- */
+
+.caseNav {
+  margin-top: var(--space-9);
+  border-top: 1px solid var(--line);
+}
+
+.caseNavInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-6);
+}
+
+.caseNavCurrent {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--body-sm);
+  color: var(--ink-secondary);
+}
+
+@media (min-width: 760px) {
+  .caseNavCurrent {
+    display: flex;
+    text-align: center;
+  }
+}
+
+.caseNavLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 44px;
+  justify-content: center;
+}
+
+.caseNavTitle {
+  font-size: 1.125rem;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.caseNavLink:hover .caseNavTitle {
+  color: var(--accent);
+}
+
+.caseNavEnd {
+  color: var(--ink-tertiary);
+  font-size: var(--body-sm);
+}
+
+/* ---- Technical figures (§47) ---- */
+
+.figureWrap {
+  margin-top: var(--space-8);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.diagram {
+  padding: var(--space-5);
+  overflow-x: auto;
+}
+
+.diagramSvg {
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+}
+
+/*
+ * At narrow widths the diagram scrolls horizontally rather than shrinking
+ * below legibility (§48: readable on mobile and at 200% zoom). The scroll is
+ * discoverable rather than hidden — it is labelled and keyboard reachable, and
+ * the same information is always present as text in the figure's own
+ * accessible name and the facts rail.
+ */
+@media (max-width: 700px) {
+  .diagram {
+    padding: var(--space-4);
+  }
+
+  .diagramScrollHint {
+    display: flex;
+  }
+}
+
+.diagramScrollHint {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4) 0;
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+}
+
+.diagramScrollHint::after {
+  content: "→";
+  color: var(--line-strong);
+}
+
+.block {
+  fill: var(--canvas);
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.blockTitle {
+  fill: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.blockLine {
+  fill: var(--ink-secondary);
+  font-family: var(--font-sans);
+  font-size: 12px;
+}
+
+.busLabel {
+  fill: var(--ink-tertiary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.bus {
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.busActive {
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+}
+
+.arrowHead {
+  fill: var(--line-strong);
+}
+
+.busActive + .arrowHead,
+.arrowHead {
+  fill: var(--line-strong);
+}
+
+.blockRejected {
+  fill: none;
+  stroke: var(--attention);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.rejectedLabel {
+  fill: var(--attention);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.rejectedNote {
+  fill: var(--ink-secondary);
+  font-family: var(--font-sans);
+  font-size: 12px;
+}
+
+.figureCaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--line);
+  background: var(--surface-subtle);
+  color: var(--ink-tertiary);
+}
+
+/* ---- Empty state (§84) ---- */
+
+.empty {
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink-secondary);
+}
+
+.emptyTitle {
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: var(--space-2);
+}
+
+/* Narrative bullet lists, used outside the .prose measure. */
+.proseList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: var(--measure-doc);
+}
+
+.proseList li {
+  position: relative;
+  padding-left: var(--space-5);
+  color: var(--ink-secondary);
+  font-size: var(--body-lg);
+  line-height: 1.6;
+}
+
+.proseList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 10px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+/* ---- Validation (§52) ---- */
+
+.validation {
+  margin-top: var(--space-8);
+}
+
+.validationHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.validationNote {
+  color: var(--ink-tertiary);
+  font-size: var(--body-sm);
+  max-width: 44ch;
+}

@@ -1,0 +1,30 @@
+{
+  "name": "uriah-villa-precision-signal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "media": "node scripts/optimize-media.mjs",
+    "check:a11y": "node scripts/check-a11y.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "verify": "npm run build && npm run check:a11y && npm run check:contrast"
+  },
+  "dependencies": {
+    "next": "16.3.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "sharp": "^0.34.5",
+    "typescript": "^5"
+  },
+  "description": "Engineering portfolio — Precision Signal editorial engineering system"
+}

@@ -1,0 +1,203 @@
+/* ==========================================================================
+   Precision Signal — Design Tokens
+   Single source of truth for every visual property (§7).
+
+   NOTE: the dark token block appears twice on purpose. The
+   `@media (prefers-color-scheme: dark)` block covers visitors with
+   JavaScript disabled; the `[data-theme="dark"]` block covers an explicit
+   user choice, which must win over the system preference. Keep both in sync.
+   ========================================================================== */
+
+:root {
+  /* ---- Color: light (§7.1) ---- */
+  --canvas: #f4f2ed;
+  --surface: #faf9f6;
+  --surface-strong: #ffffff;
+  --surface-subtle: #ece9e3;
+
+  --ink: #161616;
+  --ink-secondary: #66635f;
+  /* §7.1 specifies #99958E, but that is 2.8:1 on --surface and fails the
+     WCAG 2.2 AA contrast requirement in §68. Darkened to the closest warm
+     neutral that clears 4.5:1 on every surface in this theme. */
+  --ink-tertiary: #6b6863;
+  --ink-inverse: #faf9f6;
+
+  --line: #d9d5ce;
+  --line-strong: #bbb7af;
+  --line-subtle: rgba(22, 22, 22, 0.07);
+
+  /* Darkened from #D54435 to clear 4.5:1 as text on --surface-strong. */
+  --accent: #bb3c2f;
+  --accent-deep: #a83228;
+  --accent-soft: rgba(187, 60, 47, 0.09);
+
+  /* Darkened from #567B5C to clear 4.5:1 on --canvas. */
+  --healthy: #4f7155;
+  --healthy-soft: rgba(79, 113, 85, 0.1);
+
+  /* Darkened from #9A7131 to clear 4.5:1 on --surface. */
+  --attention: #86622b;
+  --attention-soft: rgba(134, 98, 43, 0.1);
+
+  /* Darkened from #73777A to clear 4.5:1 on --surface. */
+  --muted-status: #666a6d;
+  --danger: #b93a2e;
+
+  --shadow-control:
+    0 1px 1px rgba(0, 0, 0, 0.02),
+    0 6px 20px rgba(0, 0, 0, 0.025);
+  --shadow-overlay: 0 16px 50px rgba(0, 0, 0, 0.1);
+
+  /* ---- Typography (§7.3, §7.4, §7.5) ---- */
+  --font-sans: var(--font-geist-sans), geist-sans, system-ui, -apple-system,
+    blinkmacsystemfont, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), "SFMono-Regular", "Cascadia Code",
+    "JetBrains Mono", "IBM Plex Mono", monospace;
+
+  --hero-display: clamp(3.25rem, 5.6vw, 4.75rem);
+  --page-h1: clamp(2.75rem, 4.5vw, 4rem);
+  --section-h2: clamp(2.1rem, 3.5vw, 3.2rem);
+  --component-h3: clamp(1.15rem, 1.6vw, 1.4rem);
+
+  --body-lg: 1.125rem;
+  --body: 1rem;
+  --body-sm: 0.9375rem;
+
+  --nav: 0.875rem;
+  --meta: 0.6875rem;
+  --status: 0.6875rem;
+
+  /* ---- Spacing (§8) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --space-9: 104px;
+  --space-10: 144px;
+
+  /* ---- Radius (§9) ---- */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-media: 12px;
+  --radius-pill: 999px;
+
+  /* ---- Motion (§55, §56) ---- */
+  --motion-instant: 90ms;
+  --motion-fast: 150ms;
+  --motion-standard: 180ms;
+  --motion-emphasis: 320ms;
+  --motion-reveal: 500ms;
+
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ---- Layout (§12) ---- */
+  --container: 1240px;
+  --gutter: 32px;
+  --section-gap: var(--space-10);
+  --header-height: 60px;
+  --sidebar-width: 232px;
+
+  /* ---- Reading measure (§7.6) ---- */
+  --measure: 68ch;
+  --measure-wide: 82ch;
+  --measure-doc: 820px;
+}
+
+/* ---- Responsive scaling (§13, §69) ----
+   The layout is intrinsic and reflows; these tokens only tighten the
+   rhythm at smaller widths so section gaps and gutters stay proportional. */
+@media (max-width: 1023px) {
+  :root {
+    --gutter: 24px;
+    --section-gap: var(--space-9);
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --gutter: 20px;
+    --section-gap: var(--space-8);
+    --header-height: 56px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #0c0c0b;
+    --surface: #11110f;
+    --surface-strong: #171715;
+    --surface-subtle: #1c1c19;
+
+    --ink: #f2f0ea;
+    --ink-secondary: #b3afa7;
+    /* Lightened from #7E7A73 (4.4:1) to clear 4.5:1 on --surface. */
+    --ink-tertiary: #88847c;
+    --ink-inverse: #11110f;
+
+    --line: #2c2b28;
+    --line-strong: #47443f;
+    --line-subtle: rgba(255, 255, 255, 0.07);
+
+    --accent: #e35d4c;
+    --accent-deep: #e35241;
+    --accent-soft: rgba(227, 93, 76, 0.11);
+
+    --healthy: #78a37d;
+    --healthy-soft: rgba(120, 163, 125, 0.11);
+
+    --attention: #c1954e;
+    --attention-soft: rgba(193, 149, 78, 0.11);
+
+    --muted-status: #8b8e90;
+    --danger: #e35d4c;
+
+    --shadow-control:
+      0 1px 1px rgba(0, 0, 0, 0.2),
+      0 6px 24px rgba(0, 0, 0, 0.18);
+    --shadow-overlay: 0 20px 60px rgba(0, 0, 0, 0.38);
+  }
+}
+
+:root[data-theme="dark"] {
+  --canvas: #0c0c0b;
+  --surface: #11110f;
+  --surface-strong: #171715;
+  --surface-subtle: #1c1c19;
+
+  --ink: #f2f0ea;
+  --ink-secondary: #b3afa7;
+  /* Lightened from #7E7A73 (4.4:1) to clear 4.5:1 on --surface. */
+  --ink-tertiary: #88847c;
+  --ink-inverse: #11110f;
+
+  --line: #2c2b28;
+  --line-strong: #47443f;
+  --line-subtle: rgba(255, 255, 255, 0.07);
+
+  --accent: #e35d4c;
+  --accent-deep: #e35241;
+  --accent-soft: rgba(227, 93, 76, 0.11);
+
+  --healthy: #78a37d;
+  --healthy-soft: rgba(120, 163, 125, 0.11);
+
+  --attention: #c1954e;
+  --attention-soft: rgba(193, 149, 78, 0.11);
+
+  --muted-status: #8b8e90;
+  --danger: #e35d4c;
+
+  --shadow-control:
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 6px 24px rgba(0, 0, 0, 0.18);
+  --shadow-overlay: 0 20px 60px rgba(0, 0, 0, 0.38);
+}

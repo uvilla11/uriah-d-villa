@@ -1,0 +1,505 @@
+/* ==========================================================================
+   Precision Signal — shared UI primitives
+   Buttons, status, section framing, media, tables, prose.
+   ========================================================================== */
+
+/* ---- Section rhythm (§8, §15) ---- */
+
+.section {
+  padding-block: var(--section-gap);
+  border-top: 1px solid var(--line);
+}
+
+.section--flush {
+  border-top: none;
+}
+
+.sectionHeader {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+}
+
+.sectionHeader > * {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 900px) {
+  /* §12: 4 columns context / 8 columns content */
+  .sectionEyebrow {
+    grid-column: 1 / span 4;
+  }
+
+  .sectionTitleWrap {
+    grid-column: 5 / span 8;
+  }
+}
+
+.sectionEyebrow {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  color: var(--ink-tertiary);
+}
+
+.sectionEyebrow::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  transform: translateY(-0.25em);
+}
+
+.sectionTitle {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.sectionLead {
+  margin: var(--space-4) 0 0;
+  max-width: var(--measure);
+  color: var(--ink-secondary);
+  font-size: var(--body-lg);
+}
+
+.sectionAction {
+  margin-top: var(--space-5);
+}
+
+/* ---- Buttons (§60) ---- */
+
+.buttonPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding-inline: 18px;
+  background: var(--ink);
+  color: var(--canvas);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  transition:
+    transform var(--motion-fast) var(--ease-standard),
+    background var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard);
+}
+
+.buttonPrimary:hover {
+  transform: translateY(-1px);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink-inverse);
+}
+
+.buttonPrimary:active {
+  transform: translateY(0);
+  transition-duration: var(--motion-instant);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .buttonPrimary:hover {
+    transform: none;
+  }
+}
+
+/* ---- Text action (§60, §61) ---- */
+
+.textAction {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  /* §71 asks for ~44px touch targets. Inline prose links keep a tighter
+     line box, so the target is grown with padding that does not disturb the
+     surrounding text rhythm. */
+  min-height: 44px;
+  padding-block: 6px;
+  font-size: var(--body-sm);
+  font-weight: 500;
+  color: var(--ink);
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.textAction .arrow {
+  display: inline-block;
+  transition: transform var(--motion-fast) var(--ease-standard);
+}
+
+.textAction:hover {
+  color: var(--accent);
+}
+
+.textAction:hover .arrow {
+  transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textAction:hover .arrow {
+    transform: none;
+  }
+}
+
+.textAction--quiet {
+  color: var(--ink-secondary);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.textAction--quiet:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* ---- Status (§20, §52) ---- */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--status);
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  white-space: nowrap;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--muted-status);
+  flex: none;
+}
+
+.status--healthy .statusDot {
+  background: var(--healthy);
+}
+
+.status--attention .statusDot {
+  background: var(--attention);
+}
+
+.status--critical .statusDot {
+  background: var(--danger);
+}
+
+.status--critical {
+  color: var(--danger);
+}
+
+/* ---- Metric blocks (§29) ---- */
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metricValue {
+  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.metricLabel {
+  color: var(--ink-tertiary);
+}
+
+.metricNote {
+  color: var(--ink-secondary);
+  font-size: var(--body-sm);
+  line-height: 1.5;
+}
+
+/* ---- Tags (§28) ---- */
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.03em;
+  color: var(--ink-secondary);
+  white-space: nowrap;
+}
+
+.tag--accent {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ---- Media (§65) ---- */
+
+.media {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-media);
+  background: var(--surface-subtle);
+}
+
+.media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.media--zoom img {
+  transition: transform var(--motion-emphasis) var(--ease-standard);
+}
+
+.media--zoom:hover img,
+a:hover .media--zoom img,
+a:focus-visible .media--zoom img {
+  transform: scale(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media--zoom img {
+    transition: none;
+  }
+
+  .media--zoom:hover img,
+  a:hover .media--zoom img,
+  a:focus-visible .media--zoom img {
+    transform: none;
+  }
+}
+
+.mediaCaption {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+  color: var(--ink-tertiary);
+}
+
+/* ---- Callout (§34 voice) ---- */
+
+.callout {
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--body-lg);
+  line-height: 1.5;
+  letter-spacing: -0.012em;
+}
+
+/* ---- Technical table (§43) ---- */
+
+.tableWrap {
+  border-top: 1px solid var(--line);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--body-sm);
+}
+
+.table caption {
+  text-align: left;
+  padding-bottom: var(--space-3);
+  color: var(--ink-tertiary);
+}
+
+.table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  color: var(--ink-secondary);
+}
+
+.table th:last-child,
+.table td:last-child {
+  padding-right: 0;
+}
+
+.table td:first-child {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.table--tight td {
+  padding-block: var(--space-3);
+}
+
+/* §70: recompose rather than scroll. Each cell keeps its column label as a
+   visible prefix so the row still reads as structured data. */
+@media (max-width: 767px) {
+  .table,
+  .table tbody,
+  .table tr,
+  .table th,
+  .table td {
+    display: block;
+  }
+
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .table tr {
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .table td {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: var(--space-3);
+    padding: 0;
+    border: none;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    font-family: var(--font-mono);
+    font-size: var(--meta);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-tertiary);
+  }
+}
+
+/* ---- Prose (case-study body) ---- */
+
+.prose {
+  max-width: var(--measure-doc);
+}
+
+.prose > * + * {
+  margin-top: var(--space-4);
+}
+
+.prose p {
+  color: var(--ink-secondary);
+  font-size: var(--body-lg);
+  line-height: 1.6;
+}
+
+.prose h2 {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-2);
+  scroll-margin-top: calc(var(--header-height) + var(--space-5));
+}
+
+.prose h3 {
+  margin-top: var(--space-6);
+}
+
+.prose ul,
+.prose ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.prose li {
+  position: relative;
+  padding-left: var(--space-5);
+  color: var(--ink-secondary);
+  font-size: var(--body-lg);
+  line-height: 1.6;
+}
+
+.prose li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 10px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.prose strong {
+  color: var(--ink);
+  font-weight: 550;
+}
+
+.prose em {
+  font-style: normal;
+  color: var(--ink);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  background: var(--surface);
+}
+
+/* ---- Frame: bordered panel used for technical figures ---- */
+
+.figure {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.figureBody {
+  padding: var(--space-5);
+}
+
+.figureCaption {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--line);
+  background: var(--surface-subtle);
+  color: var(--ink-tertiary);
+}
+
+/* ---- Grid helpers ---- */
+
+.rule {
+  border-top: 1px solid var(--line);
+}

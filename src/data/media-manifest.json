@@ -1,0 +1,25 @@
+{
+  "hephaestus-lander": [
+    480,
+    640
+  ],
+  "hephaestus-poster": [
+    480,
+    768,
+    1200,
+    1400
+  ],
+  "shadeshift-prototype": [
+    480,
+    768,
+    1200,
+    1600
+  ],
+  "solarsense-showcase": [
+    480,
+    768,
+    1200,
+    1600,
+    2048
+  ]
+}

@@ -1,0 +1,1126 @@
+/* ==========================================================================
+   Precision Signal — homepage sections
+   ========================================================================== */
+
+/* ---- 01 Hero (§18) ---- */
+
+.hero {
+  padding-block: clamp(var(--space-8), 9vw, 160px) var(--space-8);
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+}
+
+@media (min-width: 1000px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+
+.heroEyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ink-tertiary);
+  margin-bottom: var(--space-5);
+}
+
+.pulseDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  flex: none;
+}
+
+.heroTitle {
+  font-size: var(--hero-display);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  margin: 0;
+}
+
+.heroTitleAccent {
+  color: var(--accent);
+}
+
+.heroLead {
+  margin: var(--space-5) 0 0;
+  max-width: 46ch;
+  font-size: var(--body-lg);
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.heroRule {
+  margin-top: var(--space-8);
+  border-top: 1px solid var(--line);
+}
+
+/* ---- Hero instrument: the signal path as real, readable text (§18, §27) ---- */
+
+.instrument {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.instrumentHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-subtle);
+  color: var(--ink-tertiary);
+}
+
+.instrumentList {
+  padding: var(--space-2) var(--space-4);
+}
+
+.instrumentRow {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  position: relative;
+}
+
+/* Thin connector between stages, interrupted at each row edge. */
+.instrumentRow:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  bottom: -1px;
+  width: 1px;
+  height: var(--space-2);
+  background: var(--line);
+}
+
+.instrumentIndex {
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  color: var(--ink-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.instrumentLabel {
+  font-size: var(--body-sm);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.instrumentDetail {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  text-align: right;
+}
+
+.instrumentFoot {
+  border-top: 1px solid var(--line);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* A quiet, low-amplitude trace. Ambient motion, never the attraction. */
+.trace {
+  width: 100%;
+  height: 34px;
+  display: block;
+  color: var(--line-strong);
+}
+
+.tracePath {
+  stroke: currentColor;
+  stroke-width: 1.25;
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.traceActive {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+/* A slow sweep across the trace, the way a scope trigger walks a capture.
+   Long period and low opacity so it registers as instrumentation rather
+   than as an animation. */
+.traceSweep {
+  animation: traceSweep 11s linear infinite;
+  will-change: transform;
+}
+
+@keyframes traceSweep {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(300px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .traceSweep {
+    animation: none !important;
+  }
+}
+
+/* ---- 02 Current Signals (§19) ---- */
+
+.signals {
+  border-top: 1px solid var(--line);
+}
+
+.signalsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .signalsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .signalsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.signal {
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 640px) {
+  .signal {
+    padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  }
+
+  .signal:nth-child(odd) {
+    border-right: 1px solid var(--line);
+  }
+
+  .signal:nth-child(even) {
+    padding-left: var(--space-4);
+  }
+
+  .signal:nth-child(-n + 2) {
+    border-top: none;
+  }
+}
+
+@media (min-width: 1000px) {
+  .signal,
+  .signal:nth-child(even) {
+    padding: var(--space-4) var(--space-5) var(--space-4) 0;
+    border-top: none;
+    border-right: 1px solid var(--line);
+  }
+
+  .signal:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .signal:not(:first-child) {
+    padding-left: var(--space-5);
+  }
+}
+
+.signalValue {
+  margin-top: var(--space-2);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.signalContext {
+  margin-top: 2px;
+  font-size: var(--body-sm);
+  color: var(--ink-tertiary);
+}
+
+/* ---- 03 Selected work (§21, §22) ---- */
+
+.featured {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  overflow: hidden;
+  transition:
+    border-color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.featured:hover,
+.featured:focus-within {
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured:hover,
+  .featured:focus-within {
+    transform: none;
+  }
+}
+
+.featuredMedia {
+  border: none;
+  border-radius: 0;
+}
+
+.featuredBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+@media (min-width: 900px) {
+  .featuredBody {
+    padding: var(--space-6);
+  }
+}
+
+.featuredSplit {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1000px) {
+  .featuredSplit {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: stretch;
+  }
+
+  .featuredSplit .featuredBody {
+    justify-content: space-between;
+  }
+}
+
+.featuredTopline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--ink-tertiary);
+}
+
+.featuredTitle {
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.featuredTitle a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.featuredTitle a::after {
+  /* Full-card hit target without nesting interactive elements. */
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.featured {
+  position: relative;
+}
+
+/* Keeps a secondary action clickable above the stretched title link. */
+.cta {
+  position: relative;
+  z-index: 1;
+}
+
+.featuredSummary {
+  color: var(--ink-secondary);
+  max-width: 52ch;
+}
+
+.featuredGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+@media (min-width: 800px) {
+  .featuredGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.featuredWide {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: var(--space-4);
+}
+
+@media (min-width: 900px) {
+  .featuredWide {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  }
+}
+
+.inlineMetrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5) var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.inlineMetricValue {
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.inlineMetricLabel {
+  margin-top: 2px;
+  color: var(--ink-tertiary);
+}
+
+/* ---- 04 Numbered capabilities (§26) ---- */
+
+.capabilityGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6) var(--space-7);
+}
+
+@media (min-width: 760px) {
+  .capabilityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.capability {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.capabilityNumber {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.capabilityTitle {
+  margin: 0 0 var(--space-2);
+}
+
+.capabilityText {
+  color: var(--ink-secondary);
+  max-width: 46ch;
+}
+
+/* ---- 05 Engineering scope chain (§27) ---- */
+
+.scope {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 720px) {
+  .scope {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1080px) {
+  .scope {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.scopeStep {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.scopeStep::after {
+  content: "→";
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  color: var(--line-strong);
+  font-size: 12px;
+}
+
+.scopeStep:last-child::after {
+  content: none;
+}
+
+@media (min-width: 1080px) {
+  .scopeStep {
+    border-bottom: none;
+    padding-right: var(--space-5);
+  }
+}
+
+@media (max-width: 1079px) {
+  .scopeStep:nth-child(3n)::after {
+    content: none;
+  }
+}
+
+@media (max-width: 719px) {
+  .scopeStep::after {
+    content: "↓";
+    top: auto;
+    bottom: -0.7em;
+    right: auto;
+    left: 0;
+  }
+
+  .scopeStep:nth-last-child(2)::after {
+    content: none;
+  }
+}
+
+.scopeIndex {
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.08em;
+  color: var(--ink-tertiary);
+}
+
+.scopeLabel {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.scopeDetail {
+  font-size: var(--body-sm);
+  color: var(--ink-tertiary);
+  padding-right: var(--space-5);
+}
+
+/* ---- 06 Technical coverage (§28) ---- */
+
+.coverage {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6) var(--space-7);
+}
+
+@media (min-width: 860px) {
+  .coverage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-8);
+  }
+}
+
+.coverageGroup {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.coverageTitle {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+}
+
+.coverageDescription {
+  margin: var(--space-2) 0 var(--space-3);
+  color: var(--ink-tertiary);
+  font-size: var(--body-sm);
+  max-width: 44ch;
+}
+
+/* ---- 07 Metrics strip (§29, §30) ---- */
+
+.metricsStrip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 760px) {
+  .metricsStrip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1080px) {
+  .metricsStrip {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.metricsCell {
+  padding: var(--space-5) var(--space-4) var(--space-5) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.metricsCell:nth-child(2n) {
+  padding-left: var(--space-4);
+  border-right: 1px solid var(--line);
+}
+
+@media (min-width: 760px) {
+  .metricsCell {
+    border-right: 1px solid var(--line);
+    padding-left: 0;
+  }
+
+  .metricsCell:nth-child(2n) {
+    padding-left: var(--space-4);
+  }
+
+  .metricsCell:nth-child(3n) {
+    border-right: none;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 759px) {
+  .metricsCell:nth-child(2n) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 759px) {
+  .metricsCell:nth-child(3n + 1),
+  .metricsCell:nth-child(3n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+@media (min-width: 1080px) {
+  .metricsCell {
+    border-bottom: none;
+    padding-left: var(--space-4);
+  }
+
+  .metricsCell:first-child {
+    padding-left: 0;
+  }
+
+  .metricsCell:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+}
+
+/* ---- 08 Experience rows (§31) ---- */
+
+.rows {
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 820px) {
+  .row {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: var(--space-6);
+  }
+}
+
+.rowAside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.rowCompany {
+  font-size: 1.125rem;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.rowDate {
+  color: var(--ink-tertiary);
+}
+
+.rowBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.rowRole {
+  font-size: var(--body);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.rowSummary {
+  color: var(--ink-secondary);
+  max-width: var(--measure);
+}
+
+.rowBullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.rowBullets li {
+  position: relative;
+  padding-left: var(--space-4);
+  color: var(--ink-secondary);
+  font-size: var(--body-sm);
+  line-height: 1.55;
+}
+
+.rowBullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 9px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.educationGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-7);
+}
+
+@media (min-width: 760px) {
+  .educationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.educationCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.educationDegree {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 550;
+  letter-spacing: -0.025em;
+}
+
+.educationMeta {
+  color: var(--ink-tertiary);
+}
+
+.educationHonors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.honor {
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--healthy);
+  background: var(--healthy-soft);
+  border-radius: var(--radius-xs);
+  padding: 3px 7px;
+}
+
+/* ---- 09 Build log (§32) ---- */
+
+.logFeed {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.logEntry {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 820px) {
+  .logEntry {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 7fr) minmax(0, 3fr);
+    gap: var(--space-5);
+    align-items: start;
+  }
+}
+
+.logAside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.logDate {
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.06em;
+  color: var(--ink-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.logBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.logTitle {
+  font-size: 1.0625rem;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.logSummary {
+  color: var(--ink-secondary);
+  max-width: 62ch;
+}
+
+.logChanges {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.logChanges li {
+  position: relative;
+  padding-left: var(--space-4);
+  font-size: var(--body-sm);
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+
+.logChanges li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.68em;
+  width: 9px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+/* ---- 10 Principles (§34) ---- */
+
+.principles {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6) var(--space-7);
+  counter-reset: principle;
+}
+
+@media (min-width: 860px) {
+  .principles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.principle {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.principleNumber {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.08em;
+  color: var(--ink-tertiary);
+}
+
+.principleTitle {
+  margin: 0 0 var(--space-2);
+  font-size: 1.1875rem;
+  font-weight: 550;
+  letter-spacing: -0.025em;
+}
+
+.principleBody {
+  color: var(--ink-secondary);
+  max-width: 48ch;
+}
+
+/* ---- 11 About (§35) ---- */
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+}
+
+@media (min-width: 900px) {
+  .aboutGrid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-8);
+  }
+}
+
+.aboutBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 60ch;
+}
+
+.aboutBody p {
+  font-size: var(--body-lg);
+  line-height: 1.6;
+  color: var(--ink-secondary);
+}
+
+.aboutBody p:first-child {
+  color: var(--ink);
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.5;
+}
+
+.aboutAside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.aboutBlock {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.aboutBlockTitle {
+  margin: 0 0 var(--space-3);
+  color: var(--ink-tertiary);
+}
+
+.aboutList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.aboutList li {
+  font-size: var(--body-sm);
+  color: var(--ink-secondary);
+}
+
+/* Inline links inside list prose still need a full touch target. */
+.aboutList a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color var(--motion-fast) var(--ease-standard);
+}
+
+.aboutList a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+/* ---- 12 Contact (§36) ---- */
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+}
+
+@media (min-width: 900px) {
+  .contactGrid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-8);
+  }
+}
+
+.contactIntro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 44ch;
+}
+
+.contactEmailLabel {
+  margin-bottom: var(--space-1);
+  color: var(--ink-tertiary);
+}
+
+.contactEmail {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 550;
+  letter-spacing: -0.025em;
+}
+
+.contactLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+}
+
+/* ---- Form ---- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+@media (min-width: 700px) {
+  .form {
+    padding: var(--space-6);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fieldLabel {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--ink-secondary);
+  font-size: var(--body-sm);
+  font-weight: 500;
+}
+
+.fieldOptional {
+  color: var(--ink-tertiary);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: var(--body);
+  transition:
+    border-color var(--motion-fast) var(--ease-standard),
+    background var(--motion-fast) var(--ease-standard);
+}
+
+.textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--ink-tertiary);
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: var(--line-strong);
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--accent);
+}
+
+.formFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-1);
+}
+
+.formStatus {
+  font-size: var(--body-sm);
+  color: var(--ink-secondary);
+  min-height: 1.4em;
+}
+
+.formStatus[data-state="success"] {
+  color: var(--healthy);
+}
+
+.formStatus[data-state="error"] {
+  color: var(--danger);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}

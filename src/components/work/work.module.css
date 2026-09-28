@@ -1,0 +1,519 @@
+/* ==========================================================================
+   Precision Signal — project directory (§23–§25)
+   ========================================================================== */
+
+.directory {
+  padding-block: var(--space-7) var(--space-8);
+  border-bottom: 1px solid var(--line);
+}
+
+.directoryHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.directoryTitle {
+  font-size: var(--section-h2);
+}
+
+.directoryCount {
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Controls ---- */
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+@media (min-width: 900px) {
+  .controls {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+}
+
+.searchField {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  color: var(--ink-tertiary);
+  pointer-events: none;
+}
+
+.search {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: var(--body-sm);
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+
+.search::placeholder {
+  color: var(--ink-tertiary);
+}
+
+.search:hover {
+  border-color: var(--line-strong);
+}
+
+.search:focus-visible {
+  border-color: var(--accent);
+}
+
+.search::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+/* Horizontally scrollable on mobile, stable in layout (§25). */
+.filters {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 900px) {
+  .filters {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+}
+
+.pill {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  text-transform: capitalize;
+  white-space: nowrap;
+  transition:
+    background var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard);
+}
+
+.pill:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.pill[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--canvas);
+}
+
+/* ---- Rows (§24, §70) ---- */
+
+.rows {
+  border-top: 1px solid var(--line);
+}
+
+.row,
+.rowStatic {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  min-height: 58px;
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--line);
+  transition: background var(--motion-fast) var(--ease-standard);
+}
+
+@media (min-width: 860px) {
+  .row,
+  .rowStatic {
+    grid-template-columns: 40px minmax(0, 1fr) 150px 160px 130px 56px 24px;
+    gap: var(--space-4);
+    min-height: 62px;
+  }
+}
+
+.row:hover {
+  background: var(--surface);
+}
+
+.rowIndex {
+  font-family: var(--font-mono);
+  font-size: var(--meta);
+  color: var(--ink-tertiary);
+  align-self: start;
+  padding-top: 3px;
+}
+
+@media (min-width: 860px) {
+  .rowIndex {
+    align-self: center;
+    padding-top: 0;
+  }
+}
+
+.rowName {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rowTitle {
+  font-size: 1rem;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.rowSummary {
+  font-size: var(--body-sm);
+  color: var(--ink-tertiary);
+  line-height: 1.4;
+}
+
+.rowCategory,
+.rowPlatform,
+.rowYear {
+  display: none;
+  font-size: var(--body-sm);
+  color: var(--ink-secondary);
+}
+
+@media (min-width: 860px) {
+  .rowCategory,
+  .rowPlatform,
+  .rowYear {
+    display: block;
+  }
+}
+
+.rowStatus {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
+}
+
+@media (min-width: 860px) {
+  .rowStatus {
+    grid-column: auto;
+    display: block;
+    margin-top: 0;
+  }
+}
+
+.rowCellLabel {
+  display: none;
+}
+
+.rowYear {
+  display: none;
+}
+
+@media (max-width: 859px) {
+  .row,
+  .rowStatic {
+    grid-template-columns: 34px minmax(0, 1fr) 24px;
+  }
+
+  .rowCategory,
+  .rowPlatform {
+    display: flex;
+    grid-column: 2 / -1;
+    gap: var(--space-2);
+    font-size: var(--meta);
+    font-family: var(--font-mono);
+    color: var(--ink-tertiary);
+  }
+
+  .rowCellLabel {
+    display: inline;
+    min-width: 54px;
+    color: var(--ink-tertiary);
+  }
+
+  .rowYear {
+    display: flex;
+    grid-column: 2 / -1;
+    gap: var(--space-2);
+    font-size: var(--meta);
+    font-family: var(--font-mono);
+    color: var(--ink-tertiary);
+  }
+}
+
+.rowAction {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  grid-row: 1;
+  grid-column: 3;
+  align-self: start;
+  padding-top: 2px;
+}
+
+@media (min-width: 860px) {
+  .rowAction {
+    align-self: center;
+    padding-top: 0;
+  }
+}
+
+.rowArrow,
+.rowArtifact {
+  font-size: 14px;
+  color: var(--ink-tertiary);
+  transition:
+    transform var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+.row:hover .rowArrow,
+.row:hover .rowArtifact {
+  color: var(--accent);
+}
+
+.row:hover .rowArrow {
+  transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row:hover .rowArrow {
+    transform: none;
+  }
+}
+
+/* ---- Flagship cards (§22) ---- */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  overflow: hidden;
+  transition:
+    border-color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .card:focus-within {
+    transform: none;
+  }
+}
+
+.cardMedia {
+  border: none;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  flex: 1;
+  padding: var(--space-5);
+}
+
+.cardTopline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--ink-tertiary);
+}
+
+.cardTitle {
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+/* The whole card is already the hit target via the stretched ::after below.
+   This keeps the link's own box above the 44px floor as well, so the heading
+   is a valid target even if the overlay ever changes. */
+.cardTitle a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.cardTitle a::after {
+  /* Stretched hit target; the explicit CTA below is lifted above it. */
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.cardResult {
+  color: var(--ink-secondary);
+  font-size: var(--body-sm);
+  line-height: 1.55;
+}
+
+.cardMetrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-5);
+  padding-block: var(--space-3);
+  border-block: 1px solid var(--line);
+}
+
+.cardMetricLabel {
+  color: var(--ink-tertiary);
+}
+
+.cardMetricValue {
+  margin-top: 2px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.cardMetricUnit {
+  font-size: 0.62em;
+  margin-left: 0.2em;
+  color: var(--ink-secondary);
+}
+
+.cardCta {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* ---- Tallies (§23) ---- */
+
+.tallies {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 700px) {
+  .tallies {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1000px) {
+  .tallies {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.tally {
+  padding: var(--space-4) var(--space-4) var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.tallyLabel {
+  color: var(--ink-tertiary);
+}
+
+.tallyValue {
+  margin-top: 2px;
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* ---- Empty state (§84) ---- */
+
+.empty {
+  padding: var(--space-8) 0;
+  border-top: 1px solid var(--line);
+}
+
+.emptyTitle {
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+}
+
+.emptyBody {
+  color: var(--ink-secondary);
+  max-width: 48ch;
+  margin-bottom: var(--space-4);
+}
+
+.emptyReset {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--ink);
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+
+.emptyReset:hover {
+  border-color: var(--line-strong);
+}
