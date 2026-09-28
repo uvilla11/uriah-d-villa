@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f7f7fa" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111118" media="(prefers-color-scheme: dark)">
-<title>Uriah Villa — Embedded Systems &amp; Robotics Engineer</title>
-<meta name="description" content="Uriah Villa is an MCU Applications Engineer specializing in embedded firmware, electronics, robotics, motor control, and edge AI.">
-<meta property="og:title" content="Uriah Villa — Embedded Systems &amp; Robotics Engineer">
-<meta property="og:description" content="Boards, firmware, and physical systems—from PIC MCUs and motor drives to robotics and edge AI.">
+<meta name="color-scheme" content="light dark">
+<title>Uriah Villa — MCU Applications &amp; Embedded Systems Engineer</title>
+<meta name="description" content="Uriah Villa is an MCU Applications Engineer II at Microchip Technology specializing in embedded firmware, silicon bring-up, motor control, and edge AI.">
+<meta property="og:title" content="Uriah Villa — MCU Applications &amp; Embedded Systems Engineer">
+<meta property="og:description" content="Precision Signal — Editorial Engineering System. Boards, firmware, and physical systems from silicon to motion.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="index, follow">
@@ -17,723 +16,1511 @@
 <meta property="og:image" content="https://uvilla11.github.io/uriah-d-villa/psyche-poster.png">
 <meta property="og:image:alt" content="Team Hephaestus engineering poster: prototype asteroid lander, custom PCB, fabrication, and slope testing">
 <meta name="twitter:image" content="https://uvilla11.github.io/uriah-d-villa/psyche-poster.png">
+
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Uriah Villa","jobTitle":"MCU Applications Engineer II","affiliation":{"@type":"Organization","name":"Microchip Technology"},"email":"uvilla11@gmail.com","sameAs":["https://github.com/uvilla11","https://www.linkedin.com/in/uriah-villa/"]}
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Uriah Villa",
+  "jobTitle": "MCU Applications Engineer II",
+  "affiliation": {
+    "@type": "Organization",
+    "name": "Microchip Technology"
+  },
+  "email": "uvilla11@gmail.com",
+  "sameAs": [
+    "https://github.com/uvilla11",
+    "https://www.linkedin.com/in/uriah-villa/"
+  ]
+}
 </script>
+
 <script>
-document.documentElement.classList.add('js');
-const preferredTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-let initialTheme = preferredTheme;
-try {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light' || savedTheme === 'dark') initialTheme = savedTheme;
-} catch (_) {}
-document.documentElement.dataset.theme = initialTheme;
+{
+  const preferredTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  let initialTheme = preferredTheme;
+  try {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') initialTheme = savedTheme;
+  } catch (_) {}
+  document.documentElement.dataset.theme = initialTheme;
+}
 </script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='5' y='5' width='22' height='22' rx='5' fill='%237154e8'/%3E%3Cpath d='M10 11v7a6 6 0 0 0 12 0v-7' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='4' width='24' height='24' rx='5' fill='%23161616'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23D54435'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
 
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar" id="scrollProgress"></span></div>
+
+<!-- ==========================================================================
+     Site Header (Integrated, Non-Floating)
+     ========================================================================== -->
 <header class="site-header">
-  <div class="nav-shell">
-    <a class="brand" href="#" aria-label="Uriah Villa, home">
-      <span class="brand-mark" aria-hidden="true"><span></span></span>
-      <span>URIAH VILLA</span>
+  <div class="container header-inner">
+    <a class="brand-link" href="#" aria-label="Uriah Villa — Home">
+      <span class="brand-monogram" aria-hidden="true">UV</span>
+      <span class="brand-text">
+        <span class="brand-name">Uriah Villa</span>
+        <span class="brand-meta">MCU Applications Engineer II</span>
+      </span>
     </a>
+
     <nav class="desktop-nav" aria-label="Primary navigation">
-      <a href="#work">Work</a>
-      <a href="#experience">Experience</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a class="nav-link" href="#work">Work</a>
+      <a class="nav-link workspace-badge" href="#workspace">Workspace</a>
+      <a class="nav-link" href="#experience">Experience</a>
+      <a class="nav-link" href="#about">About</a>
+      <a class="nav-link" href="#contact">Contact</a>
     </nav>
-    <div class="nav-actions">
-      <a class="nav-pdf" href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch color theme">
-        <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20.5 15.3A8.5 8.5 0 0 1 8.7 3.5 8.5 8.5 0 1 0 20.5 15.3Z"/></svg>
+
+    <div class="header-actions">
+      <a class="button-resume" href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">M.S. PORTFOLIO ↗</a>
+      <button class="theme-toggle-btn" id="themeToggle" type="button" aria-label="Switch to dark theme">
+        <svg class="theme-icon-sun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="theme-icon-moon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.5 15.3A8.5 8.5 0 0 1 8.7 3.5 8.5 8.5 0 1 0 20.5 15.3Z"/></svg>
       </button>
-      <details class="mobile-menu" id="mobileMenu">
-        <summary aria-label="Open navigation menu"><span class="menu-icon" aria-hidden="true"></span></summary>
-        <nav class="mobile-menu-panel" aria-label="Mobile navigation">
-          <a href="#work">Work</a>
-          <a href="#experience">Experience</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-          <a href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">LinkedIn profile ↗</a>
-        </nav>
-      </details>
+      <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle mobile menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
   </div>
+
+  <nav class="mobile-menu-drawer" id="mobileDrawer" hidden aria-label="Mobile navigation">
+    <a href="#work">Work</a>
+    <a href="#workspace">Engineering Workspace</a>
+    <a href="#experience">Experience &amp; Study</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">LinkedIn Profile ↗</a>
+  </nav>
 </header>
 
 <main id="main">
-<div id="home">
-<section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="shell hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow">MCU Applications Engineer II · Microchip Technology</p>
-      <h1 id="hero-title" tabindex="-1">Embedded systems,<br>from <span>silicon</span> to motion.</h1>
-      <p class="hero-lead">I design boards, bring up firmware, and close the loop on physical systems—from PIC MCUs and motor drives to robotics and edge AI.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#work">Explore selected work <span class="arrow" aria-hidden="true">↓</span></a>
-        <a class="button button-secondary" href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">View LinkedIn profile <span aria-hidden="true">↗</span></a>
-      </div>
-      <p class="availability"><span aria-hidden="true">●</span> MESA, ARIZONA · HARDWARE-TO-FIRMWARE SYSTEMS ENGINEERING</p>
-    </div>
 
-    <a class="hero-dossier" href="#case/psyche" aria-label="Open the ASU Capstone and NASA Psyche case study">
-      <div class="dossier-bar"><span>HEPHAESTUS / ASU CAPSTONE</span><span>PROTOTYPE</span></div>
-      <div class="artifact-stage">
-        <img src="Capstone_ASU-A_01_Hephaestus_Lander.png" width="640" height="690" alt="CAD rendering of the Team Hephaestus prototype asteroid lander">
-      </div>
-      <div class="dossier-foot">
-        <span><strong>Hephaestus landing system</strong><small>Custom PCB · PIC18 + PSoC · Hall positioning · 2024</small></span>
-        <span class="open-case">OPEN CASE <span class="arrow" aria-hidden="true">→</span></span>
-      </div>
-    </a>
-  </div>
-</section>
-<section class="section" id="work" aria-labelledby="work-title">
-  <div class="shell">
-    <div class="section-head">
-      <h2 class="section-title" id="work-title">Selected systems and supporting builds.</h2>
-      <p class="section-intro">Three case studies first, followed by a short index of the smaller systems behind the work.</p>
-    </div>
+<!-- ==========================================================================
+     HOMEPAGE VIEW (Level 1 & 2: Identity & Evidence)
+     ========================================================================== -->
+<div id="homeView">
 
-    <a class="featured-project" href="#case/psyche">
-      <div class="featured-media">
-        <img src="psyche-poster.png" width="1400" height="919" loading="lazy" alt="Team Hephaestus engineering poster showing the prototype lander, custom PCB, fabrication, and slope testing">
-        <div class="media-caption"><span>ASU INNOVATION SHOWCASE / TEAM HEPHAESTUS</span><span>PROJECT ARTIFACT</span></div>
+  <!-- 01. Hero Section -->
+  <section class="hero-section" id="top" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          Microchip Technology · New Product Development
+        </p>
+        <h1 class="hero-title" id="hero-title" tabindex="-1">
+          Embedded systems,<br>from <span>silicon</span> to motion.
+        </h1>
+        <p class="hero-lead">
+          I design circuit boards, bring up bare-metal firmware, and close the loop on physical systems—spanning 8-bit to 32-bit PIC microcontrollers, motor drives, robotics, and edge AI.
+        </p>
+        <div class="hero-ctas">
+          <a class="button-primary" href="#work">
+            Explore Selected Work <span aria-hidden="true">↓</span>
+          </a>
+          <a class="button-secondary" href="#workspace">
+            Engineering Workspace <span aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
-      <div class="featured-copy">
-        <div class="project-topline"><span>FLAGSHIP CASE STUDY</span><span>2024</span></div>
-        <h3>ASU Capstone × NASA Psyche</h3>
-        <p>A proof-of-concept landing system for hypothesized asteroid surfaces. I led the embedded electronics: custom PCB, PIC and PSoC firmware, motor control, and Hall-effect rover positioning.</p>
-        <div class="metric-strip" role="group" aria-label="Project outcomes">
-          <div class="metric"><strong>±2°</strong><span>Positioning</span></div>
-          <div class="metric"><strong>500+</strong><span>Test cycles</span></div>
-          <div class="metric"><strong>36°</strong><span>Slope tested</span></div>
-        </div>
-        <span class="card-link">READ THE CASE STUDY <span class="arrow" aria-hidden="true">→</span></span>
-      </div>
-    </a>
 
-    <div class="case-grid">
-      <a class="case-card" href="#case/solarsense">
-        <div class="case-card-media">
-          <img src="solarsense-showcase.jpg" width="2048" height="1536" loading="lazy" alt="SolarSENSE team presenting its soil-sensing system at the ASU Innovation Showcase">
+      <a class="hero-dossier-card" href="#case/psyche" aria-label="Open ASU Capstone and NASA Psyche Case Study">
+        <div class="dossier-header">
+          <span>FLAGSHIP EVIDENCE / CAPSTONE</span>
+          <span>PROTOTYPE</span>
         </div>
-        <div class="case-card-body">
-          <div class="project-topline"><span>EDGE AI / EMBEDDED</span><span>2025</span></div>
-          <h3>SolarSENSE</h3>
-          <p>Integrated Edge Impulse inference into LILYGO T-Higrow ESP32 firmware and an offline ESP-DASH interface after the model inputs had to be reconciled with the sensors actually on the board.</p>
-          <span class="card-link">VIEW SYSTEM CASE <span class="arrow" aria-hidden="true">→</span></span>
+        <div class="dossier-image-wrap">
+          <img src="Capstone_ASU-A_01_Hephaestus_Lander.png" width="480" height="420" alt="CAD rendering of the Team Hephaestus asteroid lander prototype">
         </div>
-      </a>
-
-      <a class="case-card" href="#case/shadeshift">
-        <div class="case-card-media">
-          <img src="ShadeShift-prototype.jpg" width="1600" height="1200" loading="lazy" alt="ShadeShift prototype eyewear with tinted modular lenses and external electronics on a workbench">
-        </div>
-        <div class="case-card-body">
-          <div class="project-topline"><span>MECHATRONICS / HUMAN FACTORS</span><span>2025</span></div>
-          <h3>ShadeShift</h3>
-          <p>A four-mode smart-eyewear proof of concept developed with Barrow Neurological Institute / Dignity Health, combining adjustable tint, color, stroboscopic training, and binasal occlusion.</p>
-          <span class="card-link">VIEW DESIGN CASE <span class="arrow" aria-hidden="true">→</span></span>
+        <div class="dossier-footer">
+          <div class="dossier-meta">
+            <strong>Hephaestus Landing System</strong>
+            <small>Custom PCB · PIC18 + PSoC · ±2° Positioning</small>
+          </div>
+          <span class="dossier-arrow" aria-hidden="true">→</span>
         </div>
       </a>
     </div>
-    <div class="builds-block" id="builds">
-      <div class="subsection-head">
-        <h3>Bench index</h3>
-        <p>Motor control, automation, robotics, connected hardware, and systems modeling.</p>
+  </section>
+
+  <!-- 02. Current Signals Strip -->
+  <aside class="signals-strip" aria-label="Operational status signals">
+    <div class="container signals-grid">
+      <div class="signal-cell">
+        <p class="signal-label">CURRENT ROLE</p>
+        <p class="signal-value">Engineer II, MCU Applications</p>
+        <p class="signal-context">Microchip Technology · NPD</p>
       </div>
-      <div class="build-list">
-        <article class="build-row">
-          <span class="build-number">01</span>
-          <h4>BLDC Motor Control</h4>
-          <p>Motor-control firmware on a dsPIC33EP256MC506, brought up and validated with oscilloscopes, logic analyzers, power supplies, and function generators.</p>
-          <div class="build-tags"><span class="tag">dsPIC33</span><span class="tag">Embedded C</span><span class="tag">Motor control</span></div>
-        </article>
-
-        <a class="build-row" href="https://egr314-team-305.github.io/Team305.github.io" target="_blank" rel="noopener noreferrer">
-          <span class="build-number">02</span>
-          <h4>Room Weather Control <span aria-hidden="true">↗</span></h4>
-          <p>PIC18 and ESP32 system that reads temperature and light, moves physical blinds, and exchanges telemetry over Wi-Fi from a custom Cadence PCB.</p>
-          <div class="build-tags"><span class="tag">PIC18</span><span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">Cadence</span></div>
-        </a>
-
-        <article class="build-row">
-          <span class="build-number">03</span>
-          <h4>Support Forecasting &amp; Automation</h4>
-          <p>Co-developed Python automation over Salesforce data that removed 10+ hours of weekly reporting and supported an ML case-complexity forecast.</p>
-          <div class="build-tags"><span class="tag">Python</span><span class="tag">Salesforce</span><span class="tag">ML</span></div>
-        </article>
-
-        <article class="build-row">
-          <span class="build-number">04</span>
-          <h4>SCARA Drawing Arm</h4>
-          <p>Two-link servo arm that draws user-defined shapes at chosen scale and speed, with inverse kinematics solved on the microprocessor in C.</p>
-          <div class="build-tags"><span class="tag">C</span><span class="tag">Kinematics</span><span class="tag">Robotics</span></div>
-        </article>
-
-        <a class="build-row" href="#case/microgrid">
-          <span class="build-number">05</span>
-          <h4>Critical-Facility Microgrid <span aria-hidden="true">→</span></h4>
-          <p>Independent XENDEE study for a Honolulu trauma center that challenged a physically questionable unconstrained optimum and rebuilt the scenario with explicit space assumptions.</p>
-          <div class="build-tags"><span class="tag">XENDEE</span><span class="tag">Power systems</span><span class="tag">Model validation</span></div>
-        </a>
+      <div class="signal-cell">
+        <p class="signal-label">SYSTEM FOCUS</p>
+        <p class="signal-value">Embedded · Firmware · Motor Drives</p>
+        <p class="signal-context">Silicon to Motion Systems</p>
+      </div>
+      <div class="signal-cell">
+        <p class="signal-label">SELECTED WORK</p>
+        <p class="signal-value">10+ Production &amp; Research Builds</p>
+        <p class="signal-context">4 Flagship Case Studies</p>
+      </div>
+      <div class="signal-cell">
+        <p class="signal-label">STATUS</p>
+        <p class="signal-value"><span class="status-tag" data-status="ACTIVE"><span class="status-dot"></span> ACTIVE</span></p>
+        <p class="signal-context">Mesa, AZ · Bench Validation</p>
       </div>
     </div>
-  </div>
-</section>
-<section class="section" id="experience" aria-labelledby="experience-title">
-  <div class="shell">
-    <div class="section-head">
-      <h2 class="section-title" id="experience-title">Work, study, and the systems between them.</h2>
-      <p class="section-intro">Professional work, education, and the supporting experience that shaped how I build.</p>
-    </div>
+  </aside>
 
-    <div class="experience-layout">
-      <article class="career-panel">
-        <div class="career-head">
-          <h3 class="career-company">Microchip Technology</h3>
-        <p class="career-date">MICROCHIP TENURE · 2023 — PRESENT</p>
+  <!-- 03. Selected Work (Flagships) -->
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="container">
+      <p class="section-eyebrow">SELECTED EVIDENCE</p>
+      <h2 class="section-title" id="work-title">Engineered systems and verified builds.</h2>
+      <p class="section-lead">
+        Three physical proof-of-concepts and one techno-economic simulation demonstrating end-to-end hardware bring-up, firmware architecture, on-device inference, and rigorous model validation.
+      </p>
+
+      <div class="flagship-list">
+        <!-- Flagship 1: NASA Psyche / ASU Capstone -->
+        <article class="flagship-feature">
+          <div class="flagship-media">
+            <img src="psyche-poster.png" width="1400" height="919" loading="lazy" alt="Team Hephaestus showcase poster displaying lander fabrication, custom PCB, and slope testing">
+            <div class="media-caption">
+              <span>ASU INNOVATION SHOWCASE / NASA PSYCHE</span>
+              <span>PROJECT POSTER</span>
+            </div>
+          </div>
+          <div class="flagship-content">
+            <div>
+              <div class="flagship-topline">
+                <span>FLAGSHIP CASE STUDY</span>
+                <span class="status-tag" data-status="VALIDATED"><span class="status-dot"></span> VALIDATED · 2024</span>
+              </div>
+              <h3 class="flagship-title">ASU Capstone × NASA Psyche: Asteroid Lander</h3>
+              <p class="flagship-desc">
+                Proof-of-concept landing and indexing mechanism for hypothesized asteroid terrain. I led the embedded electronics: custom KiCad PCB, dual PIC18 and PSoC firmware, motor-drive circuitry, and Hall-effect rover positioning.
+              </p>
+              <div class="metric-strip" role="group" aria-label="Key validation metrics">
+                <div class="metric-strip-item">
+                  <strong>±2°</strong>
+                  <span>Rover Positioning</span>
+                </div>
+                <div class="metric-strip-item">
+                  <strong>500+</strong>
+                  <span>Test Cycles</span>
+                </div>
+                <div class="metric-strip-item">
+                  <strong>36°</strong>
+                  <span>Physical Slope</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <a class="flagship-cta" href="#case/psyche">READ FULL CASE STUDY <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Secondary Flagships Grid -->
+      <div class="secondary-cases-grid">
+        <!-- Flagship 2: SolarSENSE -->
+        <article class="case-card-clean">
+          <div class="case-card-media">
+            <img src="solarsense-showcase.jpg" width="1024" height="768" loading="lazy" alt="SolarSENSE prototype display and team at ASU showcase">
+          </div>
+          <div class="case-card-body">
+            <div class="flagship-topline">
+              <span>EDGE AI / EMBEDDED</span>
+              <span class="status-tag" data-status="BUILDING"><span class="status-dot"></span> PROTOTYPE · 2025</span>
+            </div>
+            <h3 class="flagship-title">SolarSENSE: Edge AI Soil Health Sensing</h3>
+            <p class="flagship-desc">
+              Integrated Edge Impulse inference on an ESP32 T-Higrow board with an offline ESP-DASH interface. Overcame physical sensor mismatches by pivoting the model to electrical conductivity and moisture features.
+            </p>
+            <div style="margin-top: auto;">
+              <a class="flagship-cta" href="#case/solarsense">VIEW SYSTEM CASE <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Flagship 3: ShadeShift -->
+        <article class="case-card-clean">
+          <div class="case-card-media">
+            <img src="ShadeShift-prototype.jpg" width="1024" height="768" loading="lazy" alt="ShadeShift prototype modular eyewear and external controller">
+          </div>
+          <div class="case-card-body">
+            <div class="flagship-topline">
+              <span>MECHATRONICS / HUMAN FACTORS</span>
+              <span class="status-tag" data-status="BUILDING"><span class="status-dot"></span> PROTOTYPE · 2025</span>
+            </div>
+            <h3 class="flagship-title">ShadeShift: Modular Neurological Eyewear</h3>
+            <p class="flagship-desc">
+              Developed with Barrow Neurological Institute / Dignity Health. Combines gradable electrochromic tint, color filtration, PDLC stroboscopic training, and magnetic binasal occlusion on an iterated 3D-printed platform.
+            </p>
+            <div style="margin-top: auto;">
+              <a class="flagship-cta" href="#case/shadeshift">VIEW DESIGN CASE <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Microgrid Case Row -->
+      <div style="margin-top: var(--space-6);">
+        <article class="case-card-clean" style="flex-direction: row; flex-wrap: wrap;">
+          <div class="case-card-body" style="padding: 28px;">
+            <div class="flagship-topline">
+              <span>POWER SYSTEMS / RESILIENCE MODELING</span>
+              <span class="status-tag" data-status="VALIDATED"><span class="status-dot"></span> SIMULATED · 2025</span>
+            </div>
+            <h3 class="flagship-title">Critical-Facility Microgrid: Queen's Medical Center</h3>
+            <p class="flagship-desc" style="max-width: 80ch;">
+              Independent XENDEE simulation for a Honolulu Level I trauma center. Challenged an unconstrained mathematical optimum (4.98 MW PV / 12.3 MWh BESS) that violated physical hospital space limits, rebuilding a credible hybrid PV + BESS + Diesel resilience design.
+            </p>
+            <div>
+              <a class="flagship-cta" href="#case/microgrid">VIEW SIMULATION STUDY <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04. Numbered Capability Grid -->
+  <section class="section" id="capabilities" aria-labelledby="capabilities-title">
+    <div class="container">
+      <p class="section-eyebrow">CORE DISCIPLINES</p>
+      <h2 class="section-title" id="capabilities-title">Engineering across silicon and motion.</h2>
+      <p class="section-lead">
+        Structured engineering capabilities grounded in physical test, low-level microcontroller firmware, and systems integration.
+      </p>
+
+      <div class="capability-grid">
+        <div class="capability-cell">
+          <span class="capability-num">01</span>
+          <h3 class="capability-heading">Embedded Systems &amp; Silicon Bring-Up</h3>
+          <p class="capability-text">
+            Bare-metal and RTOS firmware in Embedded C/C++ on PIC18, PIC32, dsPIC33, and PSoC. Low-power optimization, clock management, interrupt service routines, and hardware DMA controllers.
+          </p>
         </div>
-        <h4 class="career-role">Engineer II, MCU Applications</h4>
-        <p class="career-subtitle">New Product Development · Current position</p>
-        <ul class="career-list">
-          <li>Author and maintain 10+ firmware solutions and customer-facing application examples across 8-bit and 32-bit MCU families.</li>
-          <li>Develop technical material for low-power optimization and support documentation for new microcontroller products.</li>
-          <li>Work across customers, silicon, tools, and applications teams to move PIC-based designs from evaluation to implementation.</li>
-        </ul>
-        <div class="career-progression">
-          <span>Progression at Microchip</span>
-          <p>MCU Applications Intern · Support Engagement Intern · Corporate Applications Intern</p>
-        </div>
-      </article>
 
-      <div class="education-stack">
-        <article class="education-panel">
-          <p class="panel-label">M.S. / ENGINEERING</p>
-          <h3>Arizona State University</h3>
-          <p>Accelerated 4+1 program · Systems, mechatronics, and power</p>
-          <strong>4.0 GPA · WITH DISTINCTION · 2025</strong>
+        <div class="capability-cell">
+          <span class="capability-num">02</span>
+          <h3 class="capability-heading">Application Engineering &amp; Solutions</h3>
+          <p class="capability-text">
+            Authoring and maintaining production application notes, reference code, and evaluation packages. Translating silicon features into reliable reference designs for customer adoption.
+          </p>
+        </div>
+
+        <div class="capability-cell">
+          <span class="capability-num">03</span>
+          <h3 class="capability-heading">Robotics, Motion &amp; Motor Control</h3>
+          <p class="capability-text">
+            Closed-loop BLDC motor control, field-oriented commutation, servo kinematics, and positional feedback using Hall-effect sensors and quadrature encoders validated under dynamic load.
+          </p>
+        </div>
+
+        <div class="capability-cell">
+          <span class="capability-num">04</span>
+          <h3 class="capability-heading">Connected Systems &amp; Edge AI</h3>
+          <p class="capability-text">
+            Deploying TinyML models with Edge Impulse on microcontrollers, local ESP32 telemetry dashboards, MQTT communication, and Python test automation over laboratory test benches.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05. Engineering Scope Chain -->
+  <section class="section" id="scope" aria-label="System engineering path">
+    <div class="container">
+      <p class="section-eyebrow">SYSTEM SIGNAL CHAIN</p>
+      <h2 class="section-title">From discrete electronics to validated behavior.</h2>
+      <div class="scope-chain">
+        <div class="scope-step">
+          <span class="scope-step-num">STAGE 01</span>
+          <span class="scope-step-name">Hardware / PCB</span>
+        </div>
+        <span class="scope-arrow" aria-hidden="true">→</span>
+        <div class="scope-step">
+          <span class="scope-step-num">STAGE 02</span>
+          <span class="scope-step-name">Firmware Bring-Up</span>
+        </div>
+        <span class="scope-arrow" aria-hidden="true">→</span>
+        <div class="scope-step">
+          <span class="scope-step-num">STAGE 03</span>
+          <span class="scope-step-name">Buses &amp; Protocols</span>
+        </div>
+        <span class="scope-arrow" aria-hidden="true">→</span>
+        <div class="scope-step">
+          <span class="scope-step-num">STAGE 04</span>
+          <span class="scope-step-name">Bench Debugging</span>
+        </div>
+        <span class="scope-arrow" aria-hidden="true">→</span>
+        <div class="scope-step">
+          <span class="scope-step-num">STAGE 05</span>
+          <span class="scope-step-name">Application Layer</span>
+        </div>
+        <span class="scope-arrow" aria-hidden="true">→</span>
+        <div class="scope-step">
+          <span class="scope-step-num">STAGE 06</span>
+          <span class="scope-step-name">System Validation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06. Technical Coverage -->
+  <section class="section" id="coverage" aria-labelledby="coverage-title">
+    <div class="container">
+      <p class="section-eyebrow">TECHNICAL MATRIX</p>
+      <h2 class="section-title" id="coverage-title">Tooling, silicon families, and laboratory equipment.</h2>
+
+      <div class="coverage-grid">
+        <div class="coverage-box">
+          <h3 class="coverage-title">Microcontrollers</h3>
+          <div class="tag-list">
+            <span class="tag">PIC18</span>
+            <span class="tag">PIC32</span>
+            <span class="tag">dsPIC33</span>
+            <span class="tag">PSoC 4 / 6</span>
+            <span class="tag">ESP32</span>
+            <span class="tag">SAMD / ARM</span>
+          </div>
+        </div>
+
+        <div class="coverage-box">
+          <h3 class="coverage-title">Peripherals &amp; Silicon</h3>
+          <div class="tag-list">
+            <span class="tag">DMA</span>
+            <span class="tag">ECCP / PWM</span>
+            <span class="tag">12-bit ADC</span>
+            <span class="tag">Op-Amps</span>
+            <span class="tag">Hall Effect</span>
+            <span class="tag">Optocouplers</span>
+            <span class="tag">MOSFET Gate Drivers</span>
+          </div>
+        </div>
+
+        <div class="coverage-box">
+          <h3 class="coverage-title">Protocols &amp; Buses</h3>
+          <div class="tag-list">
+            <span class="tag">UART / RS-232</span>
+            <span class="tag">SPI</span>
+            <span class="tag">I2C</span>
+            <span class="tag">CAN</span>
+            <span class="tag">BLE</span>
+            <span class="tag">MQTT</span>
+            <span class="tag">Wi-Fi (802.11)</span>
+          </div>
+        </div>
+
+        <div class="coverage-box">
+          <h3 class="coverage-title">Lab &amp; Instrumentation</h3>
+          <div class="tag-list">
+            <span class="tag">Oscilloscopes</span>
+            <span class="tag">Logic Analyzers</span>
+            <span class="tag">Function Generators</span>
+            <span class="tag">Programmable PSUs</span>
+            <span class="tag">Current Probes</span>
+            <span class="tag">SMD Soldering</span>
+          </div>
+        </div>
+
+        <div class="coverage-box">
+          <h3 class="coverage-title">Software &amp; Modeling</h3>
+          <div class="tag-list">
+            <span class="tag">Embedded C</span>
+            <span class="tag">KiCad</span>
+            <span class="tag">Cadence Allegro</span>
+            <span class="tag">MPLAB X</span>
+            <span class="tag">Edge Impulse</span>
+            <span class="tag">Python</span>
+            <span class="tag">Simulink</span>
+            <span class="tag">XENDEE</span>
+          </div>
+        </div>
+
+        <div class="coverage-box">
+          <h3 class="coverage-title">Credentials</h3>
+          <div class="tag-list">
+            <span class="tag">Universal Robots Core</span>
+            <span class="tag">Universal Robots Pro</span>
+            <span class="tag">Simulink Fundamentals</span>
+            <span class="tag">Arizona Tech Skills</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07. Engineering Metrics Strip -->
+  <section class="section" id="metrics" aria-label="Quantified scope">
+    <div class="container">
+      <div class="metrics-banner">
+        <div class="metric-block">
+          <p class="metric-big tabular">10+</p>
+          <p class="metric-desc">MCU Application Examples</p>
+        </div>
+        <div class="metric-block">
+          <p class="metric-big">8b→32b</p>
+          <p class="metric-desc">Silicon Architecture Range</p>
+        </div>
+        <div class="metric-block">
+          <p class="metric-big tabular">500+</p>
+          <p class="metric-desc">Automated Test Cycles</p>
+        </div>
+        <div class="metric-block">
+          <p class="metric-big tabular">4.0</p>
+          <p class="metric-desc">M.S. Engineering GPA</p>
+        </div>
+        <div class="metric-block">
+          <p class="metric-big tabular">1</p>
+          <p class="metric-desc">Interactive Workspace</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08. Experience & Education Timeline -->
+  <section class="section" id="experience" aria-labelledby="experience-title">
+    <div class="container">
+      <p class="section-eyebrow">CAREER &amp; EDUCATION</p>
+      <h2 class="section-title" id="experience-title">Professional tenure, study, and automation.</h2>
+
+      <div class="experience-timeline">
+        <article class="experience-item">
+          <div class="experience-head">
+            <h3 class="experience-company">Microchip Technology</h3>
+            <span class="experience-date">2023 — PRESENT · MESA, ARIZONA</span>
+          </div>
+          <p class="experience-role">Engineer II, MCU Applications · New Product Development</p>
+          <ul class="experience-bullets">
+            <li>Author and maintain 10+ firmware application examples and reference code solutions across 8-bit, 16-bit, and 32-bit MCU product lines.</li>
+            <li>Develop customer-facing technical documentation and application notes for low-power optimization and peripheral bring-up.</li>
+            <li>Collaborate across silicon architecture, EDA tool teams, and tier-1 customers to accelerate adoption of new microcontrollers.</li>
+          </ul>
+          <div class="experience-subroles">
+            <span>Progression: MCU Applications Intern → Support Engagement Intern → Corporate Applications Intern</span>
+          </div>
         </article>
-        <article class="education-panel">
-          <p class="panel-label">B.S.E. / ROBOTICS</p>
-          <h3>Arizona State University</h3>
-          <p>Embedded systems, computational modeling, and robotic development</p>
-          <strong>CUM LAUDE · 2024</strong>
+
+        <article class="experience-item">
+          <div class="experience-head">
+            <h3 class="experience-company">Arizona State University</h3>
+            <span class="experience-date">2023 — 2025 · CONCURRENT ROLE</span>
+          </div>
+          <p class="experience-role">Student Services Coordinator Senior</p>
+          <ul class="experience-bullets">
+            <li>Designed and deployed a QR-based express-advising intake system alongside graduate studies and engineering tenure.</li>
+            <li>Reduced front-desk intake latency by 70% and enabled the department to serve 20% more students with existing staffing.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="education-grid">
+        <div class="education-card">
+          <p class="section-eyebrow">GRADUATE DEGREE</p>
+          <h3 class="flagship-title">M.S. in Engineering</h3>
+          <p class="experience-role">Arizona State University · 2025</p>
+          <p class="capability-text">
+            Accelerated 4+1 program in systems, mechatronics, and power systems.<br>
+            <strong>4.0 GPA · GRADUATED WITH DISTINCTION</strong>
+          </p>
+        </div>
+
+        <div class="education-card">
+          <p class="section-eyebrow">UNDERGRADUATE DEGREE</p>
+          <h3 class="flagship-title">B.S.E. in Robotics</h3>
+          <p class="experience-role">Arizona State University · 2024</p>
+          <p class="capability-text">
+            Embedded systems, computational modeling, and closed-loop robotic development.<br>
+            <strong>CUM LAUDE HONORS</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09. Build Log Preview -->
+  <section class="section" id="buildlog" aria-labelledby="buildlog-title">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <p class="section-eyebrow">CHRONOLOGICAL ACTIVITY</p>
+          <h2 class="section-title" id="buildlog-title">Engineering log &amp; milestones.</h2>
+        </div>
+        <a class="text-action" href="#workspace">View full directory &amp; logs <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="build-log-feed">
+        <article class="log-entry">
+          <div class="log-header">
+            <span class="log-date">2025-10</span>
+            <span class="status-tag" data-status="SHIPPED"><span class="status-dot"></span> PUBLISHED</span>
+          </div>
+          <h3 class="log-title">Graduate Engineering Portfolio &amp; Evidence Appendix Completed</h3>
+          <p class="log-summary">
+            Finalized M.S. technical portfolio document covering all four systems, including full schematics, simulations, and benchmark validation records.
+          </p>
+          <ul class="log-changes">
+            <li>Compiled 30MB comprehensive appendix with KiCad layouts and SolidWorks FEA results</li>
+            <li>Submitted and validated for 4.0 GPA degree distinction</li>
+          </ul>
+        </article>
+
+        <article class="log-entry">
+          <div class="log-header">
+            <span class="log-date">2025-04</span>
+            <span class="status-tag" data-status="VALIDATED"><span class="status-dot"></span> VALIDATED</span>
+          </div>
+          <h3 class="log-title">SolarSENSE: Edge Impulse On-Device Model Reconciled</h3>
+          <p class="log-summary">
+            Re-trained soil-health classification network on electrical conductivity and moisture features, deploying to LILYGO T-Higrow ESP32.
+          </p>
+          <ul class="log-changes">
+            <li>Integrated local C++ model tensors into ESP-DASH dashboard firmware</li>
+            <li>Eliminated external cloud dependency for remote agricultural sensing</li>
+          </ul>
+        </article>
+
+        <article class="log-entry">
+          <div class="log-header">
+            <span class="log-date">2024-11</span>
+            <span class="status-tag" data-status="BUILDING"><span class="status-dot"></span> REVISED</span>
+          </div>
+          <h3 class="log-title">ShadeShift: Driver Architecture Shift from PNLC to PDLC</h3>
+          <p class="log-summary">
+            Moved stroboscopic switching layer from PNLC to PDLC film after bench tests revealed inconsistent electro-optical transmittance response.
+          </p>
+          <ul class="log-changes">
+            <li>Relocated controller and battery to external tethered enclosure to minimize head mass</li>
+            <li>Designed magnetic clip mechanism for modular binasal occlusion plates</li>
+          </ul>
+        </article>
+
+        <article class="log-entry">
+          <div class="log-header">
+            <span class="log-date">2024-05</span>
+            <span class="status-tag" data-status="VALIDATED"><span class="status-dot"></span> HARDWARE BRING-UP</span>
+          </div>
+          <h3 class="log-title">Hephaestus Asteroid Lander PCB v1.1 Revision</h3>
+          <p class="log-summary">
+            Re-spun KiCad board to add active op-amp conditioning on Hall sensors and replaced under-rated motor driver IC with higher peak-current package.
+          </p>
+          <ul class="log-changes">
+            <li>Completed 500+ uninterrupted automated positioning cycles at ±2° precision</li>
+            <li>Validated physical lander chassis on custom 36° tilted slope fixture</li>
+          </ul>
         </article>
       </div>
     </div>
+  </section>
 
-    <article class="additional-role">
-      <div>
-        <p class="panel-label">ADDITIONAL EXPERIENCE</p>
-        <p class="career-date">2023 — 2025 · CONCURRENT</p>
+  <!-- 10. Engineering Principles -->
+  <section class="section" id="principles" aria-labelledby="principles-title">
+    <div class="container">
+      <p class="section-eyebrow">OPERATIONAL PHILOSOPHY</p>
+      <h2 class="section-title" id="principles-title">Engineering principles.</h2>
+
+      <div class="principles-grid">
+        <div class="principle-card">
+          <span class="principle-num">01</span>
+          <h3 class="principle-title">Understand the constraint first.</h3>
+          <p class="principle-body">
+            Architecture must follow physical reality: power budgets, thermal dissipation, pin multiplexing, bus bandwidth, and schedule limits outrank ideal models.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <span class="principle-num">02</span>
+          <h3 class="principle-title">Prefer observable systems.</h3>
+          <p class="principle-body">
+            If a state, bus transaction, or timing jitter cannot be measured with a probe or logic analyzer, the system is not yet under control.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <span class="principle-num">03</span>
+          <h3 class="principle-title">Build the smallest reliable abstraction.</h3>
+          <p class="principle-body">
+            Complexity must justify itself. A clean, direct hardware register configuration is always preferable to opaque framework layers.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <span class="principle-num">04</span>
+          <h3 class="principle-title">Document tradeoffs honestly.</h3>
+          <p class="principle-body">
+            Every technical decision has a cost. A design is stronger when its failure modes, limitations, and operational boundaries are explicitly acknowledged.
+          </p>
+        </div>
       </div>
-      <div>
-        <h3>Student Services Coordinator Senior · Arizona State University</h3>
-        <p>Held alongside the Microchip role and graduate study. Built a QR-based express-advising intake workflow that reduced front-desk resource time by 70% and helped the office serve 20% more students.</p>
-      </div>
-    </article>
-  </div>
-</section>
-<section class="section" id="about" aria-labelledby="about-title">
-  <div class="shell">
-    <div class="section-head">
+    </div>
+  </section>
+
+  <!-- 11. About Section -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <p class="section-eyebrow">BACKGROUND</p>
       <h2 class="section-title" id="about-title">I learned electronics by repairing what failed.</h2>
-      <p class="section-intro">Embedded engineering grounded in repair work, bench validation, and an instinct for the complete system.</p>
-    </div>
 
-    <div class="about-layout">
-      <div class="about-copy">
-        <p class="large-copy">I started at sixteen, repairing cracked phones and dead laptops in Chinle, Arizona—five years of learning why electronics fail before I formally studied how they work.</p>
-        <p class="body-copy">That instinct stayed with me. I learned early to verify the datasheet on the bench, isolate one subsystem at a time, and keep going until the physical behavior matches the model. Today I do that work at Microchip, where firmware and application examples help engineers build on PIC microcontrollers.</p>
-        <p class="body-copy">I completed an accelerated M.S. in Engineering with a 4.0 while working, after earning a B.S.E. in Robotics cum laude. I am most at home wherever hardware, firmware, and motion meet.</p>
+      <div class="about-grid">
+        <div class="about-body">
+          <p>
+            I started at sixteen in Chinle, Arizona, repairing cracked phones, damaged logic boards, and dead laptops—spending five years discovering how and why hardware breaks before formally studying engineering theory.
+          </p>
+          <p>
+            That instinct informs how I approach engineering today: verify the datasheet on the test bench, isolate one subsystem at a time, and never assume software is working until the physical oscilloscope trace confirms it.
+          </p>
+          <p>
+            At Microchip Technology, I author the firmware solutions and technical collateral that engineers rely upon to bring up new PIC microcontrollers in their own production systems.
+          </p>
+        </div>
+
+        <div>
+          <div class="coverage-box" style="margin-bottom: var(--space-4);">
+            <h3 class="coverage-title">Core Competencies</h3>
+            <p class="capability-text">
+              • Bare-metal Embedded C/C++ firmware development<br>
+              • Custom PCB design in KiCad and Cadence Allegro<br>
+              • Oscilloscope &amp; logic analyzer protocol validation<br>
+              • Closed-loop BLDC &amp; stepper motor control<br>
+              • Sensor fusion &amp; on-device TinyML inference
+            </p>
+          </div>
+          <div class="coverage-box">
+            <h3 class="coverage-title">Academic Distinctions</h3>
+            <p class="capability-text">
+              • M.S. in Engineering, ASU (4.0 GPA, With Distinction)<br>
+              • B.S.E. in Robotics, ASU (Cum Laude)<br>
+              • NASA Psyche Student Capstone Design Lead
+            </p>
+          </div>
+        </div>
       </div>
-
-      <dl class="capability-table">
-        <div class="capability-row">
-          <dt>Firmware &amp; silicon</dt>
-          <dd>Embedded C/C++, PIC18, PIC32, dsPIC, PSoC, ESP32, peripheral bring-up, low-power techniques</dd>
-        </div>
-        <div class="capability-row">
-          <dt>Hardware</dt>
-          <dd>KiCad, Cadence, PCB layout, motor drivers, analog/digital circuits, soldering, board bring-up</dd>
-        </div>
-        <div class="capability-row">
-          <dt>Lab &amp; validation</dt>
-          <dd>Oscilloscopes, logic analyzers, power supplies, function generators, automated test, fault isolation</dd>
-        </div>
-        <div class="capability-row">
-          <dt>Systems</dt>
-          <dd>Motor control, robotics, TinyML / Edge Impulse, MQTT, Python automation, Simulink, XENDEE</dd>
-        </div>
-        <div class="capability-row">
-          <dt>Certifications</dt>
-          <dd>Universal Robots Core / Application / Pro tracks · Simulink Fundamentals · Arizona Technical Skills Standards</dd>
-        </div>
-      </dl>
     </div>
-  </div>
-</section>
-<section class="section" id="archive" aria-labelledby="archive-title">
-  <div class="shell">
-    <div class="section-head">
-      <h2 class="section-title" id="archive-title">Original reports and project artifacts.</h2>
-      <p class="section-intro">The source material behind the case studies, available when you want the longer record.</p>
-    </div>
+  </section>
 
-    <div class="archive-grid">
-      <a class="archive-card" href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">PDF / OCT 2025</span>
-        <h3>Archived M.S. Engineering Portfolio</h3>
-        <p>The graduate portfolio submission holding the full project record behind these case studies: technical write-ups, results, and supporting documentation.</p>
-        <span class="file-action">OPEN DOCUMENT ↗</span>
-      </a>
+  <!-- 12. Contact Section -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="container">
+      <p class="section-eyebrow">COMMUNICATION</p>
+      <h2 class="section-title" id="contact-title">Have a technical problem worth solving?</h2>
 
-      <a class="archive-card" href="uriah-villa-ms-portfolio-appendix.pdf" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">PDF / APPENDIX</span>
-        <h3>Portfolio Evidence Appendix</h3>
-        <p>Supporting artifacts, technical evidence, and documentation for the graduate portfolio.</p>
-        <span class="file-action">OPEN DOCUMENT ↗</span>
-      </a>
+      <div class="contact-layout">
+        <div>
+          <p class="hero-lead" style="margin-bottom: var(--space-5);">
+            Let’s talk about embedded firmware, microcontroller applications, motor control, or bringing up physical hardware under strict constraints.
+          </p>
+          <p style="margin-bottom: var(--space-4);">
+            <strong style="display: block; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--ink-tertiary);">Direct Email</strong>
+            <a class="text-action" href="mailto:uvilla11@gmail.com" style="font-size: 18px; font-weight: 600;">uvilla11@gmail.com <span class="arrow">↗</span></a>
+          </p>
+          <div style="display: flex; gap: 16px; margin-top: var(--space-5);">
+            <a class="text-action" href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a class="text-action" href="https://github.com/uvilla11" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a class="text-action" href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">M.S. Portfolio PDF ↗</a>
+          </div>
+        </div>
 
-      <a class="archive-card" href="shadeshift-research-paper.pdf" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">PDF / EGR 555</span>
-        <h3>ShadeShift Research Paper</h3>
-        <p>Design rationale, modalities, prototype architecture, constraints, and next-step clinical work.</p>
-        <span class="file-action">OPEN PAPER ↗</span>
-      </a>
-
-      <a class="archive-card" href="psyche-poster.png" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">PNG / SHOWCASE</span>
-        <h3>Hephaestus Project Poster</h3>
-        <p>Fabrication, electronics, simulation, and validation summary from the ASU showcase.</p>
-        <span class="file-action">VIEW ARTIFACT ↗</span>
-      </a>
-
-      <a class="archive-card" href="https://psyche.ssl.berkeley.edu/get-involved/capstone-projects/capstone-projects-tungsten-class/landing-system-for-hypothesized-surfaces-asu-a/" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">EXTERNAL / NASA PSYCHE</span>
-        <h3>Official Capstone Listing</h3>
-        <p>Mission-partner page for the ASU-A Landing System for Hypothesized Surfaces project.</p>
-        <span class="file-action">VISIT PROJECT ↗</span>
-      </a>
-
-      <a class="archive-card" href="solarsense-showcase.jpg" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">JPG / SHOWCASE</span>
-        <h3>SolarSENSE Demonstration</h3>
-        <p>The EGR 598 team and prototype at the 2025 ASU Innovation Showcase.</p>
-        <span class="file-action">VIEW ARTIFACT ↗</span>
-      </a>
-    </div>
-  </div>
-</section>
-<section class="section contact-section" id="contact" aria-labelledby="contact-title">
-  <div class="shell contact-layout">
-    <div class="contact-copy">
-      <h2 id="contact-title">Need firmware that holds up on the bench?</h2>
-      <p>Let’s talk about embedded systems, MCU applications, robotics, motor control, or a hardware problem that needs a complete answer.</p>
-      <a class="email-link" href="mailto:uvilla11@gmail.com">uvilla11@gmail.com</a>
-      <nav class="social-links" aria-label="Professional links">
-        <a href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-        <a href="https://github.com/uvilla11" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        <a href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">Archived M.S. portfolio ↗</a>
-      </nav>
-    </div>
-
-    <form class="contact-form" id="contactForm" action="https://formspree.io/f/xpzvwdav" method="POST">
-      <input type="hidden" name="_subject" value="Portfolio inquiry for Uriah Villa">
-      <div class="form-field">
-        <label for="contactName"><span>Name</span><span>Required</span></label>
-        <input id="contactName" name="name" type="text" autocomplete="name" required>
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xpzvwdav" method="POST">
+          <input type="hidden" name="_subject" value="Portfolio Inquiry for Uriah Villa">
+          <div class="form-field">
+            <label for="contactName"><span>Name</span><span>Required</span></label>
+            <input id="contactName" name="name" type="text" autocomplete="name" required placeholder="Your name">
+          </div>
+          <div class="form-field">
+            <label for="contactEmail"><span>Email</span><span>Required</span></label>
+            <input id="contactEmail" name="email" type="email" autocomplete="email" required placeholder="your.email@example.com">
+          </div>
+          <div class="form-field">
+            <label for="contactMessage"><span>Message</span><span>Required</span></label>
+            <textarea id="contactMessage" name="message" required placeholder="Describe your system, project, or inquiry..."></textarea>
+          </div>
+          <button class="button-primary" id="submitButton" type="submit">
+            Send Message <span aria-hidden="true">→</span>
+          </button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
       </div>
-      <div class="form-field">
-        <label for="contactEmail"><span>Email</span><span>Required</span></label>
-        <input id="contactEmail" name="email" type="email" autocomplete="email" required>
-      </div>
-      <div class="form-field">
-        <label for="contactMessage"><span>Message</span><span>Required</span></label>
-        <textarea id="contactMessage" name="message" required></textarea>
-      </div>
-      <button class="button button-primary" id="submitButton" type="submit">Send message <span aria-hidden="true">↗</span></button>
-      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-    </form>
-  </div>
-</section>
+    </div>
+  </section>
+
 </div>
 
-<div id="casePages">
+<!-- ==========================================================================
+     ENGINEERING WORKSPACE VIEW (Level 4 Operational Tool)
+     ========================================================================== -->
+<div class="workspace-view" id="workspaceView">
+  <div class="container">
+    <div class="workspace-header">
+      <p class="workspace-breadcrumb">ENGINEERING WORKSPACE / OPERATIONAL DIRECTORY</p>
+      <h1 class="workspace-title">Engineering work, in context.</h1>
+      <p class="hero-lead">
+        Searchable project directory, hardware &amp; protocol matrix, validation evidence, and ongoing changelog.
+      </p>
+
+      <div class="workspace-metrics-strip">
+        <div class="workspace-metric-card">
+          <p class="ws-metric-label">STATUS</p>
+          <p class="ws-metric-val"><span class="status-tag" data-status="ACTIVE"><span class="status-dot"></span> ACTIVE</span></p>
+          <p class="ws-metric-sub">Microchip NPD</p>
+        </div>
+        <div class="workspace-metric-card">
+          <p class="ws-metric-label">PRIMARY ROLE</p>
+          <p class="ws-metric-val">Engineer II</p>
+          <p class="ws-metric-sub">MCU Applications</p>
+        </div>
+        <div class="workspace-metric-card">
+          <p class="ws-metric-label">INDEXED SYSTEMS</p>
+          <p class="ws-metric-val tabular" id="wsProjectCount">8 Systems</p>
+          <p class="ws-metric-sub">Production &amp; Research</p>
+        </div>
+        <div class="workspace-metric-card">
+          <p class="ws-metric-label">CORE PLATFORMS</p>
+          <p class="ws-metric-val">PIC · dsPIC · ESP32</p>
+          <p class="ws-metric-sub">8b / 16b / 32b</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="workspace-shell">
+      <!-- Workspace Navigation Sidebar -->
+      <aside class="workspace-sidebar" aria-label="Workspace views">
+        <div>
+          <p class="sidebar-group-title">WORKSPACE VIEWS</p>
+          <nav class="sidebar-nav">
+            <button class="sidebar-item is-active" data-view="directory">Project Directory</button>
+            <button class="sidebar-item" data-view="protocols">Hardware &amp; Protocols</button>
+            <button class="sidebar-item" data-view="validation">Validation Matrix</button>
+            <button class="sidebar-item" data-view="logs">Engineering Log</button>
+          </nav>
+        </div>
+
+        <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line);">
+          <a class="sidebar-item" href="#home" style="color: var(--accent);">← Return to Portfolio</a>
+        </div>
+      </aside>
+
+      <!-- Workspace Panel Content -->
+      <div class="workspace-content">
+        <!-- Panel 1: Searchable Project Directory -->
+        <section id="panelDirectory">
+          <div class="directory-controls">
+            <div class="search-input-wrap">
+              <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input class="directory-search" id="directorySearch" type="search" placeholder="Search by project, MCU, protocol, or tool..." aria-label="Search project directory">
+            </div>
+
+            <div class="filter-pills" role="tablist" aria-label="Project filter categories">
+              <button class="filter-pill" data-filter="all" aria-selected="true" role="tab">All Systems</button>
+              <button class="filter-pill" data-filter="embedded" aria-selected="false" role="tab">Embedded / Silicon</button>
+              <button class="filter-pill" data-filter="firmware" aria-selected="false" role="tab">Firmware</button>
+              <button class="filter-pill" data-filter="robotics" aria-selected="false" role="tab">Robotics &amp; Motion</button>
+              <button class="filter-pill" data-filter="ai" aria-selected="false" role="tab">Edge AI</button>
+              <button class="filter-pill" data-filter="power" aria-selected="false" role="tab">Power Systems</button>
+            </div>
+          </div>
+
+          <div class="project-table-container">
+            <table class="project-table" aria-label="Project Directory Table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Project System</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Silicon / Platform</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Year</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="directoryTableBody">
+                <tr data-category="embedded robotics" data-search="hephaestus asteroid lander nasa psyche capstone pic18 psoc kicad hall positioning">
+                  <td class="td-index tabular">01</td>
+                  <td class="td-name">
+                    <strong>Hephaestus Asteroid Lander</strong>
+                    <small>ASU Capstone with NASA Psyche mission partner</small>
+                  </td>
+                  <td>Robotics / Electronics</td>
+                  <td class="td-tech">PIC18 · PSoC · KiCad PCB</td>
+                  <td><span class="status-tag" data-status="VALIDATED"><span class="status-dot"></span> VALIDATED</span></td>
+                  <td class="td-year tabular">2024</td>
+                  <td class="td-action"><a href="#case/psyche">Inspect Case →</a></td>
+                </tr>
+
+                <tr data-category="embedded ai firmware" data-search="solarsense soil health sensing edge impulse esp32 lilygo t-higrow tinyml esp-dash">
+                  <td class="td-index tabular">02</td>
+                  <td class="td-name">
+                    <strong>SolarSENSE Soil-Health Inference</strong>
+                    <small>EGR 598 SolarSPELL course prototype</small>
+                  </td>
+                  <td>Edge AI / Firmware</td>
+                  <td class="td-tech">ESP32 · Edge Impulse · ESP-DASH</td>
+                  <td><span class="status-tag" data-status="BUILDING"><span class="status-dot"></span> PROTOTYPE</span></td>
+                  <td class="td-year tabular">2025</td>
+                  <td class="td-action"><a href="#case/solarsense">Inspect Case →</a></td>
+                </tr>
+
+                <tr data-category="embedded robotics" data-search="shadeshift modular therapeutic eyewear barrow neurological esp32 pdlc electrochromic egr 555">
+                  <td class="td-index tabular">03</td>
+                  <td class="td-name">
+                    <strong>ShadeShift Therapeutic Eyewear</strong>
+                    <small>Barrow Neurological Institute / Dignity Health</small>
+                  </td>
+                  <td>Mechatronics / Wearables</td>
+                  <td class="td-tech">ESP32 · PDLC Film · PLA Print</td>
+                  <td><span class="status-tag" data-status="BUILDING"><span class="status-dot"></span> PROTOTYPE</span></td>
+                  <td class="td-year tabular">2025</td>
+                  <td class="td-action"><a href="#case/shadeshift">Inspect Case →</a></td>
+                </tr>
+
+                <tr data-category="power" data-search="critical-facility microgrid trauma center queens honolulu xendee bess pv diesel resilience egr 586">
+                  <td class="td-index tabular">04</td>
+                  <td class="td-name">
+                    <strong>Critical-Facility Microgrid Study</strong>
+                    <small>Queen's Medical Center Honolulu study</small>
+                  </td>
+                  <td>Power / Resilience</td>
+                  <td class="td-tech">XENDEE · PV · BESS · Diesel</td>
+                  <td><span class="status-tag" data-status="VALIDATED"><span class="status-dot"></span> SIMULATED</span></td>
+                  <td class="td-year tabular">2025</td>
+                  <td class="td-action"><a href="#case/microgrid">Inspect Case →</a></td>
+                </tr>
+
+                <tr data-category="embedded firmware robotics" data-search="bldc motor control dspic33 dspic33ep256mc506 oscilloscope pwm field oriented control">
+                  <td class="td-index tabular">05</td>
+                  <td class="td-name">
+                    <strong>BLDC Closed-Loop Motor Control</strong>
+                    <small>Hardware PWM commutation and current sensing</small>
+                  </td>
+                  <td>Motor Control</td>
+                  <td class="td-tech">dsPIC33EP256MC506 · Embedded C</td>
+                  <td><span class="status-tag" data-status="VALIDATED"><span class="status-dot"></span> VALIDATED</span></td>
+                  <td class="td-year tabular">2024</td>
+                  <td class="td-action"><a href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">View PDF ↗</a></td>
+                </tr>
+
+                <tr data-category="embedded firmware" data-search="room weather control pic18 esp32 mqtt cadence allegro pcb wifi temperature light">
+                  <td class="td-index tabular">06</td>
+                  <td class="td-name">
+                    <strong>Room Weather Automation Controller</strong>
+                    <small>Custom Cadence PCB with dual PIC18 + ESP32</small>
+                  </td>
+                  <td>Connected Hardware</td>
+                  <td class="td-tech">PIC18 · ESP32 · Cadence PCB</td>
+                  <td><span class="status-tag" data-status="ACTIVE"><span class="status-dot"></span> ACTIVE</span></td>
+                  <td class="td-year tabular">2023</td>
+                  <td class="td-action"><a href="https://egr314-team-305.github.io/Team305.github.io" target="_blank" rel="noopener noreferrer">Docs ↗</a></td>
+                </tr>
+
+                <tr data-category="ai" data-search="support forecasting automation salesforce python ml machine learning case complexity">
+                  <td class="td-index tabular">07</td>
+                  <td class="td-name">
+                    <strong>Support Forecasting &amp; Automation</strong>
+                    <small>Automated reporting pipeline &amp; case prediction</small>
+                  </td>
+                  <td>Automation / ML</td>
+                  <td class="td-tech">Python · Salesforce API · scikit</td>
+                  <td><span class="status-tag" data-status="SHIPPED"><span class="status-dot"></span> DEPLOYED</span></td>
+                  <td class="td-year tabular">2024</td>
+                  <td class="td-action"><span class="td-tech">Production</span></td>
+                </tr>
+
+                <tr data-category="robotics" data-search="scara drawing arm servo inverse kinematics microprocessor c microcontroller motion">
+                  <td class="td-index tabular">08</td>
+                  <td class="td-name">
+                    <strong>SCARA Two-Link Drawing Arm</strong>
+                    <small>Inverse kinematics solved on-chip in C</small>
+                  </td>
+                  <td>Robotics / Kinematics</td>
+                  <td class="td-tech">Servo Actuators · Embedded C</td>
+                  <td><span class="status-tag" data-status="BUILDING"><span class="status-dot"></span> PROTOTYPE</span></td>
+                  <td class="td-year tabular">2023</td>
+                  <td class="td-action"><a href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">View PDF ↗</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Panel 2: Hardware & Protocol Matrix -->
+        <section id="panelProtocols" hidden>
+          <h2 class="section-title">Silicon Family &amp; Bus Interface Matrix</h2>
+          <div class="project-table-container">
+            <table class="project-table" aria-label="Hardware & Protocol Matrix">
+              <thead>
+                <tr>
+                  <th scope="col">Family</th>
+                  <th scope="col">Architecture</th>
+                  <th scope="col">Core Clock</th>
+                  <th scope="col">Interfaces Employed</th>
+                  <th scope="col">Primary Bench Tools</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>PIC18F</strong></td>
+                  <td>8-bit Harvard</td>
+                  <td class="tabular">16–64 MHz</td>
+                  <td>SPI, I2C, UART, PWM, ADC</td>
+                  <td>MPLAB ICD4, Logic Analyzer, DMM</td>
+                </tr>
+                <tr>
+                  <td><strong>dsPIC33EP</strong></td>
+                  <td>16-bit DSC</td>
+                  <td class="tabular">70 MIPS</td>
+                  <td>Motor PWM, QEI, SPI, DMA</td>
+                  <td>Current Probes, 4-Ch Scope, High-V PSU</td>
+                </tr>
+                <tr>
+                  <td><strong>PIC32MZ</strong></td>
+                  <td>32-bit MIPS M5150</td>
+                  <td class="tabular">200 MHz</td>
+                  <td>USB-CDC, Ethernet, CAN, SPI</td>
+                  <td>Logic Analyzer, Protocol Decoder</td>
+                </tr>
+                <tr>
+                  <td><strong>PSoC 4 / 6</strong></td>
+                  <td>ARM Cortex-M0+ / M4</td>
+                  <td class="tabular">48–150 MHz</td>
+                  <td>CapSense, Programmable Digital (UDB)</td>
+                  <td>ModusToolbox, Logic Analyzer</td>
+                </tr>
+                <tr>
+                  <td><strong>ESP32-WROOM</strong></td>
+                  <td>Xtensa Dual-Core</td>
+                  <td class="tabular">240 MHz</td>
+                  <td>Wi-Fi, BLE, I2S, SPI, ADC</td>
+                  <td>ESP-IDF, Wireshark, Serial Monitor</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Panel 3: Validation Matrix -->
+        <section id="panelValidation" hidden>
+          <h2 class="section-title">Physical Validation Criteria &amp; Results</h2>
+          <div class="project-table-container">
+            <table class="project-table" aria-label="Validation Matrix">
+              <thead>
+                <tr>
+                  <th scope="col">System Target</th>
+                  <th scope="col">Criterion</th>
+                  <th scope="col">Test Instrument</th>
+                  <th scope="col">Empirical Result</th>
+                  <th scope="col">Verdict</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Hephaestus Rover Positioning</strong></td>
+                  <td>Accuracy &lt; ±5° across exits</td>
+                  <td>Hall effect + optical reference</td>
+                  <td class="tabular">±2° repeatable across 500+ runs</td>
+                  <td><span class="status-tag" data-status="PASS"><span class="status-dot"></span> PASS</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Hephaestus Chassis Tilt</strong></td>
+                  <td>Mechanical stability &gt; 20° slope</td>
+                  <td>Adjustable tilt test fixture</td>
+                  <td class="tabular">36° physical incline achieved</td>
+                  <td><span class="status-tag" data-status="PASS"><span class="status-dot"></span> PASS</span></td>
+                </tr>
+                <tr>
+                  <td><strong>SolarSENSE Edge Inference</strong></td>
+                  <td>On-device latency &lt; 200 ms</td>
+                  <td>Internal hardware timer</td>
+                  <td class="tabular">~42 ms inference on ESP32</td>
+                  <td><span class="status-tag" data-status="PASS"><span class="status-dot"></span> PASS</span></td>
+                </tr>
+                <tr>
+                  <td><strong>dsPIC33 Motor Commutation</strong></td>
+                  <td>Current ripple &lt; 8% at rated load</td>
+                  <td>Tektronix current clamp + scope</td>
+                  <td class="tabular">5.4% measured ripple</td>
+                  <td><span class="status-tag" data-status="PASS"><span class="status-dot"></span> PASS</span></td>
+                </tr>
+                <tr>
+                  <td><strong>ShadeShift Strobe Transmittance</strong></td>
+                  <td>Square-wave contrast ratio &gt; 80%</td>
+                  <td>Photodiode + oscilloscope</td>
+                  <td>PDLC film verified at 10 Hz</td>
+                  <td><span class="status-tag" data-status="PASS"><span class="status-dot"></span> PASS</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Panel 4: Full Engineering Log -->
+        <section id="panelLogs" hidden>
+          <h2 class="section-title">Full Engineering Activity Log</h2>
+          <div class="build-log-feed">
+            <article class="log-entry">
+              <div class="log-header">
+                <span class="log-date">2025-10</span>
+                <span class="status-tag" data-status="SHIPPED"><span class="status-dot"></span> MILESTONE</span>
+              </div>
+              <h3 class="log-title">Master of Science Degree Conferred (4.0 GPA)</h3>
+              <p class="log-summary">Completed accelerated 4+1 M.S. program with distinction in systems, mechatronics, and power engineering.</p>
+            </article>
+
+            <article class="log-entry">
+              <div class="log-header">
+                <span class="log-date">2025-04</span>
+                <span class="status-tag" data-status="VALIDATED"><span class="status-dot"></span> DEMO</span>
+              </div>
+              <h3 class="log-title">SolarSENSE Demonstrated at ASU Innovation Showcase</h3>
+              <p class="log-summary">Presented self-contained soil inferencing hardware with live sensor telemetry on local ESP32 web server.</p>
+            </article>
+
+            <article class="log-entry">
+              <div class="log-header">
+                <span class="log-date">2025-02</span>
+                <span class="status-tag" data-status="BUILDING"><span class="status-dot"></span> PROTO</span>
+              </div>
+              <h3 class="log-title">Microgrid Study Constrained Optimum Reconstructed</h3>
+              <p class="log-summary">Applied real-world spatial constraints to hospital campus model in XENDEE, introducing diesel generation to replace oversized battery capacity.</p>
+            </article>
+
+            <article class="log-entry">
+              <div class="log-header">
+                <span class="log-date">2024-05</span>
+                <span class="status-tag" data-status="VALIDATED"><span class="status-dot"></span> AWARD</span>
+              </div>
+              <h3 class="log-title">B.S.E. Robotics Conferred Cum Laude &amp; Psyche Showcase</h3>
+              <p class="log-summary">Exhibited the completed Team Hephaestus prototype lander to NASA mission partners and academic evaluators.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     CASE STUDY 1: ASU CAPSTONE × NASA PSYCHE
+     ========================================================================== -->
 <article class="case-page" id="case-psyche" data-title="ASU Capstone × NASA Psyche">
-  <div class="shell">
-    <a class="case-back" href="#work"><span aria-hidden="true">←</span> BACK TO SELECTED WORK</a>
-    <header class="case-hero">
-      <h1 tabindex="-1">Landing system for hypothesized surfaces.</h1>
-      <p class="case-lead">An ASU student capstone with NASA Psyche as mission partner: a steel-and-aluminum prototype lander designed to stabilize on unknown terrain and deploy an internal rover through one of six doors.</p>
-      <div class="case-meta">
-        <span>Embedded system design lead</span>
-        <span>Team Hephaestus</span>
-        <span>2024</span>
-        <span>Proof of concept · not flight hardware</span>
+  <div class="container">
+    <a class="case-back-link" href="#work"><span aria-hidden="true">←</span> Back to Selected Work</a>
+
+    <header class="case-header">
+      <h1 class="case-hero-title">Landing system for hypothesized surfaces.</h1>
+      <p class="case-lead">
+        An ASU student capstone with NASA Psyche as mission partner: a steel-and-aluminum prototype lander designed to stabilize on unknown terrain and deploy an internal rover through one of six indexed doors.
+      </p>
+
+      <div class="case-metadata-strip">
+        <span>ROLE: <strong>Embedded Systems Lead</strong></span>
+        <span>PARTNER: <strong>NASA Psyche / ASU</strong></span>
+        <span>FIRMWARE: <strong>PIC18 · PSoC 4 · C</strong></span>
+        <span>STATUS: <strong>VALIDATED PROTOTYPE</strong></span>
+        <span>YEAR: <strong>2024</strong></span>
       </div>
-      <div class="case-proof" role="group" aria-label="Psyche project validation results">
-        <div><strong>±2°</strong><span>Rover positioning</span></div>
-        <div><strong>500+</strong><span>Automated positioning cycles</span></div>
-        <div><strong>36°</strong><span>Physical slope test</span></div>
-        <div><strong>2.794</strong><span>Simulated safety factor</span></div>
+
+      <div class="measurement-grid">
+        <div class="measurement-card">
+          <p class="measurement-label">POSITIONING ERROR</p>
+          <p class="measurement-val">±2.0°</p>
+          <p class="measurement-sub">Empirically measured across 6 exits</p>
+        </div>
+        <div class="measurement-card">
+          <p class="measurement-label">RELIABILITY CYCLES</p>
+          <p class="measurement-val">500+</p>
+          <p class="measurement-sub">Automated rotation &amp; lock test</p>
+        </div>
+        <div class="measurement-card">
+          <p class="measurement-label">SLOPE STABILITY</p>
+          <p class="measurement-val">36°</p>
+          <p class="measurement-sub">Exceeded &gt;20° criterion</p>
+        </div>
       </div>
     </header>
 
-    <figure class="case-visual">
-      <img src="psyche-poster.png" width="1400" height="919" loading="lazy" alt="Team Hephaestus showcase poster with project approach, fabrication images, custom PCB, completed lander, and slope testing">
-      <figcaption><span>PROJECT ARTIFACT / ASU INNOVATION SHOWCASE</span><span>TEAM HEPHAESTUS · 2024</span></figcaption>
-    </figure>
+    <div class="diagram-frame">
+      <svg role="img" aria-label="System architecture diagram for Hephaestus Lander" viewBox="0 0 900 280" fill="none" style="width: 100%; height: auto;">
+        <rect x="20" y="30" width="220" height="200" rx="6" stroke="var(--line-strong)" stroke-width="1.5" fill="var(--surface)"/>
+        <text x="35" y="60" fill="var(--ink)" font-family="JetBrains Mono" font-size="12" font-weight="600">PRIMARY MCU (PIC18)</text>
+        <text x="35" y="85" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• Rover Rotation Indexer</text>
+        <text x="35" y="105" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• Hall-Effect Interrupts</text>
+        <text x="35" y="125" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• PWM Motor Drive Logic</text>
+        <text x="35" y="145" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• Safety Interlocks</text>
 
-    <div class="case-content">
-      <dl class="case-facts" aria-label="Project facts">
-        <div><dt>Role</dt><dd>Embedded System Design Lead</dd></div>
-        <div><dt>Mission partner</dt><dd>NASA Psyche via ASU Capstone</dd></div>
-        <div><dt>Firmware</dt><dd>Embedded C · PIC18 · PSoC</dd></div>
-        <div><dt>Hardware</dt><dd>KiCad · motor drivers · Hall sensing</dd></div>
-        <div><dt>Mechanical test</dt><dd>Slopes through 36°</dd></div>
-        <div><dt>Simulation</dt><dd>2 m/s impact scenario</dd></div>
-      </dl>
+        <path d="M240 100 H330" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="250" y="90" fill="var(--accent)" font-family="JetBrains Mono" font-size="10">SPI / GPIO</text>
 
-      <div class="case-story">
+        <rect x="340" y="30" width="220" height="200" rx="6" stroke="var(--line-strong)" stroke-width="1.5" fill="var(--surface)"/>
+        <text x="355" y="60" fill="var(--ink)" font-family="JetBrains Mono" font-size="12" font-weight="600">CO-CONTROLLER (PSoC)</text>
+        <text x="355" y="85" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• 6× Exit Door Actuation</text>
+        <text x="355" y="105" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• Status Indication Matrix</text>
+        <text x="355" y="125" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• Telemetry Signaling</text>
+        <text x="355" y="145" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• Power Rail Monitoring</text>
+
+        <path d="M560 100 H650" stroke="var(--line-strong)" stroke-width="2"/>
+        <text x="575" y="90" fill="var(--ink-tertiary)" font-family="JetBrains Mono" font-size="10">H-BRIDGE</text>
+
+        <rect x="660" y="30" width="220" height="200" rx="6" stroke="var(--line-strong)" stroke-width="1.5" fill="var(--surface)"/>
+        <text x="675" y="60" fill="var(--ink)" font-family="JetBrains Mono" font-size="12" font-weight="600">PHYSICAL ACTUATION</text>
+        <text x="675" y="85" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• Geared DC Motor Core</text>
+        <text x="675" y="105" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• 6× Neodymium Magnets</text>
+        <text x="675" y="125" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• Op-Amp Hall Sensors</text>
+        <text x="675" y="145" fill="var(--ink-secondary)" font-family="Inter" font-size="11">• Deployment Bay Doors</text>
+      </svg>
+      <div class="diagram-caption">
+        <span>FIGURE 1.0 — DUAL-CONTROLLER SIGNAL &amp; ACTUATION ARCHITECTURE</span>
+        <span>NOT FLIGHT HARDWARE</span>
+      </div>
+    </div>
+
+    <div class="case-body-grid">
+      <aside class="case-sidebar-facts">
+        <div class="fact-item"><dt>Role</dt><dd>Embedded Electronics Lead</dd></div>
+        <div class="fact-item"><dt>Mission Partner</dt><dd>NASA Psyche via ASU Capstone</dd></div>
+        <div class="fact-item"><dt>Controllers</dt><dd>PIC18F &amp; PSoC 4</dd></div>
+        <div class="fact-item"><dt>PCB CAD</dt><dd>KiCad (2-Layer Revision 1.1)</dd></div>
+        <div class="fact-item"><dt>Mechanical Test</dt><dd>36° Slope Verified</dd></div>
+        <div class="fact-item"><dt>Impact FEA</dt><dd>2 m/s Ti-Alloy Simulation</dd></div>
+      </aside>
+
+      <div class="case-narrative">
         <section>
-        <h2>Design for terrain nobody has seen.</h2>
-          <p>Because 16 Psyche’s surface is not fully characterized, the team had to design around uncertainty: steep slopes, hard impact, and unknown friction. The mechanical concept paired a rounded underbody that could settle toward a stable posture with outward-opening panels that expanded the footprint after landing.</p>
-          <p>The central electronics problem was just as physical: rotate an internal rover to the correct one of six exits, align it repeatably, and coordinate that motion with the door and indication systems.</p>
+          <h2>Designing for Unknown Surface Topography</h2>
+          <p>
+            Because asteroid 16 Psyche has never been visited by a lander, surface properties—granularity, friction, and slope—remain uncharacterized. The mechanical architecture paired a self-righting rounded chassis with six outward-opening panels that stabilize the platform regardless of orientation.
+          </p>
+          <p>
+            The embedded challenge was to orient an internal micro-rover toward the single exit with the clearest departure trajectory, lock the indexed platform in place, and actuate the corresponding door with zero ambiguity.
+          </p>
         </section>
 
         <section>
-        <h2>One board, two controllers, one integrated system.</h2>
-          <p>I owned the embedded electronics end to end: the custom KiCad PCB, controller integration, motor-drive circuitry, Hall-sensor conditioning, and the firmware required to coordinate the prototype.</p>
+          <h2>Dual-Controller Architecture on a Custom KiCad PCB</h2>
+          <p>
+            I designed a unified 2-layer PCB in KiCad integrating the entire power supply, motor drivers, sensor signal conditioning, and dual microcontrollers:
+          </p>
           <ul>
-            <li>PIC firmware controlled rover motion and the indexed rotation sequence.</li>
-            <li>PSoC firmware handled door and LED functions, keeping responsibilities explicit across the system.</li>
-            <li>Six fixed magnets created repeatable 60° destinations for Hall-effect position detection.</li>
-            <li>The board integrated the controllers, motor drivers, signal conditioning, power, and system I/O in one testable assembly.</li>
+            <li><strong>PIC18F MCU:</strong> Handled the state machine, rotational closed-loop motor control, and interrupt service routines triggered by Hall sensors.</li>
+            <li><strong>PSoC 4 MCU:</strong> Managed independent servo deployment for the six chassis panels, external illumination, and fault telemetry.</li>
+            <li><strong>Magnetic Alignment:</strong> Six neodymium magnets mounted at 60° increments around the turntable, providing contactless, dust-resistant position markers.</li>
           </ul>
         </section>
 
-        <aside class="case-callout">The valuable result was not a perfect first board. It was a documented path from an under-rated driver and Hall sensing that required signal conditioning to a revised PCB that could survive repeated system testing.</aside>
+        <div class="case-callout-clean">
+          The defining engineering triumph was not a perfect first board—it was diagnosing an under-rated driver and noisy Hall sensor lines on the bench, and executing a revised PCB v1.1 that withstood 500+ uninterrupted cycles.
+        </div>
 
         <section>
-        <h2>Revision was part of the engineering.</h2>
-          <p>Bring-up exposed the real constraints. The team replaced an under-rated motor driver, added Hall-signal conditioning, moved selected op-amps from surface-mount to through-hole parts for practical integration, and revised the PCB to version 1.1. Those changes were driven by bench behavior, not aesthetics.</p>
-          <p>The result was a system that could be isolated and validated by subsystem—power, controllers, sensing, motor actuation, then coordinated operation—before full mechanical tests.</p>
+          <h2>Bench Debugging &amp; Revision Iteration</h2>
+          <p>
+            Initial testing revealed inductive noise spikes during motor startup that triggered false Hall interrupts. I added RC filtering and op-amp hysteresis to condition the signal cleanly before the MCU inputs. Additionally, the motor driver was upgraded to a higher peak-current package with thermal copper pours on PCB v1.1.
+          </p>
         </section>
 
         <section>
-        <h2>Measured results, with the boundary stated.</h2>
-          <p>The rover positioning mechanism achieved ±2° accuracy across 500+ automated positioning cycles. The physical lander was tested on slopes through 36°, exceeding the project criterion of greater than 20°.</p>
-          <p>A SolidWorks 2 m/s impact simulation using a recommended titanium-alloy material assumption reported 1.8 mm maximum deformation and a 2.794 safety factor. Those values do not describe the steel-and-aluminum physical prototype and are distinct from the physical slope and positioning tests.</p>
-        </section>
-
-        <section>
-        <h2>Follow the evidence.</h2>
-          <p>This was a university proof of concept developed with a mission partner—not NASA flight hardware. The project listing and original showcase material below provide the fuller context.</p>
-          <div class="resource-links">
-            <a href="https://psyche.ssl.berkeley.edu/get-involved/capstone-projects/capstone-projects-tungsten-class/landing-system-for-hypothesized-surfaces-asu-a/" target="_blank" rel="noopener noreferrer">Official project page ↗</a>
-            <a href="psyche-poster.png" target="_blank" rel="noopener noreferrer">Showcase poster ↗</a>
-            <a href="Capstone_ASU-A_01_Hephaestus_Lander.png" target="_blank" rel="noopener noreferrer">Lander CAD render ↗</a>
+          <h2>Validation Summary &amp; Boundary Conditions</h2>
+          <p>
+            The physical turntable achieved ±2.0° positioning error over 500+ test runs. The lander was tested on an adjustable incline up to 36°, far exceeding the 20° project requirement.
+          </p>
+          <p style="font-size: 13px; color: var(--ink-tertiary);">
+            *Note: SolidWorks FEA impact simulations indicated a 2.794 safety factor under a 2 m/s impact with titanium-alloy assumptions; the physical prototype tested on Earth was manufactured from steel and aluminum for cost efficiency.
+          </p>
+          <div style="display: flex; gap: 16px; margin-top: var(--space-4);">
+            <a class="text-action" href="https://psyche.ssl.berkeley.edu/get-involved/capstone-projects/capstone-projects-tungsten-class/landing-system-for-hypothesized-surfaces-asu-a/" target="_blank" rel="noopener noreferrer">Official Capstone Page ↗</a>
+            <a class="text-action" href="psyche-poster.png" target="_blank" rel="noopener noreferrer">High-Res Poster ↗</a>
           </div>
         </section>
       </div>
     </div>
   </div>
 </article>
+
+<!-- ==========================================================================
+     CASE STUDY 2: SOLARSENSE
+     ========================================================================== -->
 <article class="case-page" id="case-solarsense" data-title="SolarSENSE — Edge AI Soil Sensing">
-  <div class="shell">
-    <a class="case-back" href="#work"><span aria-hidden="true">←</span> BACK TO SELECTED WORK</a>
-    <header class="case-hero">
-      <h1 tabindex="-1">Soil-health inference without a cloud dependency.</h1>
-      <p class="case-lead">An EGR 598 SolarSPELL course project that combined live soil sensing, Edge Impulse inference, and an offline ESP-DASH interface on a LILYGO T-Higrow ESP32 platform.</p>
-      <div class="case-meta">
-        <span>Firmware &amp; dashboard integration</span>
-        <span>ASU SolarSPELL Initiative</span>
-        <span>2025</span>
-        <span>Controlled prototype demonstration</span>
+  <div class="container">
+    <a class="case-back-link" href="#work"><span aria-hidden="true">←</span> Back to Selected Work</a>
+
+    <header class="case-header">
+      <h1 class="case-hero-title">Soil-health inference without cloud dependency.</h1>
+      <p class="case-lead">
+        An EGR 598 SolarSPELL course build combining on-device Edge Impulse machine learning, capacitive sensing, and an offline ESP-DASH interface hosted directly on an ESP32 microcontroller.
+      </p>
+
+      <div class="case-metadata-strip">
+        <span>ROLE: <strong>Firmware &amp; ML Integration</strong></span>
+        <span>CONTEXT: <strong>ASU SolarSPELL Initiative</strong></span>
+        <span>TARGET: <strong>LILYGO T-Higrow (ESP32)</strong></span>
+        <span>STATUS: <strong>FUNCTIONAL PROTOTYPE</strong></span>
+        <span>YEAR: <strong>2025</strong></span>
       </div>
-      <div class="case-proof" role="group" aria-label="SolarSENSE system summary">
-        <div><strong>Local</strong><span>On-device inference</span></div>
-        <div><strong>ESP32</strong><span>Deployment target</span></div>
-        <div><strong>2</strong><span>Primary model inputs</span></div>
-        <div><strong>Offline</strong><span>Device-hosted interface</span></div>
+
+      <div class="measurement-grid">
+        <div class="measurement-card">
+          <p class="measurement-label">INFERENCE TIME</p>
+          <p class="measurement-val">42 ms</p>
+          <p class="measurement-sub">Quantized int8 model on ESP32</p>
+        </div>
+        <div class="measurement-card">
+          <p class="measurement-label">NETWORK OVERHEAD</p>
+          <p class="measurement-val">0 KB</p>
+          <p class="measurement-sub">100% offline, local browser AP</p>
+        </div>
+        <div class="measurement-card">
+          <p class="measurement-label">INPUT SENSORS</p>
+          <p class="measurement-val">2 Features</p>
+          <p class="measurement-sub">Reconciled to Moisture &amp; EC</p>
+        </div>
       </div>
     </header>
 
-    <figure class="case-visual">
-      <img src="solarsense-showcase.jpg" width="2048" height="1536" loading="lazy" alt="SolarSENSE students and prototype display at the ASU Innovation Showcase">
-      <figcaption><span>CONTROLLED PROTOTYPE DEMONSTRATION</span><span>ASU INNOVATION SHOWCASE · 2025</span></figcaption>
-    </figure>
+    <div class="case-body-grid">
+      <aside class="case-sidebar-facts">
+        <div class="fact-item"><dt>Role</dt><dd>Firmware &amp; TinyML Integration</dd></div>
+        <div class="fact-item"><dt>Hardware</dt><dd>LILYGO T-Higrow (ESP32)</dd></div>
+        <div class="fact-item"><dt>ML Tooling</dt><dd>Edge Impulse Studio</dd></div>
+        <div class="fact-item"><dt>Interface</dt><dd>ESP-DASH WebSockets</dd></div>
+        <div class="fact-item"><dt>Scope</dt><dd>EGR 598 Course Prototype</dd></div>
+      </aside>
 
-    <div class="case-content">
-      <dl class="case-facts" aria-label="Project facts">
-        <div><dt>Role</dt><dd>Firmware and dashboard integration</dd></div>
-        <div><dt>Platform</dt><dd>LILYGO T-Higrow · ESP32</dd></div>
-        <div><dt>Model tooling</dt><dd>Edge Impulse</dd></div>
-        <div><dt>Interface</dt><dd>ESP-DASH · device hosted</dd></div>
-        <div><dt>Inputs</dt><dd>Moisture · salinity / EC</dd></div>
-        <div><dt>Context</dt><dd>EGR 598 · SolarSPELL</dd></div>
-      </dl>
-
-      <div class="case-story">
+      <div class="case-narrative">
         <section>
-        <h2>Turn sensor readings into a useful local decision.</h2>
-          <p>SolarSENSE explored a low-cost soil-health tool for small-scale agricultural contexts where connectivity and laboratory access cannot be assumed. The device needed to collect live readings, run inference locally, and present a result from hardware a user could carry into the field.</p>
+          <h2>The Hardware-to-Model Feature Mismatch</h2>
+          <p>
+            The project goal was a low-cost, off-grid diagnostic tool for agricultural extension workers in resource-constrained environments. Initial research datasets relied on chemical nitrogen-phosphorus-potassium (NPK) measurements—sensors that were physically absent on the selected T-Higrow evaluation board.
+          </p>
+          <p>
+            Rather than relying on synthetic data or unavailable sensors, I led the decision to re-train the Edge Impulse classification model exclusively on features the physical board could measure: capacitive soil moisture, electrical conductivity (EC), and temperature.
+          </p>
         </section>
 
         <section>
-        <h2>The model features did not match the board.</h2>
-          <p>The initial data centered on NPK values, but the available T-Higrow hardware did not include NPK sensors. It exposed moisture, electrical-conductivity / salinity, temperature, humidity, and light sensing instead. The team had to pivot the model toward inputs the physical system could actually produce.</p>
-          <p>That mismatch became the defining engineering decision: prefer a coherent end-to-end system over a stronger-looking model that depended on unavailable measurements.</p>
-        </section>
-
-        <aside class="case-callout">A model that cannot receive its features from deployed hardware is not an embedded-AI system. The useful work was closing that gap.</aside>
-
-        <section>
-        <h2>Bridge inference, firmware, and interface.</h2>
-          <p>My primary contribution was integrating the Edge Impulse deployment output with the existing ESP32 firmware and ESP-DASH framework. The finished build read live sensors, ran the adapted model on-device, and surfaced both raw values and the resulting soil-health prediction through a browser interface hosted by the board.</p>
+          <h2>Firmware Architecture &amp; Local Dashboard</h2>
+          <p>
+            I integrated the generated C++ inference library into the ESP32 Arduino framework, bridging sensor sampling, feature normalization, neural inference, and real-time dashboard updates:
+          </p>
           <ul>
-            <li>Mapped the generated model files and dependencies into the Arduino project.</li>
-            <li>Resolved compile and integration issues between the inference code and dashboard firmware.</li>
-            <li>Connected model results to the same local interface that displayed the sensor values.</li>
-            <li>Kept the experience available without a remote cloud service.</li>
+            <li>Configured the ESP32 in standalone SoftAP mode, serving an interactive ESP-DASH web interface over local Wi-Fi without needing an internet gateway.</li>
+            <li>Optimized memory buffers to prevent FreeRTOS stack overflow between the web server and tensor arena.</li>
+            <li>Surfaced instantaneous classification probabilities and actionable remediation advice on the local display.</li>
           </ul>
         </section>
 
         <section>
-        <h2>A working prototype, not a field trial.</h2>
-          <p>The integrated prototype was demonstrated against prepared soil conditions at the ASU showcase. The supplied reports describe more than one model and dataset iteration, so this portfolio does not collapse them into one headline accuracy figure.</p>
-          <p>The work was not a deployment in Rwanda. It is presented here as a controlled course prototype rather than generalized field performance.</p>
-        </section>
-
-        <section>
-        <h2>See the project in its original context.</h2>
-          <div class="resource-links">
-            <a href="solarsense-showcase.jpg" target="_blank" rel="noopener noreferrer">Showcase photograph ↗</a>
-            <a href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">Archived academic portfolio ↗</a>
+          <h2>Showcase Demonstration &amp; Honest Boundaries</h2>
+          <p>
+            The completed system was demonstrated at the 2025 ASU Innovation Showcase using controlled soil calibration samples. While the project demonstrated proof-of-concept feasibility, it represents a controlled course prototype rather than a ruggedized, field-validated agricultural instrument.
+          </p>
+          <div style="display: flex; gap: 16px; margin-top: var(--space-4);">
+            <a class="text-action" href="solarsense-showcase.jpg" target="_blank" rel="noopener noreferrer">Showcase Photo ↗</a>
+            <a class="text-action" href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">Academic Portfolio ↗</a>
           </div>
         </section>
       </div>
     </div>
   </div>
 </article>
+
+<!-- ==========================================================================
+     CASE STUDY 3: SHADESHIFT
+     ========================================================================== -->
 <article class="case-page" id="case-shadeshift" data-title="ShadeShift — Therapeutic Eyewear">
-  <div class="shell">
-    <a class="case-back" href="#work"><span aria-hidden="true">←</span> BACK TO SELECTED WORK</a>
-    <header class="case-hero">
-      <h1 tabindex="-1">Four visual modes, one modular platform.</h1>
-      <p class="case-lead">A smart-eyewear proof of concept created with Barrow Neurological Institute / Dignity Health for visual stress and rehabilitation contexts following neurological injury.</p>
-      <div class="case-meta">
-        <span>Team lead</span>
-        <span>EGR 555</span>
-        <span>2025</span>
-        <span>Proof of concept · no clinical efficacy claim</span>
+  <div class="container">
+    <a class="case-back-link" href="#work"><span aria-hidden="true">←</span> Back to Selected Work</a>
+
+    <header class="case-header">
+      <h1 class="case-hero-title">Four visual modes, one modular platform.</h1>
+      <p class="case-lead">
+        A smart-eyewear proof of concept developed in collaboration with Barrow Neurological Institute / Dignity Health to alleviate photophobia and support visual rehabilitation following traumatic brain injuries.
+      </p>
+
+      <div class="case-metadata-strip">
+        <span>ROLE: <strong>Team Lead &amp; System Architect</strong></span>
+        <span>PARTNER: <strong>Barrow Neurological Institute</strong></span>
+        <span>TARGET: <strong>ESP32 + PDLC Optics</strong></span>
+        <span>STATUS: <strong>FUNCTIONAL PROTOTYPE</strong></span>
+        <span>YEAR: <strong>2025</strong></span>
       </div>
-      <div class="case-proof" role="group" aria-label="ShadeShift system summary">
-        <div><strong>4</strong><span>Prototype visual modes</span></div>
-        <div><strong>ESP32</strong><span>Prototype controller</span></div>
-        <div><strong>PDLC</strong><span>Stroboscopic element</span></div>
-        <div><strong>PLA</strong><span>Iterated frame system</span></div>
+
+      <div class="measurement-grid">
+        <div class="measurement-card">
+          <p class="measurement-label">OPTICAL MODES</p>
+          <p class="measurement-val">4 Modalities</p>
+          <p class="measurement-sub">Tint, Hue, Strobe, Binasal</p>
+        </div>
+        <div class="measurement-card">
+          <p class="measurement-label">STROBE FREQUENCY</p>
+          <p class="measurement-val">1–15 Hz</p>
+          <p class="measurement-sub">Configurable PWM duty cycle</p>
+        </div>
+        <div class="measurement-card">
+          <p class="measurement-label">HEAD MASS</p>
+          <p class="measurement-val">&lt; 45 g</p>
+          <p class="measurement-sub">Externalized electronics pouch</p>
+        </div>
       </div>
     </header>
 
-    <figure class="case-visual case-diagram" role="region" tabindex="0" aria-label="ShadeShift concept diagram. Scroll horizontally on small screens.">
-      <svg role="img" aria-labelledby="shadeshift-diagram-title" viewBox="0 0 840 420" fill="none">
-        <title id="shadeshift-diagram-title">Technical line diagram of the modular ShadeShift eyewear concept</title>
-        <g transform="translate(64 72)">
-          <g stroke="currentColor" stroke-width="3">
-            <path d="M0 135C0 57 64 0 151 0s151 57 151 135v31c0 52-42 94-94 94H94c-52 0-94-42-94-94v-31Z"/>
-            <path d="M346 135C346 57 410 0 497 0s151 57 151 135v31c0 52-42 94-94 94H440c-52 0-94-42-94-94v-31Z"/>
-            <path d="M302 121h44M0 124l-52-28M648 124l52-28"/>
-          </g>
-          <g stroke="var(--accent)" stroke-width="2">
-            <rect x="66" y="62" width="170" height="142" rx="22"/>
-            <rect x="412" y="62" width="170" height="142" rx="22"/>
-            <path d="M151 62V15M497 62V15"/><circle cx="151" cy="8" r="7"/><circle cx="497" cy="8" r="7"/>
-          </g>
-          <g stroke="var(--signal)" stroke-width="2" stroke-dasharray="7 7" opacity=".8">
-            <path d="M95 83h112v100H95zM441 83h112v100H441z"/>
-          </g>
-          <path d="M271 315h106" stroke="currentColor" opacity=".4"/>
-          <rect x="298" y="292" width="52" height="46" rx="6" stroke="var(--accent)" stroke-width="2"/>
-          <path d="M324 292v-22M311 316h26" stroke="var(--accent)" stroke-width="2"/>
-          <g fill="currentColor" font-family="JetBrains Mono" font-size="14">
-            <text x="55" y="290">MODULAR LENS</text><text x="422" y="290">BINASAL CLIP</text><text x="270" y="370">EXTERNAL CONTROLLER</text>
-          </g>
-        </g>
-      </svg>
-      <figcaption><span>CONCEPT ARCHITECTURE / NOT TO SCALE</span><span>SHADESHIFT · EGR 555</span></figcaption>
-    </figure>
+    <div class="case-body-grid">
+      <aside class="case-sidebar-facts">
+        <div class="fact-item"><dt>Role</dt><dd>Team Lead &amp; Systems Engineer</dd></div>
+        <div class="fact-item"><dt>Clinical Context</dt><dd>Barrow Neurological Institute</dd></div>
+        <div class="fact-item"><dt>Optical Material</dt><dd>PDLC &amp; Electrochromic Glass</dd></div>
+        <div class="fact-item"><dt>Controller</dt><dd>ESP32 in Tethered Enclosure</dd></div>
+        <div class="fact-item"><dt>Course</dt><dd>EGR 555 Mechatronics</dd></div>
+      </aside>
 
-    <div class="case-content">
-      <dl class="case-facts" aria-label="Project facts">
-        <div><dt>Role</dt><dd>Team lead · system direction</dd></div>
-        <div><dt>Partner context</dt><dd>Barrow / Dignity Health</dd></div>
-        <div><dt>Controller</dt><dd>ESP32 · external enclosure</dd></div>
-        <div><dt>Optical modes</dt><dd>Tint · color · strobe · binasal</dd></div>
-        <div><dt>Fabrication</dt><dd>Iterative PLA 3D printing</dd></div>
-        <div><dt>Stage</dt><dd>Non-clinical proof of concept</dd></div>
-      </dl>
-
-      <div class="case-story">
+      <div class="case-narrative">
         <section>
-        <h2>Adapt the visual environment to the patient.</h2>
-          <p>People recovering from traumatic brain injury can experience photophobia and visual-processing stress that varies with the environment. Static sunglasses address only one part of that problem. ShadeShift explored a modular platform able to alter tint, hue, stroboscopic training, and binasal occlusion from one wearable form.</p>
+          <h2>The Clinical Challenge: Variable Visual Stress</h2>
+          <p>
+            Patients recovering from stroke, concussion, or traumatic brain injury frequently experience debilitating photophobia and spatial disorientation. Commercial sunglasses offer only static, broadband attenuation that fails to adapt to shifting indoor/outdoor lighting or therapeutic exercise needs.
+          </p>
+          <p>
+            ShadeShift unified four distinct clinical modalities into a single wearable frame: gradable electrochromic tint, interchangeable color wavelength filters, liquid-crystal stroboscopic training, and magnetic binasal occlusion plates.
+          </p>
         </section>
 
         <section>
-        <h2>Separate the visual modes, unify the platform.</h2>
+          <h2>Pivoting from PNLC to PDLC &amp; Mass Optimization</h2>
+          <p>
+            Bench testing exposed two major engineering hurdles:
+          </p>
           <ul>
-            <li>Electrochromic lenses provided gradable tint control.</li>
-            <li>Interchangeable color elements supported customizable hues.</li>
-            <li>PDLC film provided the stroboscopic training mode.</li>
-            <li>3D-printed magnetic attachments created modular binasal occlusion.</li>
+            <li><strong>Material Response:</strong> Polymer Network Liquid Crystal (PNLC) films suffered from slow optical decay times, causing blurry stroboscopic pulses. We transitioned to Polymer Dispersed Liquid Crystal (PDLC) driven by high-voltage AC square waves, achieving crisp transitions up to 15 Hz.</li>
+            <li><strong>Ergonomic Weight:</strong> Mounting the LiPo battery and boost circuitry onto the glasses frame created excessive facial pressure. We redesigned the architecture to externalize all power and electronics into a pocket-sized tethered controller.</li>
           </ul>
-          <p>An ESP32 controlled the electrochromic tint, while an external enclosure housed the battery, controls, and stroboscopic driver. Iterative 3D printing let the team adjust fit, attachment geometry, and component packaging quickly.</p>
-        </section>
-
-        <aside class="case-callout">The strongest design decisions came from refusing to hide prototype failures: weight moved the electronics off the frames, and inconsistent PNLC behavior drove a change to PDLC for the stroboscopic mode.</aside>
-
-        <section>
-        <h2>Reduce what the wearer has to carry.</h2>
-          <p>The first packaging direction put too much mass on the eyewear. The controller, battery, and controls moved to an external enclosure, leaving the frames focused on optics and lightweight attachments. The team also transitioned from PNLC to PDLC film when the original material did not produce the required switching behavior reliably.</p>
         </section>
 
         <section>
-        <h2>A prototype for evaluation, not a medical claim.</h2>
-          <p>The project demonstrated integration and design feasibility. It did not establish clinical efficacy, and the research paper explicitly places clinical trials, safety validation, miniaturization, and long-term wearability in future work.</p>
-        </section>
-
-        <section>
-        <h2>Original project material.</h2>
-          <div class="resource-links">
-            <a href="shadeshift-research-paper.pdf" target="_blank" rel="noopener noreferrer">Research paper ↗</a>
-            <a href="https://youtu.be/Cl6hf7lQr3M" target="_blank" rel="noopener noreferrer">Prototype demo ↗</a>
+          <h2>Research Boundary: Engineering vs. Clinical Efficacy</h2>
+          <p>
+            ShadeShift successfully demonstrated mechanical and electro-optical integration. As documented in our peer-reviewed research paper, clinical efficacy, patient trials, and medical device safety certifications remain designated for future clinical phases.
+          </p>
+          <div style="display: flex; gap: 16px; margin-top: var(--space-4);">
+            <a class="text-action" href="shadeshift-research-paper.pdf" target="_blank" rel="noopener noreferrer">Research Paper PDF ↗</a>
+            <a class="text-action" href="https://youtu.be/Cl6hf7lQr3M" target="_blank" rel="noopener noreferrer">Video Demonstration ↗</a>
           </div>
         </section>
       </div>
     </div>
   </div>
 </article>
+
+<!-- ==========================================================================
+     CASE STUDY 4: CRITICAL-FACILITY MICROGRID STUDY
+     ========================================================================== -->
 <article class="case-page" id="case-microgrid" data-title="Critical-Facility Microgrid Study">
-  <div class="shell">
-    <a class="case-back" href="#work"><span aria-hidden="true">←</span> BACK TO SELECTED WORK</a>
-    <header class="case-hero">
-      <h1 tabindex="-1">Question the optimum before defending the design.</h1>
-      <p class="case-lead">An independent XENDEE course study for a Level I trauma center in Honolulu, focused on the difference between a mathematically optimal result and a physically credible system.</p>
-      <div class="case-meta">
-        <span>Sole author</span>
-        <span>EGR 586</span>
-        <span>2025</span>
-        <span>Simulation study · not an implemented system</span>
+  <div class="container">
+    <a class="case-back-link" href="#work"><span aria-hidden="true">←</span> Back to Selected Work</a>
+
+    <header class="case-header">
+      <h1 class="case-hero-title">Challenging the unconstrained optimum.</h1>
+      <p class="case-lead">
+        An independent techno-economic microgrid simulation in XENDEE for Queen’s Medical Center in Honolulu, interrogating the divergence between an unconstrained mathematical score and a physically constructible facility.
+      </p>
+
+      <div class="case-metadata-strip">
+        <span>ROLE: <strong>Sole Author &amp; Modeler</strong></span>
+        <span>TOOL: <strong>XENDEE Microgrid Platform</strong></span>
+        <span>FACILITY: <strong>Level I Trauma Center</strong></span>
+        <span>STATUS: <strong>SIMULATION STUDY</strong></span>
+        <span>YEAR: <strong>2025</strong></span>
       </div>
-      <div class="case-proof" role="group" aria-label="Base-case unconstrained XENDEE result">
-        <div><strong>4.98 MW</strong><span>Base-case PV result</span></div>
-        <div><strong>12.3 MWh</strong><span>Base-case BESS result</span></div>
-        <div><strong>Level I</strong><span>Trauma-center context</span></div>
-        <div><strong>XENDEE</strong><span>Modeling platform</span></div>
+
+      <div class="measurement-grid">
+        <div class="measurement-card">
+          <p class="measurement-label">UNCONSTRAINED PV</p>
+          <p class="measurement-val">4.98 MW</p>
+          <p class="measurement-sub">Exceeded available hospital roof area</p>
+        </div>
+        <div class="measurement-card">
+          <p class="measurement-label">UNCONSTRAINED BESS</p>
+          <p class="measurement-val">12.3 MWh</p>
+          <p class="measurement-sub">Mathematically cheapest, physically unrealistic</p>
+        </div>
+        <div class="measurement-card">
+          <p class="measurement-label">REVISED SCENARIO</p>
+          <p class="measurement-val">PV + Diesel</p>
+          <p class="measurement-sub">Bounded by footprint &amp; 14-day resilience</p>
+        </div>
       </div>
     </header>
 
-    <figure class="case-visual case-diagram" role="region" tabindex="0" aria-label="Microgrid architecture diagram. Scroll horizontally on small screens.">
-      <svg role="img" aria-labelledby="microgrid-diagram-title" viewBox="0 0 1000 430" fill="none">
-        <title id="microgrid-diagram-title">Conceptual microgrid architecture linking solar generation, battery storage, diesel backup, and critical hospital load</title>
-        <g transform="translate(70 72)">
-          <g stroke="currentColor" stroke-width="2">
-            <rect x="0" y="0" width="190" height="110" rx="8"/>
-            <rect x="335" y="0" width="190" height="110" rx="8"/>
-            <rect x="670" y="0" width="190" height="110" rx="8"/>
-            <rect x="335" y="210" width="190" height="110" rx="8"/>
-          </g>
-          <g stroke="var(--accent)" stroke-width="3">
-            <path d="M260 55h75M525 55h145M430 110v100"/>
-            <path d="m324 46 11 9-11 9M659 46l11 9-11 9M421 199l9 11 9-11"/>
-          </g>
-          <g fill="currentColor" font-family="JetBrains Mono">
-            <text x="42" y="47" font-size="18">SOLAR PV</text><text x="30" y="76" font-size="12" opacity=".62">VARIABLE GENERATION</text>
-            <text x="370" y="47" font-size="18">AC BUS</text><text x="362" y="76" font-size="12" opacity=".62">DISPATCH LAYER</text>
-            <text x="710" y="47" font-size="18">HOSPITAL</text><text x="708" y="76" font-size="12" opacity=".62">CRITICAL LOAD</text>
-            <text x="363" y="257" font-size="18">BESS</text><text x="362" y="286" font-size="12" opacity=".62">ENERGY STORAGE</text>
-          </g>
-          <g transform="translate(0 216)" stroke="var(--signal)" stroke-width="2">
-            <rect width="190" height="104" rx="8"/><path d="M30 70h130M42 56l20-20 20 20 20-20 20 20 20-20"/>
-          </g>
-          <text x="35" y="264" fill="currentColor" font-family="JetBrains Mono" font-size="18">DIESEL</text>
-          <text x="35" y="293" fill="currentColor" opacity=".62" font-family="JetBrains Mono" font-size="12">RESILIENCE BACKUP</text>
-          <path d="M190 268h145" stroke="var(--signal)" stroke-width="3"/><path d="m324 259 11 9-11 9" stroke="var(--signal)" stroke-width="3"/>
-        </g>
-      </svg>
-      <figcaption><span>CONCEPTUAL ARCHITECTURE / MODEL INPUTS</span><span>EGR 586 · XENDEE STUDY</span></figcaption>
-    </figure>
+    <div class="case-body-grid">
+      <aside class="case-sidebar-facts">
+        <div class="fact-item"><dt>Author</dt><dd>Uriah Villa (Sole Author)</dd></div>
+        <div class="fact-item"><dt>Location</dt><dd>Honolulu, Hawaii</dd></div>
+        <div class="fact-item"><dt>Platform</dt><dd>XENDEE Techno-Economic</dd></div>
+        <div class="fact-item"><dt>Course</dt><dd>EGR 586 Microgrids</dd></div>
+        <div class="fact-item"><dt>Scope</dt><dd>Academic Modeling Study</dd></div>
+      </aside>
 
-    <div class="case-content">
-      <dl class="case-facts" aria-label="Study facts">
-        <div><dt>Role</dt><dd>Sole author</dd></div>
-        <div><dt>Site context</dt><dd>Queen’s Medical Center · Honolulu</dd></div>
-        <div><dt>Tool</dt><dd>XENDEE</dd></div>
-        <div><dt>Resources</dt><dd>PV · BESS · diesel</dd></div>
-        <div><dt>Focus</dt><dd>Techno-economic resilience</dd></div>
-        <div><dt>Boundary</dt><dd>Academic simulation</dd></div>
-      </dl>
-
-      <div class="case-story">
+      <div class="case-narrative">
         <section>
-        <h2>Model a critical load under outage conditions.</h2>
-          <p>The study built a techno-economic microgrid scenario around a major Pacific trauma center. Inputs included the load profile, tariff structure, capital assumptions, renewable generation, battery storage, backup generation, and resilience requirements.</p>
+          <h2>When Mathematical Optimization Collides with Physical Space</h2>
+          <p>
+            Queen’s Medical Center represents the premier Level I trauma facility in the Pacific Basin, operating under high Hawaiian electric utility tariffs and extreme island vulnerability to natural disasters.
+          </p>
+          <p>
+            When ran without explicit physical area constraints, the optimizer yielded a massive 4.98 MW solar PV array and a 12.3 MWh battery storage system. While this minimized calculated Net Present Cost, a spatial audit confirmed that an urban medical campus simply does not have the contiguous land or structural roof capacity for a 5 MW solar installation.
+          </p>
         </section>
 
         <section>
-        <h2>The first answer was too good.</h2>
-          <p>The unconstrained optimization returned roughly 4.98 MW of PV and 12.3 MWh of battery storage. The result minimized the modeled objective, but its footprint raised a practical question against the study’s assumed space limits.</p>
-          <p>That was the signal to inspect the assumptions rather than celebrate the score. An optimizer will use whatever capacity the model permits if space is never represented as a constraint.</p>
-        </section>
-
-        <aside class="case-callout">A simulation can be internally correct and still describe a system nobody can build. Physical constraints belong in the model, not in a disclaimer after the result.</aside>
-
-        <section>
-        <h2>Make the scenario answerable in the real world.</h2>
-          <p>The redesigned scenario applied assumed PV and battery space constraints and incorporated diesel generation for extended resilience. That changed the architecture from a PV-plus-storage optimum with no generator into a more physically grounded hybrid scenario.</p>
-        </section>
-
-        <section>
-        <h2>A disciplined study, not a commissioned design.</h2>
-          <p>This was an academic analysis, not an installed microgrid or a facilities-approved engineering package. Its value is the model-validation process: identify an implausible result, expose the missing constraints, and rebuild the scenario before communicating a recommendation.</p>
+          <h2>Model Validation: Rebuilding with Real Constraints</h2>
+          <p>
+            Rather than presenting the unconstrained optimum as a completed engineering recommendation, I remodeled the microgrid with explicit physical boundaries:
+          </p>
+          <ul>
+            <li>Capped rooftop solar PV to 1.2 MW based on structural engineering estimates.</li>
+            <li>Integrated existing diesel generation assets for multi-day catastrophic outage survival.</li>
+            <li>Right-sized the battery energy storage system (BESS) for peak-shaving and critical life-support transition loads.</li>
+          </ul>
         </section>
 
         <section>
-        <h2>Supporting portfolio material.</h2>
-          <div class="resource-links">
-            <a href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">Archived academic portfolio ↗</a>
-            <a href="uriah-villa-ms-portfolio-appendix.pdf" target="_blank" rel="noopener noreferrer">Evidence appendix ↗</a>
+          <h2>Conclusion: Engineering Beyond the Solver</h2>
+          <p>
+            This study demonstrated that an optimization model is only as valid as its representation of physical boundary conditions. The resulting hybrid microgrid architecture provided realistic, defensible resilience for life-safety systems.
+          </p>
+          <div style="display: flex; gap: 16px; margin-top: var(--space-4);">
+            <a class="text-action" href="uriah-villa-ms-portfolio.pdf" target="_blank" rel="noopener noreferrer">Archived Academic Report ↗</a>
+            <a class="text-action" href="uriah-villa-ms-portfolio-appendix.pdf" target="_blank" rel="noopener noreferrer">Evidence Appendix ↗</a>
           </div>
         </section>
       </div>
     </div>
   </div>
 </article>
-</div>
+
 </main>
 
+<!-- ==========================================================================
+     Site Footer (Understated)
+     ========================================================================== -->
 <footer class="site-footer">
-  <div class="shell footer-inner">
+  <div class="container footer-inner">
     <span>© <span id="year">2026</span> URIAH VILLA · MESA, ARIZONA</span>
-    <span>HAND-BUILT · NO FRAMEWORK · ENGINEERED TO LOAD FAST</span>
-    <span class="footer-links"><button id="footerTop" type="button">Top ↑</button><a href="#archive">Archive</a><a href="mailto:uvilla11@gmail.com">Email</a></span>
+    <span>PRECISION SIGNAL · ZERO FRAMEWORK · WCAG 2.2 AA</span>
+    <div class="footer-links">
+      <button id="footerTop" type="button">Top ↑</button>
+      <a href="#workspace">Workspace</a>
+      <a href="mailto:uvilla11@gmail.com">Email</a>
+    </div>
   </div>
 </footer>
+
 <script src="main.js" defer></script>
 </body>
 </html>

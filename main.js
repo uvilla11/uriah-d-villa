@@ -1,166 +1,309 @@
+/**
+ * Precision Signal — Editorial Engineering System
+ * Interactive Logic: Hash Router, Workspace Controls, Search & Filter, Theme, and Accessibility
+ */
 (() => {
   'use strict';
 
   const root = document.documentElement;
   const body = document.body;
-  const pages = [...document.querySelectorAll('.case-page')];
-  const baseTitle = 'Uriah Villa — Embedded Systems & Robotics Engineer';
+  const baseTitle = 'Uriah Villa — MCU Applications & Embedded Systems Engineer';
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const initRouter = () => {
-    const home = document.getElementById('home');
-    if (!home) return;
+  // View Containers
+  const homeView = document.getElementById('homeView');
+  const workspaceView = document.getElementById('workspaceView');
+  const casePages = [...document.querySelectorAll('.case-page')];
 
-    let lastCaseTrigger = null;
+  /* --------------------------------------------------------------------------
+     01. Hash Router
+     -------------------------------------------------------------------------- */
+  const initRouter = () => {
+    if (!homeView || !workspaceView) return;
+
+    let lastTrigger = null;
 
     document.addEventListener('click', event => {
-      const link = event.target.closest('a[href^="#case/"]');
-      if (link) lastCaseTrigger = link;
+      const link = event.target.closest('a[href^="#"]');
+      if (link) lastTrigger = link;
     });
 
     const focusHeading = container => {
-      const heading = container.querySelector('h1');
+      const heading = container.querySelector('h1, h2');
       if (!heading) return;
-      setTimeout(() => heading.focus({preventScroll: true}), reduceMotion ? 0 : 180);
+      if (!heading.hasAttribute('tabindex')) heading.setAttribute('tabindex', '-1');
+      setTimeout(() => heading.focus({preventScroll: true}), reduceMotion ? 0 : 160);
+    };
+
+    const updateNavActive = activeRoute => {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === '#' + activeRoute || (activeRoute === 'home' && href === '#')) {
+          link.classList.add('is-active');
+        } else {
+          link.classList.remove('is-active');
+        }
+      });
     };
 
     const showRoute = () => {
-      const match = location.hash.match(/^#case\/([a-z0-9-]+)$/i);
-      const slug = match ? match[1].toLowerCase() : '';
-      const page = match ? document.getElementById('case-' + slug) : null;
-      const wasInCase = body.classList.contains('in-case');
+      const hash = location.hash.replace(/^#/, '');
 
-      if (match && !page) {
-        location.replace('#work');
-        return;
-      }
+      // Check for Case Studies: #case/:slug
+      const caseMatch = hash.match(/^case\/([a-z0-9-]+)$/i);
+      if (caseMatch) {
+        const slug = caseMatch[1].toLowerCase();
+        const targetCase = document.getElementById('case-' + slug);
 
-      pages.forEach(item => item.classList.remove('is-active'));
+        if (!targetCase) {
+          location.replace('#work');
+          return;
+        }
 
-      if (page) {
-        page.classList.add('is-active');
-        body.classList.add('in-case');
-        document.title = page.dataset.title + ' — Uriah Villa';
+        homeView.style.display = 'none';
+        workspaceView.classList.remove('is-active');
+        casePages.forEach(p => p.classList.remove('is-active'));
+
+        targetCase.classList.add('is-active');
+        document.title = (targetCase.dataset.title || 'Case Study') + ' — Uriah Villa';
         scrollTo({top: 0, behavior: 'auto'});
-        focusHeading(page);
+        focusHeading(targetCase);
+        updateNavActive('work');
         return;
       }
 
-      body.classList.remove('in-case');
+      // Check for Engineering Workspace: #workspace
+      if (hash === 'workspace') {
+        homeView.style.display = 'none';
+        casePages.forEach(p => p.classList.remove('is-active'));
+        workspaceView.classList.add('is-active');
+
+        document.title = 'Engineering Workspace — Uriah Villa';
+        scrollTo({top: 0, behavior: 'auto'});
+        focusHeading(workspaceView);
+        updateNavActive('workspace');
+        return;
+      }
+
+      // Default: Homepage View
+      workspaceView.classList.remove('is-active');
+      casePages.forEach(p => p.classList.remove('is-active'));
+      homeView.style.display = 'block';
       document.title = baseTitle;
 
-      const targetId = location.hash.slice(1);
-      const target = (targetId && document.getElementById(targetId)) || document.getElementById('top');
-      requestAnimationFrame(() => {
-        if (target) target.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
-        if (wasInCase) {
-          const triggerBelongsToTarget = lastCaseTrigger && lastCaseTrigger.isConnected && target && target.contains(lastCaseTrigger);
-          const focusTarget = triggerBelongsToTarget
-            ? lastCaseTrigger
-            : target && (target.querySelector('h1, h2') || target);
-          if (focusTarget) {
-            if (!focusTarget.hasAttribute('tabindex') && !focusTarget.matches('a, button, input, textarea, select')) {
-              focusTarget.setAttribute('tabindex', '-1');
-            }
-            setTimeout(() => focusTarget.focus({preventScroll: true}), reduceMotion ? 0 : 260);
-          }
-          lastCaseTrigger = null;
+      if (hash && hash !== 'home') {
+        const targetElement = document.getElementById(hash);
+        if (targetElement) {
+          requestAnimationFrame(() => {
+            targetElement.scrollIntoView({
+              behavior: reduceMotion ? 'auto' : 'smooth',
+              block: 'start'
+            });
+            focusHeading(targetElement);
+          });
         }
-      });
+        updateNavActive(hash);
+      } else {
+        updateNavActive('home');
+        if (lastTrigger) {
+          scrollTo({top: 0, behavior: reduceMotion ? 'auto' : 'smooth'});
+        }
+      }
     };
 
     addEventListener('hashchange', showRoute);
     showRoute();
   };
 
+  /* --------------------------------------------------------------------------
+     02. Engineering Workspace: Sidebar Tabs & Directory Search/Filter
+     -------------------------------------------------------------------------- */
+  const initWorkspace = () => {
+    // Sidebar view switching
+    const sidebarButtons = document.querySelectorAll('.workspace-sidebar .sidebar-item[data-view]');
+    const panels = {
+      directory: document.getElementById('panelDirectory'),
+      protocols: document.getElementById('panelProtocols'),
+      validation: document.getElementById('panelValidation'),
+      logs: document.getElementById('panelLogs')
+    };
+
+    sidebarButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetView = btn.dataset.view;
+        sidebarButtons.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        Object.keys(panels).forEach(key => {
+          if (panels[key]) {
+            panels[key].hidden = key !== targetView;
+          }
+        });
+      });
+    });
+
+    // Directory Search & Filtering
+    const searchInput = document.getElementById('directorySearch');
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const tableBody = document.getElementById('directoryTableBody');
+    const projectCountEl = document.getElementById('wsProjectCount');
+
+    if (!tableBody) return;
+    const rows = [...tableBody.querySelectorAll('tr')];
+
+    let currentFilter = 'all';
+    let currentQuery = '';
+
+    const applyFilter = () => {
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const category = (row.dataset.category || '').toLowerCase();
+        const searchCorpus = (row.dataset.search || '' + ' ' + row.textContent).toLowerCase();
+
+        const matchesCategory = currentFilter === 'all' || category.includes(currentFilter);
+        const matchesQuery = !currentQuery || searchCorpus.includes(currentQuery);
+
+        if (matchesCategory && matchesQuery) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (projectCountEl) {
+        projectCountEl.textContent = visibleCount + (visibleCount === 1 ? ' System' : ' Systems');
+      }
+    };
+
+    if (searchInput) {
+      searchInput.addEventListener('input', e => {
+        currentQuery = e.target.value.trim().toLowerCase();
+        applyFilter();
+      });
+    }
+
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => {
+          p.setAttribute('aria-selected', 'false');
+        });
+        pill.setAttribute('aria-selected', 'true');
+        currentFilter = pill.dataset.filter || 'all';
+        applyFilter();
+      });
+    });
+  };
+
+  /* --------------------------------------------------------------------------
+     03. Theme Switcher (Standard-Compliant & Accessible)
+     -------------------------------------------------------------------------- */
   const initTheme = () => {
-    const themeButton = document.getElementById('themeToggle');
-    if (!themeButton) return;
+    const toggleBtn = document.getElementById('themeToggle');
+    if (!toggleBtn) return;
 
-    const syncThemeButton = () => {
-      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      themeButton.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+    const mediaQuery = matchMedia('(prefers-color-scheme: dark)');
+
+    const syncThemeUI = () => {
+      const activeTheme = root.dataset.theme || (mediaQuery.matches ? 'dark' : 'light');
+      const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+      toggleBtn.setAttribute('aria-label', `Switch to ${nextTheme} theme`);
     };
-    syncThemeButton();
 
-    themeButton.addEventListener('click', () => {
-      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      try { localStorage.setItem('theme', root.dataset.theme); } catch (_) {}
-      syncThemeButton();
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = root.dataset.theme || (mediaQuery.matches ? 'dark' : 'light');
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = nextTheme;
+      try {
+        localStorage.setItem('theme', nextTheme);
+      } catch (_) {}
+      syncThemeUI();
     });
+
+    mediaQuery.addEventListener('change', e => {
+      try {
+        if (!localStorage.getItem('theme')) {
+          root.dataset.theme = e.matches ? 'dark' : 'light';
+          syncThemeUI();
+        }
+      } catch (_) {}
+    });
+
+    syncThemeUI();
   };
 
+  /* --------------------------------------------------------------------------
+     04. Mobile Navigation Drawer
+     -------------------------------------------------------------------------- */
   const initMobileMenu = () => {
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (!mobileMenu) return;
+    const toggle = document.getElementById('mobileNavToggle');
+    const drawer = document.getElementById('mobileDrawer');
+    if (!toggle || !drawer) return;
 
-    const mobileSummary = mobileMenu.querySelector('summary');
-    mobileMenu.addEventListener('toggle', () => {
-      mobileSummary.setAttribute('aria-label', mobileMenu.open ? 'Close navigation menu' : 'Open navigation menu');
-    });
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => mobileMenu.removeAttribute('open'));
-    });
-  };
-
-  const initSkipLink = () => {
-    const skipLink = document.querySelector('.skip-link');
-    if (!skipLink) return;
-
-    skipLink.addEventListener('click', event => {
-      event.preventDefault();
-      const visiblePage = pages.find(page => page.classList.contains('is-active'));
-      const target = visiblePage ? visiblePage.querySelector('h1') : document.getElementById('hero-title');
-      if (!target) return;
-      target.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
-      target.focus({preventScroll: true});
-    });
-  };
-
-  const initProgress = () => {
-    const progress = document.getElementById('scrollProgress');
-    if (!progress) return;
-
-    let progressFrame = 0;
-    const updateProgress = () => {
-      progressFrame = 0;
-      const range = document.documentElement.scrollHeight - innerHeight;
-      const ratio = range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;
-      progress.style.transform = 'scaleX(' + ratio + ')';
+    const toggleDrawer = open => {
+      const isOpen = open !== undefined ? open : drawer.hidden;
+      drawer.hidden = !isOpen;
+      toggle.setAttribute('aria-expanded', String(isOpen));
     };
-    addEventListener('scroll', () => {
-      if (!progressFrame) progressFrame = requestAnimationFrame(updateProgress);
-    }, {passive: true});
-    addEventListener('resize', updateProgress);
-    updateProgress();
-  };
 
-  const initFooterTop = () => {
-    const footerTop = document.getElementById('footerTop');
-    if (!footerTop) return;
+    toggle.addEventListener('click', () => toggleDrawer());
 
-    footerTop.addEventListener('click', () => {
-      const visiblePage = pages.find(page => page.classList.contains('is-active'));
-      const heading = visiblePage ? visiblePage.querySelector('h1') : document.getElementById('hero-title');
-      scrollTo({top: 0, behavior: reduceMotion ? 'auto' : 'smooth'});
-      if (heading) setTimeout(() => heading.focus({preventScroll: true}), reduceMotion ? 0 : 260);
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => toggleDrawer(false));
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !drawer.hidden) {
+        toggleDrawer(false);
+        toggle.focus();
+      }
     });
   };
 
+  /* --------------------------------------------------------------------------
+     05. Scroll Progress Bar
+     -------------------------------------------------------------------------- */
+  const initProgress = () => {
+    const bar = document.getElementById('scrollProgress');
+    if (!bar) return;
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const total = root.scrollHeight - innerHeight;
+      const ratio = total > 0 ? Math.min(1, Math.max(0, scrollY / total)) : 0;
+      bar.style.transform = `scaleX(${ratio})`;
+    };
+
+    addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, {passive: true});
+
+    addEventListener('resize', update);
+    update();
+  };
+
+  /* --------------------------------------------------------------------------
+     06. Contact Form (AJAX via Formspree)
+     -------------------------------------------------------------------------- */
   const initForm = () => {
     const form = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
-    const submitButton = document.getElementById('submitButton');
-    if (!form || !formStatus || !submitButton) return;
+    const status = document.getElementById('formStatus');
+    const btn = document.getElementById('submitButton');
+    if (!form || !status || !btn) return;
 
-    const originalLabel = submitButton.innerHTML;
+    const originalBtnHTML = btn.innerHTML;
 
     form.addEventListener('submit', async event => {
       event.preventDefault();
-      submitButton.disabled = true;
-      submitButton.textContent = 'Sending…';
-      formStatus.textContent = '';
-      formStatus.dataset.state = '';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      status.textContent = '';
+      status.dataset.state = '';
 
       try {
         const response = await fetch(form.action, {
@@ -168,27 +311,53 @@
           body: new FormData(form),
           headers: {'Accept': 'application/json'}
         });
-        if (!response.ok) throw new Error('Form submission failed: ' + response.status);
+
+        if (!response.ok) throw new Error('Submission failed');
         form.reset();
-        formStatus.dataset.state = 'success';
-        formStatus.textContent = 'Message sent. I’ll get back to you soon.';
+        status.dataset.state = 'success';
+        status.textContent = 'Message sent. I will respond to your technical inquiry shortly.';
       } catch (_) {
-        formStatus.dataset.state = 'error';
-        formStatus.textContent = 'The form could not send. Please email me directly at uvilla11@gmail.com.';
+        status.dataset.state = 'error';
+        status.textContent = 'Transmission failed. Please email me directly at uvilla11@gmail.com.';
       } finally {
-        submitButton.disabled = false;
-        submitButton.innerHTML = originalLabel;
+        btn.disabled = false;
+        btn.innerHTML = originalBtnHTML;
       }
     });
   };
 
-  const initYear = () => {
-    const year = document.getElementById('year');
-    if (!year) return;
-    year.textContent = new Date().getFullYear();
+  /* --------------------------------------------------------------------------
+     07. Utilities & Footer
+     -------------------------------------------------------------------------- */
+  const initUtilities = () => {
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    const topBtn = document.getElementById('footerTop');
+    if (topBtn) {
+      topBtn.addEventListener('click', () => {
+        scrollTo({top: 0, behavior: reduceMotion ? 'auto' : 'smooth'});
+        const heroTitle = document.getElementById('hero-title');
+        if (heroTitle) setTimeout(() => heroTitle.focus({preventScroll: true}), reduceMotion ? 0 : 200);
+      });
+    }
   };
 
-  [initRouter, initTheme, initMobileMenu, initSkipLink,
-   initProgress, initFooterTop, initForm, initYear]
-    .forEach(fn => { try { fn(); } catch (err) { console.error(err); } });
+  // Safe Execution Bootstrap
+  [
+    initRouter,
+    initWorkspace,
+    initTheme,
+    initMobileMenu,
+    initProgress,
+    initForm,
+    initUtilities
+  ].forEach(fn => {
+    try {
+      fn();
+    } catch (err) {
+      console.error(`[PrecisionSignal] Error initializing ${fn.name}:`, err);
+    }
+  });
+
 })();
