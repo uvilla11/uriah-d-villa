@@ -125,6 +125,22 @@ python3 -m http.server 4321 -d /tmp/preview
 # http://localhost:4321/uriah-d-villa/
 ```
 
+## Deployment
+
+GitHub Pages via Actions (`.github/workflows/deploy.yml`):
+
+- Pushes to `main` build, gate (`lint` + `verify`), and publish `out/`.
+  Work on `build/**` branches is verified but never published.
+- `verify.yml` runs the same gates on every push and pull request.
+- One-time setup in repo Settings → Pages: **Source → GitHub Actions**.
+- `public/.nojekyll` ships as `out/.nojekyll` so Pages serves `_next/`
+  assets instead of letting Jekyll swallow them.
+- `sitemap.xml` and `robots.txt` are generated at build time from
+  `src/app/sitemap.ts` and `src/app/robots.ts`; new case studies appear
+  automatically because both enumerate the project registry.
+- `public/media/generated/` (responsive AVIF/WebP) is gitignored and
+  regenerated in CI via `npm run media` before every build.
+
 ## Architecture
 
 ```
