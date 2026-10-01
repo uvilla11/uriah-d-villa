@@ -153,32 +153,22 @@
     const submitButton = document.getElementById('submitButton');
     if (!form || !formStatus || !submitButton) return;
 
-    const originalLabel = submitButton.innerHTML;
-
-    form.addEventListener('submit', async event => {
+    form.addEventListener('submit', event => {
       event.preventDefault();
-      submitButton.disabled = true;
-      submitButton.textContent = 'Sending…';
-      formStatus.textContent = '';
-      formStatus.dataset.state = '';
-
-      try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: {'Accept': 'application/json'}
-        });
-        if (!response.ok) throw new Error('Form submission failed: ' + response.status);
-        form.reset();
-        formStatus.dataset.state = 'success';
-        formStatus.textContent = 'Message sent. I’ll get back to you soon.';
-      } catch (_) {
+      if (!form.reportValidity()) return;
+      const name = form.elements.name.value.trim();
+      const email = form.elements.email.value.trim();
+      const message = form.elements.message.value.trim();
+      if (!name || !email || !message) {
+        formStatus.textContent = 'Add your name, email, and message before composing.';
         formStatus.dataset.state = 'error';
-        formStatus.textContent = 'The form could not send. Please email me directly at uvilla11@gmail.com.';
-      } finally {
-        submitButton.disabled = false;
-        submitButton.innerHTML = originalLabel;
+        return;
       }
+      const subject = encodeURIComponent('Portfolio inquiry from ' + name);
+      const bodyText = encodeURIComponent(message + '\n\nFrom: ' + name + ' <' + email + '>');
+      formStatus.textContent = 'Opening your email app. This page does not send or store messages.';
+      formStatus.dataset.state = '';
+      location.href = 'mailto:uriah.villa2023@gmail.com?subject=' + subject + '&body=' + bodyText;
     });
   };
 
