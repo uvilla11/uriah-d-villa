@@ -1,1383 +1,327 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f7f7fa" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111118" media="(prefers-color-scheme: dark)">
-<title>Uriah Villa — Embedded Systems &amp; Robotics Engineer</title>
-<meta name="description" content="Uriah Villa is an MCU Applications Engineer specializing in embedded firmware, electronics, robotics, motor control, and edge AI.">
-<meta property="og:title" content="Uriah Villa — Embedded Systems &amp; Robotics Engineer">
-<meta property="og:description" content="Boards, firmware, and physical systems—from PIC MCUs and motor drives to robotics and edge AI.">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-<meta name="robots" content="index, follow">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Uriah Villa","jobTitle":"MCU Applications Engineer II","affiliation":{"@type":"Organization","name":"Microchip Technology"},"email":"uvilla11@gmail.com","sameAs":["https://github.com/uvilla11","https://www.linkedin.com/in/uriah-villa/"]}
-</script>
-<script>
-document.documentElement.classList.add('js');
-const preferredTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-let initialTheme = preferredTheme;
-try {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light' || savedTheme === 'dark') initialTheme = savedTheme;
-} catch (_) {}
-document.documentElement.dataset.theme = initialTheme;
-</script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='5' y='5' width='22' height='22' rx='5' fill='%237154e8'/%3E%3Cpath d='M10 11v7a6 6 0 0 0 12 0v-7' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box}
-*{margin:0}
-:root{
-  color-scheme:light;
-  --bg:oklch(98.2% .004 280);
-  --bg-raised:oklch(100% 0 0);
-  --surface:oklch(96% .009 278);
-  --surface-2:oklch(93.5% .014 278);
-  --ink:oklch(18% .025 278);
-  --muted:oklch(44% .025 278);
-  --faint:oklch(47% .025 278);
-  --line:oklch(87% .014 278);
-  --line-strong:oklch(76% .025 278);
-  --accent:oklch(49% .225 282);
-  --accent-strong:oklch(43% .245 282);
-  --accent-soft:oklch(92% .045 282);
-  --signal:oklch(58% .17 245);
-  --positive:oklch(54% .14 155);
-  --error:oklch(46% .18 25);
-  --shadow:0 24px 70px oklch(20% .04 278 / .1);
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
-  --sans:"Archivo",Inter,ui-sans-serif,system-ui,sans-serif;
-  --ease:cubic-bezier(.22,1,.36,1);
-  --shell:min(1180px,calc(100% - clamp(40px,8vw,112px)));
-}
-[data-theme=dark]{
-  color-scheme:dark;
-  --bg:oklch(15.5% .017 278);
-  --bg-raised:oklch(19.5% .021 278);
-  --surface:oklch(21% .025 278);
-  --surface-2:oklch(25% .03 278);
-  --ink:oklch(95.5% .008 278);
-  --muted:oklch(73% .02 278);
-  --faint:oklch(69% .022 278);
-  --line:oklch(29% .026 278);
-  --line-strong:oklch(39% .04 278);
-  --accent:oklch(76% .145 282);
-  --accent-strong:oklch(82% .12 282);
-  --accent-soft:oklch(27% .055 282);
-  --signal:oklch(77% .12 245);
-  --positive:oklch(76% .12 155);
-  --error:oklch(74% .15 25);
-  --shadow:0 26px 80px oklch(4% .02 278 / .45);
-}
-html{scroll-behavior:smooth;scroll-padding-top:110px}
-body{
-  min-width:320px;
-  overflow-x:clip;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:var(--sans);
-  font-size:16px;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
-}
-a{color:inherit;text-decoration:none}
-button,input,textarea{font:inherit}
-button{color:inherit}
-img,svg{display:block;max-width:100%}
-[hidden]{display:none!important}
-::selection{background:var(--accent);color:var(--bg)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
-.shell{width:var(--shell);margin-inline:auto}
-.mono{font-family:var(--mono)}
-.skip-link{
-  position:fixed;
-  left:16px;
-  top:12px;
-  z-index:1000;
-  transform:translateY(-160%);
-  padding:10px 14px;
-  border-radius:6px;
-  background:var(--ink);
-  color:var(--bg);
-  font:600 12px/1 var(--mono);
-  transition:transform .16s ease;
-}
-.skip-link:focus{transform:none}
-.site-header{position:fixed;inset:14px 0 auto;z-index:100}
-.nav-shell{
-  width:min(1240px,calc(100% - 28px));
-  min-height:58px;
-  margin-inline:auto;
-  padding:8px 10px 8px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  border:1px solid color-mix(in oklch,var(--line) 88%,transparent);
-  border-radius:12px;
-  background:color-mix(in oklch,var(--bg-raised) 88%,transparent);
-  box-shadow:0 10px 30px oklch(20% .03 278 / .07);
-  backdrop-filter:blur(16px) saturate(130%);
-  -webkit-backdrop-filter:blur(16px) saturate(130%);
-}
-.brand{display:inline-flex;align-items:center;gap:11px;font:600 12px/1 var(--mono);letter-spacing:.055em;white-space:nowrap}
-.brand-mark{width:25px;height:25px;border:1px solid var(--line-strong);border-radius:5px;display:grid;place-items:center;position:relative}
-.brand-mark::before,.brand-mark::after{content:"";position:absolute;background:var(--accent)}
-.brand-mark::before{width:7px;height:7px;border-radius:2px}
-.brand-mark::after{width:1px;height:31px;opacity:.45}
-.brand-mark span{position:absolute;width:31px;height:1px;background:var(--accent);opacity:.45}
-.desktop-nav{display:flex;align-items:center;gap:4px}
-.desktop-nav a{
-  padding:9px 12px;
-  border-radius:6px;
-  color:var(--muted);
-  font-size:13px;
-  font-weight:550;
-  transition:color .16s ease,background .16s ease;
-}
-.desktop-nav a:hover{color:var(--ink);background:var(--surface)}
-.nav-actions{display:flex;align-items:center;gap:7px}
-.nav-pdf{
-  padding:9px 13px;
-  border:1px solid var(--line);
-  border-radius:6px;
-  font:600 11px/1 var(--mono);
-  letter-spacing:.03em;
-  color:var(--muted);
-  transition:border-color .16s ease,color .16s ease,background .16s ease;
-}
-.nav-pdf:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
-.theme-toggle{
-  width:38px;
-  height:38px;
-  border:1px solid var(--line);
-  border-radius:6px;
-  background:transparent;
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  transition:border-color .16s ease,color .16s ease,background .16s ease;
-}
-.theme-toggle:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
-.theme-toggle svg{width:17px;height:17px}
-[data-theme=light] .icon-sun,[data-theme=dark] .icon-moon{display:none}
-.mobile-menu{display:none;position:relative}
-.mobile-menu summary{
-  width:38px;
-  height:38px;
-  border:1px solid var(--line);
-  border-radius:6px;
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  list-style:none;
-}
-.mobile-menu summary::-webkit-details-marker{display:none}
-.menu-icon,.menu-icon::before,.menu-icon::after{width:16px;height:1.5px;background:currentColor;display:block;transition:transform .18s ease}
-.menu-icon{position:relative}
-.menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0}
-.menu-icon::before{top:-5px}.menu-icon::after{top:5px}
-.mobile-menu[open] .menu-icon{background:transparent}
-.mobile-menu[open] .menu-icon::before{top:0;transform:rotate(45deg)}
-.mobile-menu[open] .menu-icon::after{top:0;transform:rotate(-45deg)}
-.mobile-menu-panel{
-  position:absolute;
-  right:0;
-  top:46px;
-  width:min(280px,calc(100vw - 28px));
-  padding:8px;
-  border:1px solid var(--line);
-  border-radius:10px;
-  background:var(--bg-raised);
-  box-shadow:var(--shadow);
-}
-.mobile-menu-panel a{display:block;padding:12px 14px;border-radius:6px;color:var(--muted);font-size:14px}
-.mobile-menu-panel a:hover{background:var(--surface);color:var(--ink)}
-.scroll-progress{position:fixed;inset:0 0 auto;height:2px;z-index:110;pointer-events:none}
-.scroll-progress span{display:block;width:100%;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:left center;will-change:transform}
-section{scroll-margin-top:100px}
-.hero{
-  min-height:min(960px,100svh);
-  padding:clamp(136px,16vh,190px) 0 clamp(72px,9vh,104px);
-  display:flex;
-  align-items:center;
-  position:relative;
-}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(380px,.75fr);gap:clamp(48px,8vw,108px);align-items:center}
-.eyebrow,.panel-label{
-  font:600 11px/1.3 var(--mono);
-  letter-spacing:.075em;
-  text-transform:uppercase;
-}
-.eyebrow{display:flex;align-items:center;gap:10px;color:var(--muted);margin-bottom:24px}
-.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--positive);box-shadow:0 0 0 4px color-mix(in oklch,var(--positive) 15%,transparent)}
-.hero h1{
-  max-width:800px;
-  font-size:clamp(3.6rem,7.1vw,7rem);
-  font-weight:720;
-  font-variation-settings:"wdth" 112;
-  letter-spacing:-.055em;
-  line-height:.9;
-  text-wrap:balance;
-}
-.hero h1 span{color:var(--accent)}
-.hero-copy{max-width:700px}
-.hero-lead{max-width:590px;margin-top:30px;color:var(--muted);font-size:clamp(1.08rem,1.8vw,1.32rem);line-height:1.5;text-wrap:pretty}
-.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:36px}
-.button{
-  min-height:46px;
-  padding:0 19px;
-  border:1px solid transparent;
-  border-radius:7px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  font-size:14px;
-  font-weight:650;
-  cursor:pointer;
-  transition:transform .16s ease,background .16s ease,border-color .16s ease,color .16s ease;
-}
-.button:hover{transform:translateY(-2px)}
-.button:active{transform:translateY(0) scale(.98)}
-.button-primary{background:var(--accent);color:var(--bg)}
-.button-primary:hover{background:var(--accent-strong)}
-.button-secondary{border-color:var(--line-strong);background:color-mix(in oklch,var(--bg-raised) 72%,transparent);color:var(--ink)}
-.button-secondary:hover{border-color:var(--accent);color:var(--accent)}
-.arrow{font-family:var(--mono);transition:transform .18s var(--ease)}
-a:hover .arrow{transform:translateX(3px)}
-.availability{display:flex;align-items:center;gap:8px;margin-top:22px;color:var(--faint);font:500 11px/1.5 var(--mono)}
-.hero-dossier{
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:color-mix(in oklch,var(--bg-raised) 90%,transparent);
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(12px) saturate(115%);
-  -webkit-backdrop-filter:blur(12px) saturate(115%);
-  overflow:hidden;
-}
-.dossier-bar{min-height:43px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);font:500 10px/1 var(--mono);letter-spacing:.06em;color:var(--muted)}
-.dossier-bar span:last-child{color:var(--positive)}
-.artifact-stage{position:relative;aspect-ratio:1.06;background:var(--surface);overflow:hidden}
-.artifact-stage img{width:100%;height:100%;object-fit:contain;padding:8%}
-.dossier-foot{padding:17px 18px 18px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end}
-.dossier-foot strong{display:block;font-size:15px;line-height:1.25;letter-spacing:-.01em}
-.dossier-foot small{display:block;margin-top:4px;color:var(--muted);font:500 10px/1.4 var(--mono)}
-.dossier-foot .open-case{color:var(--accent);font:600 11px/1 var(--mono);white-space:nowrap}
-.section{padding:clamp(88px,12vw,154px) 0;border-top:1px solid var(--line)}
-.section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.58fr);gap:30px;align-items:start;margin-bottom:clamp(44px,7vw,80px)}
-.section-title{font-size:clamp(2.35rem,5vw,4.7rem);font-weight:680;font-variation-settings:"wdth" 108;letter-spacing:-.045em;line-height:.97;text-wrap:balance}
-.section-intro{color:var(--muted);font-size:15px;line-height:1.65;text-wrap:pretty;padding-top:8px}
-.featured-project{
-  display:grid;
-  grid-template-columns:minmax(0,1.14fr) minmax(340px,.86fr);
-  min-height:0;
-  border-block:1px solid var(--line);
-  border-inline:0;
-  background:transparent;
-  overflow:hidden;
-  transition:border-color .18s ease;
-}
-.featured-project:hover{border-color:var(--accent)}
-.featured-media{position:relative;min-height:480px;background:var(--surface);overflow:hidden}
-.featured-media img{width:100%;height:100%;object-fit:contain;object-position:center;padding:clamp(10px,2vw,22px);opacity:1}
-.media-caption{position:absolute;inset:auto 16px 16px;display:flex;justify-content:space-between;gap:16px;padding:9px 11px;border-top:1px solid rgb(255 255 255 / .32);background:rgb(17 12 24 / .78);color:#fff;font:500 10px/1.3 var(--mono);letter-spacing:.05em;text-transform:uppercase}
-.featured-copy{padding:clamp(34px,5vw,66px);display:flex;flex-direction:column}
-.project-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:auto;color:var(--accent);font:600 10px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase}
-.project-topline span:last-child{color:var(--muted)}
-.featured-copy h3{margin-top:62px;font-size:clamp(2rem,3.7vw,3.35rem);font-weight:680;line-height:1;letter-spacing:-.04em;text-wrap:balance}
-.featured-copy>p{margin-top:22px;color:var(--muted);font-size:16px;line-height:1.65;text-wrap:pretty}
-.featured-copy .card-link{margin-top:28px;color:var(--accent);font:600 11px/1 var(--mono)}
-.metric-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:34px;border-block:1px solid var(--line);overflow:hidden}
-.metric{padding:15px 15px 15px 0;background:transparent}
-.metric strong{display:block;color:var(--accent);font:650 16px/1.2 var(--mono)}
-.metric span{display:block;margin-top:5px;color:var(--muted);font:500 10px/1.35 var(--mono);text-transform:uppercase}
-.case-grid{display:grid;grid-template-columns:1fr;gap:0;margin-top:18px}
-.case-card{
-  display:grid;
-  grid-template-columns:minmax(220px,280px) minmax(0,1fr);
-  border-block:1px solid var(--line);
-  border-inline:0;
-  background:transparent;
-  overflow:hidden;
-  transition:border-color .18s ease;
-}
-.case-card:hover{border-color:var(--accent)}
-.case-card-media{height:auto;aspect-ratio:16/9;background:var(--surface);overflow:hidden;position:relative}
-.case-card-media img{width:100%;height:100%;object-fit:cover;transition:transform .55s var(--ease)}
-.case-card:hover .case-card-media img{transform:scale(1.025)}
-.case-card-media.schematic{display:grid;place-items:center;padding:40px;color:var(--muted);background:var(--surface)}
-.case-card-media.schematic svg{width:min(340px,86%);color:var(--accent)}
-.case-card-body{padding:28px 0 30px 34px;display:flex;flex-direction:column;min-height:230px}
-.case-card-body .project-topline{margin-bottom:26px}
-.case-card h3{font-size:clamp(1.55rem,2.7vw,2.15rem);line-height:1.05;letter-spacing:-.035em}
-.case-card p{margin-top:15px;color:var(--muted);font-size:14.5px;line-height:1.6;text-wrap:pretty}
-.case-card .card-link{margin-top:auto;padding-top:28px;color:var(--accent);font:600 11px/1 var(--mono)}
-.experience-layout{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(320px,.62fr);gap:18px}
-.career-panel,.education-panel{border-block:1px solid var(--line);border-inline:0;background:transparent}
-.career-panel{padding:clamp(30px,5vw,58px)}
-.career-head{display:flex;justify-content:space-between;gap:28px;align-items:start;padding-bottom:28px;border-bottom:1px solid var(--line)}
-.career-company{font-size:clamp(1.7rem,3vw,2.5rem);font-weight:680;letter-spacing:-.035em;line-height:1}
-.career-date{color:var(--accent);font:600 11px/1.4 var(--mono);white-space:nowrap}
-.career-role{margin-top:34px;font-size:clamp(1.2rem,2vw,1.55rem);font-weight:650;line-height:1.2}
-.career-subtitle{margin-top:7px;color:var(--accent);font:500 11px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.035em}
-.career-list{margin-top:25px;list-style:none;padding:0;display:grid;gap:13px}
-.career-list li{position:relative;padding-left:20px;color:var(--muted);font-size:15px;line-height:1.6;text-wrap:pretty}
-.career-list li::before{content:"";position:absolute;left:0;top:.72em;width:8px;height:1px;background:var(--accent)}
-.career-progression{margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
-.career-progression span{display:block;color:var(--faint);font:500 10px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase}
-.career-progression p{margin-top:8px;color:var(--muted);font-size:13px}
-.education-stack{display:grid;gap:18px}
-.education-panel{padding:28px;min-height:210px;display:flex;flex-direction:column}
-.education-panel .panel-label{color:var(--accent)}
-.education-panel h3{margin-top:28px;font-size:1.3rem;line-height:1.2;letter-spacing:-.02em}
-.education-panel p{margin-top:8px;color:var(--muted);font-size:13px}
-.education-panel strong{margin-top:auto;padding-top:22px;color:var(--accent);font:600 13px/1.4 var(--mono)}
-.additional-role{margin-top:18px;padding:24px 0;border-block:1px solid var(--line);border-inline:0;background:transparent;display:grid;grid-template-columns:180px 1fr;gap:26px}
-.subsection-head{display:flex;justify-content:space-between;gap:24px;align-items:baseline;margin-top:clamp(70px,9vw,112px);padding-bottom:18px;border-bottom:1px solid var(--line)}
-.subsection-head h3{font-size:clamp(1.55rem,2.8vw,2.15rem);line-height:1.05;letter-spacing:-.03em}
-.subsection-head p{max-width:46ch;color:var(--muted);font-size:14px}
-.additional-role .panel-label{color:var(--accent)}
-.additional-role h3{font-size:1.1rem;line-height:1.3}
-.additional-role p{margin-top:7px;color:var(--muted);font-size:13px;line-height:1.55}
-.additional-role .career-date{margin-top:8px}
-.build-list{border-top:1px solid var(--line)}
-.build-row{
-  display:grid;
-  grid-template-columns:64px minmax(220px,.72fr) minmax(0,1.2fr) auto;
-  gap:clamp(18px,3.5vw,46px);
-  align-items:center;
-  min-height:132px;
-  padding:24px 0;
-  border-bottom:1px solid var(--line);
-}
-a.build-row{transition:color .16s ease}
-a.build-row:hover{color:var(--accent)}
-.build-number{color:var(--accent);font:600 11px/1 var(--mono)}
-.build-row h4{font-size:1.2rem;line-height:1.2;letter-spacing:-.02em}
-.build-row p{color:var(--muted);font-size:14px;line-height:1.55;text-wrap:pretty}
-.build-tags{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;max-width:220px}
-.tag{padding:5px 8px;border:1px solid var(--line);border-radius:4px;color:var(--muted);font:500 10px/1 var(--mono);letter-spacing:.035em;text-transform:uppercase;white-space:nowrap}
-.about-layout{display:grid;grid-template-columns:minmax(0,.88fr) minmax(420px,1.12fr);gap:clamp(54px,9vw,120px);align-items:start}
-.about-copy .large-copy{font-size:clamp(1.32rem,2.3vw,1.8rem);line-height:1.42;letter-spacing:-.02em;text-wrap:pretty}
-.about-copy p+p{margin-top:22px}
-.about-copy .body-copy{color:var(--muted);font-size:15px;line-height:1.7}
-.capability-table{border-top:1px solid var(--line)}
-.capability-row{display:grid;grid-template-columns:150px 1fr;gap:25px;padding:20px 0;border-bottom:1px solid var(--line)}
-.capability-row dt{color:var(--accent);font:600 10px/1.5 var(--mono);letter-spacing:.04em;text-transform:uppercase}
-.capability-row dd{color:var(--muted);font-size:14px;line-height:1.65}
-.archive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 42px}
-.archive-card{
-  min-height:0;
-  padding:20px 0;
-  border-block:1px solid var(--line);
-  border-inline:0;
-  background:transparent;
-  display:flex;
-  flex-direction:column;
-  transition:border-color .18s ease,color .18s ease;
-}
-.archive-card:hover{border-color:var(--accent);color:var(--accent)}
-.archive-card .file-type{color:var(--accent);font:600 10px/1 var(--mono);letter-spacing:.06em}
-.archive-card h3{margin-top:26px;font-size:1.12rem;line-height:1.25;letter-spacing:-.02em}
-.archive-card p{margin-top:9px;color:var(--muted);font-size:13px;line-height:1.5}
-.archive-card .file-action{margin-top:auto;padding-top:22px;color:var(--accent);font:600 10px/1 var(--mono)}
-.contact-section{position:relative;overflow:hidden}
-.contact-layout{display:grid;grid-template-columns:minmax(0,.82fr) minmax(360px,.62fr);gap:clamp(56px,10vw,140px);position:relative;z-index:1}
-.contact-copy h2{font-size:clamp(2.8rem,5.7vw,5.8rem);font-weight:680;font-variation-settings:"wdth" 110;line-height:.92;letter-spacing:-.055em;text-wrap:balance}
-.contact-copy>p{max-width:52ch;margin-top:25px;color:var(--muted);font-size:16px;line-height:1.65}
-.email-link{display:inline-block;margin-top:34px;color:var(--accent);font:600 clamp(1.1rem,2.4vw,1.5rem)/1.4 var(--mono);overflow-wrap:anywhere;border-bottom:1px solid var(--accent)}
-.social-links{display:flex;flex-wrap:wrap;gap:18px;margin-top:28px}
-.social-links a{color:var(--muted);font-size:13px;border-bottom:1px solid var(--line-strong);transition:color .16s ease,border-color .16s ease}
-.social-links a:hover{color:var(--accent);border-color:var(--accent)}
-.contact-form{padding:clamp(26px,4vw,38px) 0;border-block:1px solid var(--line);border-inline:0;background:transparent}
-.form-field+.form-field{margin-top:18px}
-.form-field label{display:flex;justify-content:space-between;gap:12px;margin-bottom:7px;color:var(--muted);font:600 10px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase}
-.form-field input,.form-field textarea{
-  width:100%;
-  border:1px solid var(--line);
-  border-radius:6px;
-  background:var(--surface);
-  color:var(--ink);
-  padding:12px 13px;
-  font-size:14px;
-  outline:none;
-  transition:border-color .16s ease,box-shadow .16s ease,background .16s ease;
-}
-.form-field textarea{min-height:126px;resize:vertical}
-.form-field input:focus,.form-field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in oklch,var(--accent) 14%,transparent);background:var(--bg-raised)}
-.contact-form .button{width:100%;margin-top:20px}
-.contact-form .button[disabled]{cursor:wait;opacity:.7;transform:none}
-.form-status{min-height:20px;margin-top:14px;color:var(--muted);font:500 11px/1.5 var(--mono)}
-.form-status[data-state=success]{color:var(--positive)}
-.form-status[data-state=error]{color:var(--error)}
-.site-footer{padding:28px 0;border-top:1px solid var(--line)}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:var(--faint);font:500 10px/1.5 var(--mono);letter-spacing:.045em;text-transform:uppercase}
-.footer-links{display:flex;gap:16px}.footer-links a,.footer-links button{padding:0;border:0;background:none;color:inherit;font:inherit;text-transform:inherit;letter-spacing:inherit;cursor:pointer}.footer-links a:hover,.footer-links button:hover{color:var(--accent)}
-.case-page{min-height:100vh;padding:132px 0 100px}
-.case-back{display:inline-flex;align-items:center;gap:9px;color:var(--muted);font:600 11px/1 var(--mono);transition:color .16s ease}
-.case-back:hover{color:var(--accent)}
-.case-hero{padding:52px 0 64px;border-bottom:1px solid var(--line)}
-.case-page h1{max-width:950px;margin-top:22px;font-size:clamp(3rem,7vw,6.8rem);font-weight:700;font-variation-settings:"wdth" 110;letter-spacing:-.055em;line-height:.9;text-wrap:balance}
-.case-lead{max-width:760px;margin-top:27px;color:var(--muted);font-size:clamp(1.08rem,2vw,1.35rem);line-height:1.55;text-wrap:pretty}
-.case-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:30px}
-.case-meta span{padding:0;color:var(--muted);font:500 10px/1.4 var(--mono);letter-spacing:.04em;text-transform:uppercase}
-.case-meta span+span::before{content:"·";margin:0 9px;color:var(--line-strong)}
-.case-proof{display:grid;grid-template-columns:repeat(4,1fr);margin-top:48px;border-block:1px solid var(--line);border-inline:0;overflow:hidden}
-.case-proof div{padding:18px 18px 18px 0;background:transparent;border-right:1px solid var(--line)}
-.case-proof div:last-child{border-right:0}
-.case-proof strong{display:block;color:var(--accent);font:650 1.2rem/1.2 var(--mono)}
-.case-proof span{display:block;margin-top:5px;color:var(--muted);font:500 10px/1.4 var(--mono);text-transform:uppercase}
-.case-visual{margin:52px 0 0;border-block:1px solid var(--line);border-inline:0;background:var(--surface);overflow:hidden}
-.case-visual img{width:100%;height:auto}
-.case-visual.case-diagram{--diagram-pad:clamp(20px,6vw,72px);padding:clamp(24px,5vw,56px) var(--diagram-pad) 0;background:var(--surface)}
-.case-diagram svg{width:100%;max-height:520px}
-.case-diagram figcaption{margin-inline:calc(0px - var(--diagram-pad));margin-top:22px;background:var(--bg-raised)}
-.case-visual figcaption{padding:12px 14px;display:flex;justify-content:space-between;gap:20px;color:var(--muted);font:500 10px/1.4 var(--mono);letter-spacing:.04em;text-transform:uppercase}
-.case-content{display:grid;grid-template-columns:230px minmax(0,720px);gap:clamp(52px,9vw,120px);justify-content:center;padding-top:70px}
-.case-facts{align-self:start;position:sticky;top:110px;border-top:1px solid var(--line)}
-.case-facts div{padding:14px 0;border-bottom:1px solid var(--line)}
-.case-facts dt{color:var(--faint);font:500 10px/1.3 var(--mono);letter-spacing:.055em;text-transform:uppercase}
-.case-facts dd{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5}
-.case-story>section{padding:0 0 50px;scroll-margin-top:110px}
-.case-story h2{font-size:clamp(1.55rem,3vw,2.15rem);line-height:1.1;letter-spacing:-.035em}
-.case-story p{margin-top:17px;color:var(--muted);font-size:15.5px;line-height:1.75;text-wrap:pretty}
-.case-story ul{list-style:none;padding:0;margin-top:18px;display:grid;gap:11px}
-.case-story li{position:relative;padding-left:20px;color:var(--muted);font-size:15px;line-height:1.65}
-.case-story li::before{content:"";position:absolute;left:0;top:.7em;width:8px;height:1px;background:var(--accent)}
-.case-callout{margin:5px 0 54px;padding:24px 0;border-block:1px solid var(--accent);border-inline:0;background:transparent;color:var(--ink);font-size:1.05rem;line-height:1.6;text-wrap:pretty}
-.resource-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.resource-links a{padding:0 0 4px;border:0;border-bottom:1px solid var(--line-strong);border-radius:0;color:var(--muted);font:600 10px/1.4 var(--mono);transition:border-color .16s ease,color .16s ease}
-.resource-links a:hover{border-color:var(--accent);color:var(--accent)}
-@media(max-width:1020px){
-  .hero{min-height:auto}
-  .hero-grid{grid-template-columns:1fr .72fr;gap:42px}
-  .hero h1{font-size:clamp(3.5rem,8vw,5.5rem)}
-  .section-head{grid-template-columns:1fr}.section-intro{grid-column:1}
-  .featured-project{grid-template-columns:1fr}.featured-media{min-height:430px}.featured-copy{min-height:430px}
-  .experience-layout{grid-template-columns:1fr}.education-stack{grid-template-columns:repeat(2,1fr)}
-  .about-layout{grid-template-columns:1fr;gap:60px}
-  .archive-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:840px){
-  .desktop-nav,.nav-pdf{display:none}
-  .mobile-menu{display:block}
-  .hero{padding-top:126px}
-  .hero-grid{grid-template-columns:1fr}
-  .hero-copy{max-width:760px}
-  .hero-dossier{width:min(580px,100%);transform:none}
-  .case-grid{grid-template-columns:1fr}
-  .build-row{grid-template-columns:46px minmax(0,1fr) auto}.build-row p{grid-column:2/-1}.build-tags{grid-column:2/-1;justify-content:flex-start}
-  .contact-layout{grid-template-columns:1fr}
-  .case-proof{grid-template-columns:repeat(2,1fr)}
-  .case-proof div:nth-child(2){border-right:0}.case-proof div:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .case-content{grid-template-columns:1fr}.case-facts{position:static;display:grid;grid-template-columns:repeat(2,1fr);gap:0 22px}
-}
-@media(max-width:620px){
-  :root{--shell:calc(100% - 32px)}
-  .site-header{inset-block-start:8px}.nav-shell{width:calc(100% - 16px);min-height:54px}
-  .brand{font-size:10px}
-  .hero{padding:112px 0 64px}
-  .hero h1{font-size:clamp(3.15rem,16vw,4.5rem);line-height:.92}
-  .hero-lead{font-size:1rem;margin-top:24px}
-  .hero-actions{align-items:stretch}.hero-actions .button{width:100%}
-  .hero-dossier{margin-top:4px}
-  .section{padding:78px 0}
-  .section-head{display:block;margin-bottom:38px}.section-title{margin-top:16px}.section-intro{margin-top:18px;padding:0}
-  .subsection-head{display:block}.subsection-head p{margin-top:12px}
-  .featured-project{min-height:0}.featured-media{min-height:300px}.featured-copy{min-height:390px;padding:28px}
-  .featured-copy h3{margin-top:45px;font-size:2rem}.featured-copy>p{font-size:14px}
-  .metric-strip{grid-template-columns:1fr}.metric{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-  .case-card{grid-template-columns:1fr}.case-card-media{height:auto;aspect-ratio:4/3}.case-card-body{padding:24px 0;min-height:0}
-  .career-panel{padding:26px}.career-head{display:block}.career-date{display:block;margin-top:12px}.education-stack{grid-template-columns:1fr}
-  .additional-role{grid-template-columns:1fr;gap:10px}
-  .build-row{grid-template-columns:38px 1fr;min-height:0;padding:25px 0}.build-row p,.build-tags{grid-column:2}.build-tags{justify-content:flex-start}
-  .capability-row{grid-template-columns:1fr;gap:7px}
-  .archive-grid{grid-template-columns:1fr}.archive-card{min-height:0}
-  .contact-form{padding:22px}
-  .footer-inner{display:block}.footer-inner>span{display:block}.footer-inner>span+span{margin-top:10px}.footer-inner>.footer-links{display:flex}
-  .case-page{padding-top:108px}.case-hero{padding-top:42px}
-  .case-page h1{font-size:clamp(2.8rem,15vw,4.2rem)}
-  .case-proof{grid-template-columns:1fr}.case-proof div{border-right:0;border-bottom:1px solid var(--line)}.case-proof div:last-child{border-bottom:0}
-  .case-visual figcaption{display:block}.case-visual figcaption span{display:block}.case-visual figcaption span+span{margin-top:4px}
-  .case-visual.case-diagram{--diagram-pad:18px;overflow-x:auto}.case-diagram svg,.case-diagram figcaption{min-width:820px}
-  .case-facts{grid-template-columns:1fr}
-}
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-}
-@media print{
-  .site-header,.scroll-progress,.hero-actions,.contact-form{display:none!important}
-  .hero,.section,.case-page{padding:24px 0}
-  .hero{min-height:auto}
-  .hero-grid,.section-head,.featured-project,.experience-layout,.about-layout,.contact-layout,.case-content{display:block}
-  .hero-dossier,.featured-media,.case-card-media{display:none}
-  .case-proof{break-inside:avoid}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d1213">
+  <meta name="color-scheme" content="light">
+  <title>Uriah D. Villa | Embedded Firmware Engineer</title>
+  <meta name="description" content="Uriah D. Villa is an embedded firmware engineer at Microchip Technology, working across low-power MCU applications, electronics, robotics, and edge AI.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Uriah D. Villa | Embedded Firmware Engineer">
+  <meta property="og:description" content="Uriah D. Villa is an embedded firmware engineer at Microchip Technology, working across low-power MCU applications, electronics, robotics, and edge AI.">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Uriah D. Villa","jobTitle":"Engineer II, MCU Applications","worksFor":{"@type":"Organization","name":"Microchip Technology"},"email":"uriah.villa2023@gmail.com","sameAs":["https://github.com/uvilla11","https://www.linkedin.com/in/uriah-villa/"]}</script>
+  <link rel="canonical" href="https://uvilla11.github.io/uriah-d-villa/">
+  <meta property="og:url" content="https://uvilla11.github.io/uriah-d-villa/">
+  <meta property="og:image" content="https://uvilla11.github.io/uriah-d-villa/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Oscilloscope-style hero reading From silicon to motion.">
+  <meta name="twitter:image" content="https://uvilla11.github.io/uriah-d-villa/og-image.png">
+  <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-boot');setTimeout(function(){document.documentElement.classList.add('boot-failsafe')},4000)}</script>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
-
-<header class="site-header">
-  <div class="nav-shell">
-    <a class="brand" href="#" aria-label="Uriah Villa, home">
-      <span class="brand-mark" aria-hidden="true"><span></span></span>
-      <span>URIAH VILLA</span>
-    </a>
-    <nav class="desktop-nav" aria-label="Primary navigation">
-      <a href="#work">Work</a>
-      <a href="#experience">Experience</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+<body class="page">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="benchGrid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="rgba(236,224,208,.06)" stroke-width="1"/></pattern>
+    <symbol id="i-ur" viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M6 4.5h5.5V10" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-dr" viewBox="0 0 16 16"><path d="M4.5 4.5l7 7M11.5 6v5.5H6" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-up" viewBox="0 0 16 16"><path d="M8 13V3.5M4 7.5l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-edge" viewBox="0 0 16 16"><path d="M1 12.5h5v-9h9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.8 9.2L6 6.8l2.2 2.4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-sine" viewBox="0 0 16 16"><path d="M1 8c2-6.5 4-6.5 7 0s5 6.5 7 0" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-pwm" viewBox="0 0 16 16"><path d="M1 12h2V4h4v8h1.5V4H13v8h2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-hall" viewBox="0 0 16 16"><path d="M1 5h3V1.5h5V5h6M1 10h6V6.5h5V10h3M1 15h1.5v-3.5h5V15H15" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 16 16"><path d="M2 5.5h12M2 10.5h12" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 16 16"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 16 16"><path d="M1.5 3.5h13v9h-13zM1.5 4l6.5 5 6.5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-fft" viewBox="0 0 16 16"><path d="M2 14.5V10M5 14.5V2.5M8 14.5V11M11 14.5V6M14 14.5v-3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-cursors" viewBox="0 0 16 16"><path d="M5 3.5v11M11 3.5v11M3 1.5h4M9 1.5h4M5 9h6" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-delta" viewBox="0 0 12 12"><path d="M6 1.6L10.8 10.4H1.2z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Uriah Villa, back to top">URIAH <span>VILLA.</span></a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#work">Work</a><a href="#about">About</a><a href="#experience">Experience</a>
+      <a class="nav-cta" href="#contact">Let's connect <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
+      <span class="nav-ind" aria-hidden="true"></span>
     </nav>
-    <div class="nav-actions">
-      <a class="nav-pdf" href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch color theme">
-        <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20.5 15.3A8.5 8.5 0 0 1 8.7 3.5 8.5 8.5 0 1 0 20.5 15.3Z"/></svg>
-      </button>
-      <details class="mobile-menu" id="mobileMenu">
-        <summary aria-label="Open navigation menu"><span class="menu-icon" aria-hidden="true"></span></summary>
-        <nav class="mobile-menu-panel" aria-label="Mobile navigation">
-          <a href="#work">Work</a>
-          <a href="#experience">Experience</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-          <a href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">LinkedIn profile ↗</a>
-        </nav>
-      </details>
-    </div>
+    <details class="mobile-menu" id="mobileMenu">
+      <summary><svg class="icon icon-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="icon icon-close" aria-hidden="true"><use href="#i-close"/></svg><span class="label-open">Menu</span><span class="label-close">Close</span></summary>
+      <nav class="mobile-panel" aria-label="Mobile navigation"><a href="#work">Work</a><a href="#about">About</a><a href="#experience">Experience</a><a href="#contact">Contact</a></nav>
+    </details>
   </div>
 </header>
 
 <main id="main">
-<div id="home">
-<section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="shell hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow">MCU Applications Engineer II · Microchip Technology</p>
-      <h1 id="hero-title" tabindex="-1">Embedded systems,<br>from <span>silicon</span> to motion.</h1>
-      <p class="hero-lead">I design boards, bring up firmware, and close the loop on physical systems—from PIC MCUs and motor drives to robotics and edge AI.</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#work">Explore selected work <span class="arrow" aria-hidden="true">↓</span></a>
-        <a class="button button-secondary" href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">View LinkedIn profile <span aria-hidden="true">↗</span></a>
+  <section class="hero" id="top" aria-labelledby="hero-title" data-mode="0">
+    <canvas class="scope-grid" aria-hidden="true"></canvas>
+    <div class="scope-scan" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="scope-status">
+        <dl class="scope-settings" aria-label="Scope settings">
+          <div><dt class="ch1">CH1</dt><dd><span data-out="vdiv">1.43</span><span data-out="vunit">&nbsp;V/div</span></dd></div>
+          <div><dt data-out="tlabel">Time</dt><dd><span data-out="tdiv">0.21 ms</span><span data-out="tunit">/div</span></dd></div>
+          <div class="trig"><dt data-out="triglabel">Trig</dt><dd><svg class="icon" aria-hidden="true"><use href="#i-edge"/></svg><span data-out="trig">CH1 rising · 1.65 V</span></dd></div>
+        </dl>
+        <div class="scope-keys">
+          <div class="key-set" role="group" aria-label="Signal">
+            <button type="button" class="key" data-mode="0" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="#i-sine"/></svg>Sense</button>
+            <button type="button" class="key" data-mode="1" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-pwm"/></svg>Control</button>
+            <button type="button" class="key" data-mode="2" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-hall"/></svg>Motion</button>
+          </div>
+          <div class="key-set" role="group" aria-label="Scope tools">
+            <button type="button" class="key key-tool" data-tool="fft" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-fft"/></svg>FFT</button>
+            <button type="button" class="key key-tool" data-tool="cursors" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-cursors"/></svg>Cursors</button>
+             <button type="button" class="key key-run" data-state="running" aria-label="Running: pause scope animation"><span class="run-dot" aria-hidden="true"></span><span class="run-label">Running</span></button>
+          </div>
+        </div>
       </div>
-      <p class="availability"><span aria-hidden="true">●</span> MESA, ARIZONA · HARDWARE-TO-FIRMWARE SYSTEMS ENGINEERING</p>
+
+      <h1 class="hero-title" id="hero-title"><span class="line">From silicon</span> <span class="line">to <em>motion.</em></span></h1>
+
+      <div class="scope-band" tabindex="0" role="group" aria-roledescription="oscilloscope" aria-label="Oscilloscope screen" aria-describedby="scopeHelp">
+        <canvas class="scope-trace" aria-hidden="true"></canvas>
+        <span class="ch" aria-hidden="true">1</span><span class="ch" aria-hidden="true">2</span><span class="ch" aria-hidden="true">3</span>
+        <div class="probe" aria-hidden="true"><span class="probe-text"></span></div>
+        <div class="cursor-read" aria-hidden="true" hidden>
+          <span><span class="k">A</span><span data-out="ca">+0.00 ms</span></span>
+          <span><span class="k">B</span><span data-out="cb">+0.00 ms</span></span>
+          <span><span class="k"><svg class="delta" aria-hidden="true"><use href="#i-delta"/></svg><span data-out="dl">t</span></span><span data-out="cd">0.00 ms</span></span>
+          <span class="inv"><span class="k">1/<svg class="delta" aria-hidden="true"><use href="#i-delta"/></svg>t</span><span data-out="cf">0 Hz</span></span>
+        </div>
+        <div class="handle cursor-handle" data-c="0" role="slider" tabindex="0" aria-label="Cursor A" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" hidden><span class="tab">A</span></div>
+        <div class="handle cursor-handle" data-c="1" role="slider" tabindex="0" aria-label="Cursor B" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" hidden><span class="tab">B</span></div>
+        <div class="handle trig-handle" role="slider" tabindex="0" aria-label="Trigger level" aria-orientation="vertical" aria-valuemin="-0.5" aria-valuemax="3.8" aria-valuenow="1.65" aria-valuetext="1.65 volts, triggered"><span class="tab">T</span></div>
+        <p class="band-caption" data-out="caption">Sense · analog sensor input</p>
+        <p class="scope-hint" aria-hidden="true">← → time · ↑ ↓ amplitude</p>
+        <p class="sr-only" id="scopeHelp">Live oscilloscope trace. With the screen focused, Left and Right arrows change the time scale and Up and Down change the amplitude. In FFT view, Left and Right move the frequency probe. The trigger and cursor handles are sliders.</p>
+      </div>
+      <div class="sr-only" id="scopeLive" aria-live="polite"></div>
+
+      <div class="hero-foot">
+        <div class="hero-copy">
+          <p class="hero-lead">I'm <strong>Uriah Villa</strong>, an embedded firmware engineer at Microchip Technology. I work on low-power MCU applications and connect firmware with the electronics, sensors, and physical systems around it.</p>
+          <div class="actions">
+            <a class="button button-primary" href="#work">Explore selected work <svg class="icon" aria-hidden="true"><use href="#i-dr"/></svg></a>
+            <a class="button button-ghost go-up" href="#contact">Get in touch <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
+          </div>
+          <p class="availability">Embedded firmware · Arizona</p>
+        </div>
+        <dl class="meters">
+          <div class="meter"><dt>Lower average current</dt><dd class="meter-note">PIC32CM PL10 · Lab 2 active vs Lab 4 SleepWalking · Ch4 <a href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode" target="_blank" rel="noopener noreferrer">Source: Microchip labs</a></dd><dd class="meter-value"><span class="seg" data-value="82" data-digits="2">82</span><span>%</span></dd></div>
+        </dl>
+      </div>
     </div>
+  </section>
 
-    <a class="hero-dossier" href="#case/psyche" aria-label="Open the ASU Capstone and NASA Psyche case study">
-      <div class="dossier-bar"><span>HEPHAESTUS / ASU CAPSTONE</span><span>PROTOTYPE</span></div>
-      <div class="artifact-stage">
-        <img src="Capstone_ASU-A_01_Hephaestus_Lander.png" width="640" height="690" alt="CAD rendering of the Team Hephaestus prototype asteroid lander">
-      </div>
-      <div class="dossier-foot">
-        <span><strong>Hephaestus landing system</strong><small>Custom PCB · PIC18 + PSoC · Hall positioning · 2024</small></span>
-        <span class="open-case">OPEN CASE <span class="arrow" aria-hidden="true">→</span></span>
-      </div>
-    </a>
-  </div>
-</section>
-<section class="section" id="work" aria-labelledby="work-title">
-  <div class="shell">
-    <div class="section-head">
-      <h2 class="section-title" id="work-title">Selected systems and supporting builds.</h2>
-      <p class="section-intro">Three case studies first, followed by a short index of the smaller systems behind the work.</p>
-    </div>
+  <section class="section work" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <header class="section-head"><h2 class="h2" id="work-title">Selected work<span class="dot">.</span></h2><p class="section-intro">Firmware first. Four case studies trace the constraint, decision, test, and limit behind each system.</p></header>
+      <div class="projects">
 
-    <a class="featured-project" href="#case/psyche">
-      <div class="featured-media">
-        <img src="psyche-poster.png" width="1400" height="919" loading="lazy" alt="Team Hephaestus engineering poster showing the prototype lander, custom PCB, fabrication, and slope testing">
-        <div class="media-caption"><span>ASU INNOVATION SHOWCASE / TEAM HEPHAESTUS</span><span>PROJECT ARTIFACT</span></div>
-      </div>
-      <div class="featured-copy">
-        <div class="project-topline"><span>FLAGSHIP CASE STUDY</span><span>2024</span></div>
-        <h3>ASU Capstone × NASA Psyche</h3>
-        <p>A proof-of-concept landing system for hypothesized asteroid surfaces. I led the embedded electronics: custom PCB, PIC and PSoC firmware, motor control, and Hall-effect rover positioning.</p>
-        <div class="metric-strip" role="group" aria-label="Project outcomes">
-          <div class="metric"><strong>±2°</strong><span>Positioning</span></div>
-          <div class="metric"><strong>500+</strong><span>Test cycles</span></div>
-          <div class="metric"><strong>36°</strong><span>Slope tested</span></div>
-        </div>
-        <span class="card-link">READ THE CASE STUDY <span class="arrow" aria-hidden="true">→</span></span>
-      </div>
-    </a>
-
-    <div class="case-grid">
-      <a class="case-card" href="#case/solarsense">
-        <div class="case-card-media">
-          <img src="EGR%20598%20SolarSPELL.jpeg" width="2048" height="1536" loading="lazy" alt="SolarSENSE team presenting its soil-sensing system at the ASU Innovation Showcase">
-        </div>
-        <div class="case-card-body">
-          <div class="project-topline"><span>EDGE AI / EMBEDDED</span><span>2025</span></div>
-          <h3>SolarSENSE</h3>
-          <p>Integrated Edge Impulse inference into LILYGO T-Higrow ESP32 firmware and an offline ESP-DASH interface after the model inputs had to be reconciled with the sensors actually on the board.</p>
-          <span class="card-link">VIEW SYSTEM CASE <span class="arrow" aria-hidden="true">→</span></span>
-        </div>
-      </a>
-
-      <a class="case-card" href="#case/shadeshift">
-        <div class="case-card-media">
-          <img src="ShadeShift-prototype.jpg" width="1600" height="1200" loading="lazy" alt="ShadeShift prototype eyewear with tinted modular lenses and external electronics on a workbench">
-        </div>
-        <div class="case-card-body">
-          <div class="project-topline"><span>MECHATRONICS / HUMAN FACTORS</span><span>2025</span></div>
-          <h3>ShadeShift</h3>
-          <p>A four-mode smart-eyewear proof of concept developed with Barrow Neurological Institute / Dignity Health, combining adjustable tint, color, stroboscopic training, and binasal occlusion.</p>
-          <span class="card-link">VIEW DESIGN CASE <span class="arrow" aria-hidden="true">→</span></span>
-        </div>
-      </a>
-    </div>
-    <div class="builds-block" id="builds">
-      <div class="subsection-head">
-        <h3>Bench index</h3>
-        <p>Motor control, automation, robotics, connected hardware, and systems modeling.</p>
-      </div>
-      <div class="build-list">
-        <article class="build-row">
-          <span class="build-number">01</span>
-          <h4>BLDC Motor Control</h4>
-          <p>Motor-control firmware on a dsPIC33EP256MC506, brought up and validated with oscilloscopes, logic analyzers, power supplies, and function generators.</p>
-          <div class="build-tags"><span class="tag">dsPIC33</span><span class="tag">Embedded C</span><span class="tag">Motor control</span></div>
+        <article class="project feature" id="pic32cm">
+          <figure class="art lab-art"><div class="lab-art-inner" role="img" aria-label="Progression from active MCU polling through standby to event-driven SleepWalking on PIC32CM PL10"><span>ACTIVE · 3.02 mA</span><span>RTC → EVSYS → ADC → DMA</span><strong>SLEEPWALKING · 559 µA</strong><small>Ch4 · Curiosity Nano Explorer / PAC1944</small></div></figure>
+          <div class="project-body">
+            <h3 class="project-title">PIC32CM low-power labs</h3>
+            <p class="project-kind">MCU applications · Microchip Technology</p>
+            <p class="project-text">Built out four public firmware labs from standby baseline to event-driven light sensing. The published Lab 2-to-Lab 4 Ch4 comparison reports 82% lower average current. A later technical brief measures the application under a different setup; the figures are not directly interchangeable.</p>
+            <ul class="tags"><li>PIC32CM PL10</li><li>RTC / EVSYS</li><li>ADC / DMA</li></ul>
+            <a class="text-link" href="pic32cm.html">Read the case study <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
+          </div>
         </article>
 
-        <a class="build-row" href="https://egr314-team-305.github.io/Team305.github.io" target="_blank" rel="noopener noreferrer">
-          <span class="build-number">02</span>
-          <h4>Room Weather Control <span aria-hidden="true">↗</span></h4>
-          <p>PIC18 and ESP32 system that reads temperature and light, moves physical blinds, and exchanges telemetry over Wi-Fi from a custom Cadence PCB.</p>
-          <div class="build-tags"><span class="tag">PIC18</span><span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">Cadence</span></div>
-        </a>
-
-        <article class="build-row">
-          <span class="build-number">03</span>
-          <h4>Support Forecasting &amp; Automation</h4>
-          <p>Co-developed Python automation over Salesforce data that removed 10+ hours of weekly reporting and supported an ML case-complexity forecast.</p>
-          <div class="build-tags"><span class="tag">Python</span><span class="tag">Salesforce</span><span class="tag">ML</span></div>
+        <article class="project feature" id="case/psyche">
+          <figure class="art">
+            <svg class="rig" data-rig="lander" viewBox="0 0 640 400" role="img" aria-label="Top-down diagram of a rotary platform indexing between six Hall-sensor destinations">
+              <rect width="640" height="400" fill="#111719"/><rect width="640" height="400" fill="url(#benchGrid)"/>
+              <circle class="st-faint" cx="320" cy="200" r="168" stroke-dasharray="2 7"/>
+              <circle class="st" cx="320" cy="200" r="150"/>
+              <g class="ticks"></g>
+              <rect class="hall" x="-7" y="-7" width="14" height="14" transform="translate(320 50)" data-on="1"/>
+              <rect class="hall" x="-7" y="-7" width="14" height="14" transform="translate(449.9 125) rotate(60)"/>
+              <rect class="hall" x="-7" y="-7" width="14" height="14" transform="translate(449.9 275) rotate(120)"/>
+              <rect class="hall" x="-7" y="-7" width="14" height="14" transform="translate(320 350)"/>
+              <rect class="hall" x="-7" y="-7" width="14" height="14" transform="translate(190.1 275) rotate(60)"/>
+              <rect class="hall" x="-7" y="-7" width="14" height="14" transform="translate(190.1 125) rotate(120)"/>
+              <g class="dlabel" text-anchor="middle" dominant-baseline="middle"><text x="320" y="22">D1</text><text x="478" y="109">D2</text><text x="478" y="291">D3</text><text x="320" y="378">D4</text><text x="162" y="291">D5</text><text x="162" y="109">D6</text></g>
+              <g class="rotor">
+                <path class="cu" d="M320 200V74"/><circle cx="320" cy="66" r="7" fill="#efad83"/>
+                <path class="st" d="M320 200v100M320 200l-86.6-50M320 200l86.6-50" stroke="#8e9b94"/>
+                <circle cx="320" cy="300" r="9" fill="#1b2624" stroke="#8e9b94" stroke-width="1.5"/><circle cx="233.4" cy="150" r="9" fill="#1b2624" stroke="#8e9b94" stroke-width="1.5"/><circle cx="406.6" cy="150" r="9" fill="#1b2624" stroke="#8e9b94" stroke-width="1.5"/>
+                <path d="M378 200l-29 50.2h-58L262 200l29-50.2h58z" fill="#23332f" stroke="#e0b18c" stroke-width="2"/>
+                <circle cx="320" cy="200" r="24" fill="none" stroke="#e59663" stroke-width="2"/><circle cx="320" cy="200" r="7" fill="#efad83"/>
+              </g>
+              <text class="hud-dim" x="28" y="40">POSITION</text><text class="hud" x="28" y="62" data-out="pos">D1 · 000°</text>
+              <text class="hud-dim" x="28" y="352">TOLERANCE</text><text class="hud" x="28" y="374">±2°</text>
+              <text class="hud-dim" x="612" y="40" text-anchor="end">INDEXING</text><text class="hud" x="612" y="62" text-anchor="end">HALL-EFFECT</text>
+              <text class="hud-dim" x="612" y="352" text-anchor="end">CONTROL</text><text class="hud" x="612" y="374" text-anchor="end">PIC18 + PSOC</text>
+            </svg>
+          </figure>
+          <div class="project-body">
+            <h3 class="project-title">Hephaestus Landing System</h3>
+            <p class="project-kind">Embedded system design · ASU capstone, 2024</p>
+             <p class="project-text">Led embedded electronics for an ASU capstone associated with the NASA Psyche mission. Built a custom PCB and Hall-effect positioning system; project reports cite ±2° rotation accuracy across six destinations and 500+ automated cycles.</p>
+            <ul class="tags"><li>PIC18</li><li>PSoC</li><li>KiCad</li><li>Embedded C</li></ul>
+            <a class="text-link" href="psyche.html">Read the case study <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
+          </div>
         </article>
 
-        <article class="build-row">
-          <span class="build-number">04</span>
-          <h4>SCARA Drawing Arm</h4>
-          <p>Two-link servo arm that draws user-defined shapes at chosen scale and speed, with inverse kinematics solved on the microprocessor in C.</p>
-          <div class="build-tags"><span class="tag">C</span><span class="tag">Kinematics</span><span class="tag">Robotics</span></div>
+        <article class="project" id="case/solarsense">
+           <figure class="art">
+             <svg class="rig" data-rig="soil" data-phase="idle" viewBox="0 0 640 400" role="img" aria-label="Soil probe board sending moisture and salinity readings to an offline, device-hosted dashboard">
+              <rect width="640" height="400" fill="#111719"/><rect width="640" height="400" fill="url(#benchGrid)"/>
+              <path d="M0 262Q90 248 170 262T330 258V400H0z" fill="#29221c"/>
+              <path d="M0 262Q90 248 170 262T330 258" fill="none" stroke="#6b5a49" stroke-width="1.5"/>
+              <g fill="#3b3129"><circle cx="40" cy="300" r="3"/><circle cx="210" cy="330" r="2.5"/><circle cx="270" cy="296" r="3"/><circle cx="70" cy="360" r="2"/><circle cx="160" cy="372" r="3"/><circle cx="300" cy="352" r="2"/></g>
+              <circle class="ripple" cx="112" cy="300" r="14"/><circle class="ripple" cx="112" cy="300" r="14"/><circle class="ripple" cx="112" cy="300" r="14"/>
+              <path d="M200 262c-2-34 2-58 0-86" fill="none" stroke="#7fa06f" stroke-width="3"/>
+              <path d="M200 206c-30-4-46-22-48-44 26 2 44 18 48 44zM201 186c28-8 42-28 42-50-26 6-40 24-42 50z" fill="#6f9a6b"/>
+              <rect x="92" y="118" width="40" height="200" rx="4" fill="#1f3b33" stroke="#7fa593" stroke-width="1.5"/>
+              <rect x="99" y="128" width="26" height="32" rx="2" fill="#c9c3b8"/>
+              <circle class="led-dot" cx="112" cy="178" r="4"/>
+              <path d="M104 270v38M112 270v38M120 270v38" stroke="#7fa593" stroke-width="1.2"/>
+              <path class="link" d="M140 150C220 80 300 80 360 118"/>
+              <rect x="360" y="78" width="252" height="244" rx="10" fill="#0d1314" stroke="#3c4a47" stroke-width="1.5"/>
+              <text class="hud-dim" x="380" y="108">SOIL MONITOR</text>
+              <rect x="522" y="93" width="72" height="22" rx="11" fill="none" stroke="#6f7f78"/><text class="hud-dim" x="558" y="108" text-anchor="middle">OFFLINE</text>
+              <text class="hud" x="380" y="148">Moisture</text><rect x="380" y="158" width="212" height="8" rx="4" fill="#243030"/><rect class="bar" x="380" y="158" width="212" height="8" rx="4" fill="#efad83" style="--lv:.66"/>
+              <text class="hud" x="380" y="194">Salinity</text><rect x="380" y="204" width="212" height="8" rx="4" fill="#243030"/><rect class="bar" x="380" y="204" width="212" height="8" rx="4" fill="#cfc3b2" style="--lv:.38"/>
+              <path d="M380 234h212" stroke="#2c3736"/>
+              <text class="hud-dim" x="380" y="258">ON-DEVICE INFERENCE</text>
+              <text class="infer" x="380" y="296" data-out="infer">Healthy</text>
+              <text class="hud-dim" x="28" y="40">LILYGO T-HIGROW · ESP32</text>
+              <text class="hud-dim" x="28" y="380" fill="#b9a893">MOISTURE + SALINITY</text>
+             </svg>
+           </figure>
+           <figure class="project-photo"><img src="EGR%20598%20SolarSPELL.jpeg" alt="SolarSENSE team with potted-soil sensing demo at the ASU Innovation Showcase" width="2048" height="1536" loading="lazy"><figcaption>SolarSENSE at the ASU Innovation Showcase · 2025</figcaption></figure>
+           <div class="project-body">
+             <h3 class="project-title">SolarSENSE</h3>
+             <p class="project-kind">Edge AI · Firmware integration</p>
+             <p class="project-text">Integrated a teammate-trained Edge Impulse model into LILYGO T-Higrow ESP32 firmware and its offline ESP DASH dashboard. The showcase proof of concept classified soil using the board's moisture and salinity readings, not direct NPK measurements.</p>
+            <ul class="tags"><li>ESP32</li><li>Edge Impulse</li><li>TinyML</li><li>ESP DASH</li></ul>
+             <a class="text-link" href="solarsense.html">Read the case study <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
+          </div>
         </article>
 
-        <a class="build-row" href="#case/microgrid">
-          <span class="build-number">05</span>
-          <h4>Critical-Facility Microgrid <span aria-hidden="true">→</span></h4>
-          <p>Independent XENDEE study for a Honolulu trauma center that challenged a physically questionable unconstrained optimum and rebuilt the scenario with explicit space assumptions.</p>
-          <div class="build-tags"><span class="tag">XENDEE</span><span class="tag">Power systems</span><span class="tag">Model validation</span></div>
-        </a>
+        <article class="project" id="case/shadeshift">
+          <figure class="art">
+            <svg class="rig" data-rig="optics" data-mode="tint" viewBox="0 0 640 400" role="img" aria-label="Modular therapeutic eyewear cycling through tint, hue, strobe, and occlusion lens modes">
+              <rect width="640" height="400" fill="#111719"/><rect width="640" height="400" fill="url(#benchGrid)"/>
+              <path class="film l" d="M136 156H300c4 0 6 4 5 10-5 48-25 80-73 82h-26c-42-2-66-34-72-82-1-6-2-10 2-10z"/>
+              <path class="film r" d="M504 156H340c-4 0-6 4-5 10 5 48 25 80 73 82h26c42-2 66-34 72-82 1-6 2-10-2-10z"/>
+              <path d="M136 156H300c4 0 6 4 5 10-5 48-25 80-73 82h-26c-42-2-66-34-72-82-1-6-2-10 2-10zM504 156H340c-4 0-6 4-5 10 5 48 25 80 73 82h26c42-2 66-34 72-82 1-6 2-10-2-10z" fill="none" stroke="#d9cfc2" stroke-width="6"/>
+              <path d="M104 150H536M300 160q20-14 40 0" fill="none" stroke="#d9cfc2" stroke-width="8" stroke-linecap="round"/>
+              <path d="M160 176l40-8M372 176l40-8" stroke="rgba(255,255,255,.35)" stroke-width="3" stroke-linecap="round"/>
+              <g class="pod">
+                <rect x="546" y="134" width="64" height="34" rx="8" fill="#26302e" stroke="#d9cfc2" stroke-width="2"/>
+                <circle cx="552" cy="144" r="3" fill="#e59663"/><circle cx="552" cy="158" r="3" fill="#e59663"/>
+                <circle class="led-dot" cx="596" cy="151" r="4"/>
+              </g>
+              <text class="hud-dim" x="28" y="40">MODE</text><text class="hud" x="28" y="62" data-out="mode">Tint</text>
+              <text class="hud-dim" x="612" y="40" text-anchor="end">PNLC PROTOTYPE</text><text class="hud" x="612" y="62" text-anchor="end">MODULAR FRAME</text>
+              <g text-anchor="middle"><text class="mode-lbl m0" x="160" y="326">TINT</text><text class="mode-lbl m1" x="248" y="326">HUE</text><text class="mode-lbl m2" x="346" y="326">STROBE</text><text class="mode-lbl m3" x="466" y="326">OCCLUSION</text></g>
+              <path d="M110 338H520" stroke="#2c3736"/>
+              <rect class="mode-bar" x="0" y="0" width="1" height="2" style="transform:translate(143px,337px) scaleX(34)"/>
+            </svg>
+           </figure>
+           <figure class="project-photo"><img src="ShadeShift-prototype.jpg" alt="White ShadeShift eyewear prototypes with modular attachments and colored inserts" width="1600" height="1200" loading="lazy"><figcaption>ShadeShift prototype and interchangeable attachments · 2025</figcaption></figure>
+           <div class="project-body">
+            <h3 class="project-title">ShadeShift</h3>
+            <p class="project-kind">Medical wearables · Team lead</p>
+             <p class="project-text">Led a team building modular eyewear for tint, hue, strobe, and binasal occlusion. The documented prototype used PNLC film and external electronics; switching latency remained an open issue. This was not clinically validated.</p>
+             <ul class="tags"><li>ESP32</li><li>PNLC prototype</li><li>3D printing</li></ul>
+             <a class="text-link" href="shadeshift.html">Read the case study <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
+          </div>
+        </article>
+
       </div>
-    </div>
-  </div>
-</section>
-<section class="section" id="experience" aria-labelledby="experience-title">
-  <div class="shell">
-    <div class="section-head">
-      <h2 class="section-title" id="experience-title">Work, study, and the systems between them.</h2>
-      <p class="section-intro">Professional work, education, and the supporting experience that shaped how I build.</p>
-    </div>
-
-    <div class="experience-layout">
-      <article class="career-panel">
-        <div class="career-head">
-          <h3 class="career-company">Microchip Technology</h3>
-        <p class="career-date">MICROCHIP TENURE · 2023 — PRESENT</p>
-        </div>
-        <h4 class="career-role">Engineer II, MCU Applications</h4>
-        <p class="career-subtitle">New Product Development · Current position</p>
-        <ul class="career-list">
-          <li>Author and maintain 10+ firmware solutions and customer-facing application examples across 8-bit and 32-bit MCU families.</li>
-          <li>Develop technical material for low-power optimization and support documentation for new microcontroller products.</li>
-          <li>Work across customers, silicon, tools, and applications teams to move PIC-based designs from evaluation to implementation.</li>
+      <section class="bench" aria-labelledby="bench-title">
+        <h3 id="bench-title">Supporting work</h3>
+        <ul class="bench-list">
+          <li><h4>Closed-loop BLDC control</h4><p>Built and tested a dsPIC33 motor-control project with oscilloscope and logic-analyzer measurements during a Microchip internship.</p></li>
+          <li><h4>Room Weather Control</h4><p>Designed a PIC18 and ESP32 room-weather controller with a Cadence PCB for an ASU team project. <a href="https://egr314-team-305.github.io/Team305.github.io/" target="_blank" rel="noopener noreferrer">Team site <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a></p></li>
+          <li><h4>Support forecasting &amp; automation</h4><p>Co-developed internal Python reporting and escalation tools. Estimated more than 10 hours saved per week; internal systems and code are not public.</p></li>
         </ul>
-        <div class="career-progression">
-          <span>Progression at Microchip</span>
-          <p>MCU Applications Intern · Support Engagement Intern · Corporate Applications Intern</p>
-        </div>
-      </article>
+        <h4 class="bench-subhead">Other systems</h4>
+        <ul class="bench-list">
+          <li><h4>SCARA drawing arm</h4><p>Two-link servo drawing arm with inverse kinematics in C, documented as a supporting academic build.</p></li>
+          <li id="microgrid"><span id="case/microgrid" class="legacy-anchor" aria-hidden="true"></span><h4>Critical-facility microgrid</h4><p>Modeled a Honolulu trauma-center scenario in XENDEE; reran outage cases with solar and battery space constraints. Modeled study, not an installed system.</p></li>
+        </ul>
+      </section>
+    </div>
+  </section>
 
-      <div class="education-stack">
-        <article class="education-panel">
-          <p class="panel-label">M.S. / ENGINEERING</p>
-          <h3>Arizona State University</h3>
-          <p>Accelerated 4+1 program · Systems, mechatronics, and power</p>
-          <strong>4.0 GPA · WITH DISTINCTION</strong>
+  <section class="section about" id="about" aria-labelledby="about-title">
+    <div class="wrap about-grid">
+      <div class="about-side">
+        <h2 class="h2" id="about-title">The work happens between disciplines<span class="dot">.</span></h2>
+         <p class="about-note">Firmware, electronics, and physical systems.<br>Arizona</p>
+      </div>
+      <div class="about-main">
+          <p class="about-copy">I'm Uriah, an embedded firmware engineer focused on microcontrollers, low-power design, and robotics. My work connects firmware with the circuits, sensors, actuators, and people around it.</p>
+          <p class="about-copy secondary">I started at sixteen in Chinle, Arizona, repairing phones and laptops. Five years of finding hardware faults taught me to isolate one subsystem at a time and check the behavior on the bench.</p>
+         <p class="about-copy secondary">At Microchip Technology, I moved from applications support and automation to PIC18 examples and PIC32CM PL10 low-power labs. At ASU, I integrated an edge-AI soil monitor, led a therapeutic eyewear team, and analyzed a critical-facility microgrid. I test assumptions against the hardware and constraints at hand.</p>
+         <section class="skill-group" aria-labelledby="sk1"><h3 id="sk1">Firmware &amp; software</h3><ul class="pills"><li>C / C++</li><li>Python</li><li>PIC18 / PIC32CM</li><li>dsPIC33</li><li>ESP32</li><li>Edge Impulse</li></ul></section>
+        <section class="skill-group" aria-labelledby="sk2"><h3 id="sk2">Hardware &amp; tools</h3><ul class="pills"><li>PCB layout</li><li>KiCad</li><li>Cadence</li><li>Motor control</li><li>Oscilloscopes</li><li>Logic analyzers</li><li>MATLAB / Simulink</li></ul></section>
+      </div>
+    </div>
+  </section>
+
+  <section class="section experience" id="experience" aria-labelledby="experience-title">
+    <div class="wrap">
+      <header class="section-head"><h2 class="h2" id="experience-title">Experience<span class="dot">.</span></h2><p class="section-intro">Practical engineering, customer-facing support, and interdisciplinary study.</p></header>
+      <div class="experience-layout">
+        <article class="career-panel" aria-labelledby="microchip-title">
+          <div class="career-head"><h3 id="microchip-title">Microchip Technology</h3><p>Chandler, AZ · 2023 to present</p></div>
+          <ol class="career-roles">
+            <li><div class="career-role-head"><h4>Engineer II, MCU Applications</h4><time>Jan 2026 – Present</time></div><p>Developed four public PIC32CM PL10 low-power labs using RTC, ADC, event system, DMA, and UART. Authored follow-up Microchip brief TB3388, which uses a different measurement setup. <a href="pic32cm.html">Inspect the firmware labs and measurements <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a></p></li>
+            <li><div class="career-role-head"><h4>MCU Applications Intern</h4><time>May 2025 – Jan 2026</time></div><p>Developed PIC18 customer-facing application examples and evaluation-board firmware with cross-functional teams.</p></li>
+            <li><div class="career-role-head"><h4>Support Engagement Engineer Intern</h4><time>Aug 2024 – May 2025</time></div><p>Co-developed internal Python reporting and escalation tools. Estimated more than 10 hours of weekly reporting time saved; no internal code or customer data is shared.</p></li>
+            <li><div class="career-role-head"><h4>Corporate Applications Engineer Intern</h4><time>Aug 2023 – Aug 2024</time></div><p>Handled an estimated 100+ support cases and built a dsPIC33 BLDC motor-control project using bench instrumentation.</p></li>
+          </ol>
         </article>
-        <article class="education-panel">
-          <p class="panel-label">B.S.E. / ROBOTICS</p>
-          <h3>Arizona State University</h3>
-          <p>Embedded systems, computational modeling, and robotic development</p>
-          <strong>CUM LAUDE · 2024</strong>
-        </article>
+        <div class="education-stack" id="education" aria-label="Education">
+          <article class="education-panel"><p class="degree-label">M.S. / Engineering</p><h3>Arizona State University</h3><p>Accelerated 4+1 program · systems, mechatronics, and power</p><strong>4.0 GPA · With Distinction · Dec 2025</strong></article>
+          <article class="education-panel"><p class="degree-label">B.S.E. / Robotics</p><h3>Arizona State University</h3><p>Embedded systems, computational modeling, and robotics</p><strong>Cum laude · 2024</strong></article>
+        </div>
       </div>
+      <article class="additional-role"><div><p class="degree-label">Concurrent role</p><p class="additional-date">Feb 2023 – Dec 2025</p></div><div><h3>Student Services Coordinator Senior</h3><p class="additional-org">Arizona State University · Mesa, AZ</p><p>Held alongside Microchip roles and graduate study. Built a QR-based Express Advising intake workflow to improve access to advising.</p></div></article>
     </div>
+  </section>
 
-    <article class="additional-role">
+  <section class="section archive-note" id="archive" aria-labelledby="archive-title"><div class="wrap"><h2 class="h2" id="archive-title">Document archive</h2><p>Full project documents are under review for the new site. Existing file addresses remain available for previous links.</p><a class="text-link" href="#work">Return to selected work <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a></div></section>
+
+  <section class="section contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact-grid">
       <div>
-        <p class="panel-label">ADDITIONAL EXPERIENCE</p>
-        <p class="career-date">2023 — 2025</p>
+        <h2 class="h2" id="contact-title">Let's build something that works in the real world.</h2>
+        <p class="contact-lead">I'm interested in embedded systems, robotics, and teams turning difficult ideas into tangible, tested technology.</p>
+        <nav class="socials" aria-label="Contact and social links">
+           <a href="mailto:uriah.villa2023@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>uriah.villa2023@gmail.com</a>
+          <a href="https://github.com/uvilla11" target="_blank" rel="noopener noreferrer">GitHub <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
+          <a href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">LinkedIn <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
+        </nav>
       </div>
-      <div>
-        <h3>Student Services Coordinator Senior · Arizona State University</h3>
-        <p>Built a QR-based express-advising intake workflow that reduced front-desk resource time by 70% and helped the office serve 20% more students.</p>
-      </div>
-    </article>
-  </div>
-</section>
-<section class="section" id="about" aria-labelledby="about-title">
-  <div class="shell">
-    <div class="section-head">
-      <h2 class="section-title" id="about-title">I learned electronics by repairing what failed.</h2>
-      <p class="section-intro">Embedded engineering grounded in repair work, bench validation, and an instinct for the complete system.</p>
+      <form class="contact-form" id="contactForm" novalidate hidden>
+        <label for="sender">Your name</label><input class="field" id="sender" name="name" autocomplete="name" required maxlength="100" aria-describedby="senderError">
+        <p class="field-error" id="senderError" aria-live="polite"></p>
+        <label for="senderEmail">Your email</label><input class="field" id="senderEmail" name="email" type="email" autocomplete="email" required maxlength="254" aria-describedby="senderEmailError">
+        <p class="field-error" id="senderEmailError" aria-live="polite"></p>
+        <label for="message">Your message</label><textarea class="field" id="message" name="message" required maxlength="4000" aria-describedby="messageError"></textarea>
+        <p class="field-error" id="messageError" aria-live="polite"></p>
+        <button type="submit" class="button button-primary go-up"><span class="submit-label">Compose email</span> <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></button>
+        <p class="form-note" id="formNote" aria-live="polite">Opens your email app with the message filled in. This page does not send or store messages.</p>
+      </form>
     </div>
-
-    <div class="about-layout">
-      <div class="about-copy">
-        <p class="large-copy">I started at sixteen, repairing cracked phones and dead laptops in Chinle, Arizona—five years of learning why electronics fail before I formally studied how they work.</p>
-        <p class="body-copy">That instinct stayed with me. I learned early to verify the datasheet on the bench, isolate one subsystem at a time, and keep going until the physical behavior matches the model. Today I do that work at Microchip, where firmware and application examples help engineers build on PIC microcontrollers.</p>
-        <p class="body-copy">I completed an accelerated M.S. in Engineering with a 4.0 while working, after earning a B.S.E. in Robotics cum laude. I am most at home wherever hardware, firmware, and motion meet.</p>
-      </div>
-
-      <dl class="capability-table">
-        <div class="capability-row">
-          <dt>Firmware &amp; silicon</dt>
-          <dd>Embedded C/C++, PIC18, PIC32, dsPIC, PSoC, ESP32, peripheral bring-up, low-power techniques</dd>
-        </div>
-        <div class="capability-row">
-          <dt>Hardware</dt>
-          <dd>KiCad, Cadence, PCB layout, motor drivers, analog/digital circuits, soldering, board bring-up</dd>
-        </div>
-        <div class="capability-row">
-          <dt>Lab &amp; validation</dt>
-          <dd>Oscilloscopes, logic analyzers, power supplies, function generators, automated test, fault isolation</dd>
-        </div>
-        <div class="capability-row">
-          <dt>Systems</dt>
-          <dd>Motor control, robotics, TinyML / Edge Impulse, MQTT, Python automation, Simulink, XENDEE</dd>
-        </div>
-        <div class="capability-row">
-          <dt>Certifications</dt>
-          <dd>Universal Robots Core / Application / Pro tracks · Simulink Fundamentals · Arizona Technical Skills Standards</dd>
-        </div>
-      </dl>
-    </div>
-  </div>
-</section>
-<section class="section" id="archive" aria-labelledby="archive-title">
-  <div class="shell">
-    <div class="section-head">
-      <h2 class="section-title" id="archive-title">Original reports and project artifacts.</h2>
-      <p class="section-intro">The source material behind the case studies, available when you want the longer record.</p>
-    </div>
-
-    <div class="archive-grid">
-      <a class="archive-card" href="Uriah%20Villa%20Portfolio%20MS%20in%20Engineering.pdf" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">PDF / 2025</span>
-        <h3>Archived M.S. Engineering Portfolio</h3>
-        <p>October 2025 academic submission. Role and degree-status language reflects its original filing date.</p>
-        <span class="file-action">OPEN DOCUMENT ↗</span>
-      </a>
-
-      <a class="archive-card" href="Appendix%20for%20Portfolio_%20MS%20in%20Engineering.pdf" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">PDF / APPENDIX</span>
-        <h3>Portfolio Evidence Appendix</h3>
-        <p>Supporting artifacts, technical evidence, and documentation for the graduate portfolio.</p>
-        <span class="file-action">OPEN DOCUMENT ↗</span>
-      </a>
-
-      <a class="archive-card" href="ShadeShift_%20Smart%20Modular%20Eyewear%20for%20Neurological%20Recovery%20and%20Visual%20Stress%20Alleviation.pdf" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">PDF / EGR 555</span>
-        <h3>ShadeShift Research Paper</h3>
-        <p>Design rationale, modalities, prototype architecture, constraints, and next-step clinical work.</p>
-        <span class="file-action">OPEN PAPER ↗</span>
-      </a>
-
-      <a class="archive-card" href="psyche-poster.png" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">PNG / SHOWCASE</span>
-        <h3>Hephaestus Project Poster</h3>
-        <p>Fabrication, electronics, simulation, and validation summary from the ASU showcase.</p>
-        <span class="file-action">VIEW ARTIFACT ↗</span>
-      </a>
-
-      <a class="archive-card" href="https://psyche.ssl.berkeley.edu/get-involved/capstone-projects/capstone-projects-tungsten-class/landing-system-for-hypothesized-surfaces-asu-a/" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">EXTERNAL / NASA PSYCHE</span>
-        <h3>Official Capstone Listing</h3>
-        <p>Mission-partner page for the ASU-A Landing System for Hypothesized Surfaces project.</p>
-        <span class="file-action">VISIT PROJECT ↗</span>
-      </a>
-
-      <a class="archive-card" href="EGR%20598%20SolarSPELL.jpeg" target="_blank" rel="noopener noreferrer">
-        <span class="file-type">JPG / SHOWCASE</span>
-        <h3>SolarSENSE Demonstration</h3>
-        <p>The EGR 598 team and prototype at the 2025 ASU Innovation Showcase.</p>
-        <span class="file-action">VIEW ARTIFACT ↗</span>
-      </a>
-    </div>
-  </div>
-</section>
-<section class="section contact-section" id="contact" aria-labelledby="contact-title">
-  <div class="shell contact-layout">
-    <div class="contact-copy">
-      <h2 id="contact-title">Need firmware that holds up on the bench?</h2>
-      <p>Let’s talk about embedded systems, MCU applications, robotics, motor control, or a hardware problem that needs a complete answer.</p>
-      <a class="email-link" href="mailto:uvilla11@gmail.com">uvilla11@gmail.com</a>
-      <nav class="social-links" aria-label="Professional links">
-        <a href="https://www.linkedin.com/in/uriah-villa/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-        <a href="https://github.com/uvilla11" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        <a href="Uriah%20Villa%20Portfolio%20MS%20in%20Engineering.pdf" target="_blank" rel="noopener noreferrer">Archived M.S. portfolio ↗</a>
-      </nav>
-    </div>
-
-    <form class="contact-form" id="contactForm" action="https://formspree.io/f/xpzvwdav" method="POST">
-      <input type="hidden" name="_subject" value="Portfolio inquiry for Uriah Villa">
-      <div class="form-field">
-        <label for="contactName"><span>Name</span><span>Required</span></label>
-        <input id="contactName" name="name" type="text" autocomplete="name" required>
-      </div>
-      <div class="form-field">
-        <label for="contactEmail"><span>Email</span><span>Required</span></label>
-        <input id="contactEmail" name="email" type="email" autocomplete="email" required>
-      </div>
-      <div class="form-field">
-        <label for="contactMessage"><span>Message</span><span>Required</span></label>
-        <textarea id="contactMessage" name="message" required></textarea>
-      </div>
-      <button class="button button-primary" id="submitButton" type="submit">Send message <span aria-hidden="true">↗</span></button>
-      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-    </form>
-  </div>
-</section>
-</div>
-
-<div id="casePages">
-<article class="case-page" id="case-psyche" data-title="ASU Capstone × NASA Psyche" hidden>
-  <div class="shell">
-    <a class="case-back" href="#work"><span aria-hidden="true">←</span> BACK TO SELECTED WORK</a>
-    <header class="case-hero">
-      <h1 tabindex="-1">Landing system for hypothesized surfaces.</h1>
-      <p class="case-lead">An ASU student capstone with NASA Psyche as mission partner: a steel-and-aluminum prototype lander designed to stabilize on unknown terrain and deploy an internal rover through one of six doors.</p>
-      <div class="case-meta">
-        <span>Embedded system design lead</span>
-        <span>Team Hephaestus</span>
-        <span>2024</span>
-        <span>Proof of concept · not flight hardware</span>
-      </div>
-      <div class="case-proof" role="group" aria-label="Psyche project validation results">
-        <div><strong>±2°</strong><span>Rover positioning</span></div>
-        <div><strong>500+</strong><span>Automated positioning cycles</span></div>
-        <div><strong>36°</strong><span>Physical slope test</span></div>
-        <div><strong>2.794</strong><span>Simulated safety factor</span></div>
-      </div>
-    </header>
-
-    <figure class="case-visual">
-      <img src="psyche-poster.png" width="1400" height="919" loading="lazy" alt="Team Hephaestus showcase poster with project approach, fabrication images, custom PCB, completed lander, and slope testing">
-      <figcaption><span>PROJECT ARTIFACT / ASU INNOVATION SHOWCASE</span><span>TEAM HEPHAESTUS · 2024</span></figcaption>
-    </figure>
-
-    <div class="case-content">
-      <dl class="case-facts" aria-label="Project facts">
-        <div><dt>Role</dt><dd>Embedded System Design Lead</dd></div>
-        <div><dt>Mission partner</dt><dd>NASA Psyche via ASU Capstone</dd></div>
-        <div><dt>Firmware</dt><dd>Embedded C · PIC18 · PSoC</dd></div>
-        <div><dt>Hardware</dt><dd>KiCad · motor drivers · Hall sensing</dd></div>
-        <div><dt>Mechanical test</dt><dd>Slopes through 36°</dd></div>
-        <div><dt>Simulation</dt><dd>2 m/s impact scenario</dd></div>
-      </dl>
-
-      <div class="case-story">
-        <section>
-        <h2>Design for terrain nobody has seen.</h2>
-          <p>Because 16 Psyche’s surface is not fully characterized, the team had to design around uncertainty: steep slopes, hard impact, and unknown friction. The mechanical concept paired a rounded underbody that could settle toward a stable posture with outward-opening panels that expanded the footprint after landing.</p>
-          <p>The central electronics problem was just as physical: rotate an internal rover to the correct one of six exits, align it repeatably, and coordinate that motion with the door and indication systems.</p>
-        </section>
-
-        <section>
-        <h2>One board, two controllers, one integrated system.</h2>
-          <p>I owned the embedded electronics end to end: the custom KiCad PCB, controller integration, motor-drive circuitry, Hall-sensor conditioning, and the firmware required to coordinate the prototype.</p>
-          <ul>
-            <li>PIC firmware controlled rover motion and the indexed rotation sequence.</li>
-            <li>PSoC firmware handled door and LED functions, keeping responsibilities explicit across the system.</li>
-            <li>Six fixed magnets created repeatable 60° destinations for Hall-effect position detection.</li>
-            <li>The board integrated the controllers, motor drivers, signal conditioning, power, and system I/O in one testable assembly.</li>
-          </ul>
-        </section>
-
-        <aside class="case-callout">The valuable result was not a perfect first board. It was a documented path from an under-rated driver and Hall sensing that required signal conditioning to a revised PCB that could survive repeated system testing.</aside>
-
-        <section>
-        <h2>Revision was part of the engineering.</h2>
-          <p>Bring-up exposed the real constraints. The team replaced an under-rated motor driver, added Hall-signal conditioning, moved selected op-amps from surface-mount to through-hole parts for practical integration, and revised the PCB to version 1.1. Those changes were driven by bench behavior, not aesthetics.</p>
-          <p>The result was a system that could be isolated and validated by subsystem—power, controllers, sensing, motor actuation, then coordinated operation—before full mechanical tests.</p>
-        </section>
-
-        <section>
-        <h2>Measured results, with the boundary stated.</h2>
-          <p>The rover positioning mechanism achieved ±2° accuracy across 500+ automated positioning cycles. The physical lander was tested on slopes through 36°, exceeding the project criterion of greater than 20°.</p>
-          <p>A SolidWorks 2 m/s impact simulation using a recommended titanium-alloy material assumption reported 1.8 mm maximum deformation and a 2.794 safety factor. Those values do not describe the steel-and-aluminum physical prototype and are distinct from the physical slope and positioning tests.</p>
-        </section>
-
-        <section>
-        <h2>Follow the evidence.</h2>
-          <p>This was a university proof of concept developed with a mission partner—not NASA flight hardware. The project listing and original showcase material below provide the fuller context.</p>
-          <div class="resource-links">
-            <a href="https://psyche.ssl.berkeley.edu/get-involved/capstone-projects/capstone-projects-tungsten-class/landing-system-for-hypothesized-surfaces-asu-a/" target="_blank" rel="noopener noreferrer">Official project page ↗</a>
-            <a href="psyche-poster.png" target="_blank" rel="noopener noreferrer">Showcase poster ↗</a>
-            <a href="Capstone_ASU-A_01_Hephaestus_Lander.png" target="_blank" rel="noopener noreferrer">Lander CAD render ↗</a>
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="case-page" id="case-solarsense" data-title="SolarSENSE — Edge AI Soil Sensing" hidden>
-  <div class="shell">
-    <a class="case-back" href="#work"><span aria-hidden="true">←</span> BACK TO SELECTED WORK</a>
-    <header class="case-hero">
-      <h1 tabindex="-1">Soil-health inference without a cloud dependency.</h1>
-      <p class="case-lead">An EGR 598 SolarSPELL course project that combined live soil sensing, Edge Impulse inference, and an offline ESP-DASH interface on a LILYGO T-Higrow ESP32 platform.</p>
-      <div class="case-meta">
-        <span>Firmware &amp; dashboard integration</span>
-        <span>ASU SolarSPELL Initiative</span>
-        <span>2025</span>
-        <span>Controlled prototype demonstration</span>
-      </div>
-      <div class="case-proof" role="group" aria-label="SolarSENSE system summary">
-        <div><strong>Local</strong><span>On-device inference</span></div>
-        <div><strong>ESP32</strong><span>Deployment target</span></div>
-        <div><strong>2</strong><span>Primary model inputs</span></div>
-        <div><strong>Offline</strong><span>Device-hosted interface</span></div>
-      </div>
-    </header>
-
-    <figure class="case-visual">
-      <img src="EGR%20598%20SolarSPELL.jpeg" width="2048" height="1536" loading="lazy" alt="SolarSENSE students and prototype display at the ASU Innovation Showcase">
-      <figcaption><span>CONTROLLED PROTOTYPE DEMONSTRATION</span><span>ASU INNOVATION SHOWCASE · 2025</span></figcaption>
-    </figure>
-
-    <div class="case-content">
-      <dl class="case-facts" aria-label="Project facts">
-        <div><dt>Role</dt><dd>Firmware and dashboard integration</dd></div>
-        <div><dt>Platform</dt><dd>LILYGO T-Higrow · ESP32</dd></div>
-        <div><dt>Model tooling</dt><dd>Edge Impulse</dd></div>
-        <div><dt>Interface</dt><dd>ESP-DASH · device hosted</dd></div>
-        <div><dt>Inputs</dt><dd>Moisture · salinity / EC</dd></div>
-        <div><dt>Context</dt><dd>EGR 598 · SolarSPELL</dd></div>
-      </dl>
-
-      <div class="case-story">
-        <section>
-        <h2>Turn sensor readings into a useful local decision.</h2>
-          <p>SolarSENSE explored a low-cost soil-health tool for small-scale agricultural contexts where connectivity and laboratory access cannot be assumed. The device needed to collect live readings, run inference locally, and present a result from hardware a user could carry into the field.</p>
-        </section>
-
-        <section>
-        <h2>The model features did not match the board.</h2>
-          <p>The initial data centered on NPK values, but the available T-Higrow hardware did not include NPK sensors. It exposed moisture, electrical-conductivity / salinity, temperature, humidity, and light sensing instead. The team had to pivot the model toward inputs the physical system could actually produce.</p>
-          <p>That mismatch became the defining engineering decision: prefer a coherent end-to-end system over a stronger-looking model that depended on unavailable measurements.</p>
-        </section>
-
-        <aside class="case-callout">A model that cannot receive its features from deployed hardware is not an embedded-AI system. The useful work was closing that gap.</aside>
-
-        <section>
-        <h2>Bridge inference, firmware, and interface.</h2>
-          <p>My primary contribution was integrating the Edge Impulse deployment output with the existing ESP32 firmware and ESP-DASH framework. The finished build read live sensors, ran the adapted model on-device, and surfaced both raw values and the resulting soil-health prediction through a browser interface hosted by the board.</p>
-          <ul>
-            <li>Mapped the generated model files and dependencies into the Arduino project.</li>
-            <li>Resolved compile and integration issues between the inference code and dashboard firmware.</li>
-            <li>Connected model results to the same local interface that displayed the sensor values.</li>
-            <li>Kept the experience available without a remote cloud service.</li>
-          </ul>
-        </section>
-
-        <section>
-        <h2>A working prototype, not a field trial.</h2>
-          <p>The integrated prototype was demonstrated against prepared soil conditions at the ASU showcase. The supplied reports describe more than one model and dataset iteration, so this portfolio does not collapse them into one headline accuracy figure.</p>
-          <p>The work was not a deployment in Rwanda. It is presented here as a controlled course prototype rather than generalized field performance.</p>
-        </section>
-
-        <section>
-        <h2>See the project in its original context.</h2>
-          <div class="resource-links">
-            <a href="EGR%20598%20SolarSPELL.jpeg" target="_blank" rel="noopener noreferrer">Showcase photograph ↗</a>
-            <a href="Uriah%20Villa%20Portfolio%20MS%20in%20Engineering.pdf" target="_blank" rel="noopener noreferrer">Archived academic portfolio ↗</a>
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="case-page" id="case-shadeshift" data-title="ShadeShift — Therapeutic Eyewear" hidden>
-  <div class="shell">
-    <a class="case-back" href="#work"><span aria-hidden="true">←</span> BACK TO SELECTED WORK</a>
-    <header class="case-hero">
-      <h1 tabindex="-1">Four visual modes, one modular platform.</h1>
-      <p class="case-lead">A smart-eyewear proof of concept created with Barrow Neurological Institute / Dignity Health for visual stress and rehabilitation contexts following neurological injury.</p>
-      <div class="case-meta">
-        <span>Team lead</span>
-        <span>EGR 555</span>
-        <span>2025</span>
-        <span>Proof of concept · no clinical efficacy claim</span>
-      </div>
-      <div class="case-proof" role="group" aria-label="ShadeShift system summary">
-        <div><strong>4</strong><span>Prototype visual modes</span></div>
-        <div><strong>ESP32</strong><span>Prototype controller</span></div>
-        <div><strong>PDLC</strong><span>Stroboscopic element</span></div>
-        <div><strong>PLA</strong><span>Iterated frame system</span></div>
-      </div>
-    </header>
-
-    <figure class="case-visual case-diagram" role="region" tabindex="0" aria-label="ShadeShift concept diagram. Scroll horizontally on small screens.">
-      <svg role="img" aria-labelledby="shadeshift-diagram-title" viewBox="0 0 840 420" fill="none">
-        <title id="shadeshift-diagram-title">Technical line diagram of the modular ShadeShift eyewear concept</title>
-        <g transform="translate(64 72)">
-          <g stroke="currentColor" stroke-width="3">
-            <path d="M0 135C0 57 64 0 151 0s151 57 151 135v31c0 52-42 94-94 94H94c-52 0-94-42-94-94v-31Z"/>
-            <path d="M346 135C346 57 410 0 497 0s151 57 151 135v31c0 52-42 94-94 94H440c-52 0-94-42-94-94v-31Z"/>
-            <path d="M302 121h44M0 124l-52-28M648 124l52-28"/>
-          </g>
-          <g stroke="var(--accent)" stroke-width="2">
-            <rect x="66" y="62" width="170" height="142" rx="22"/>
-            <rect x="412" y="62" width="170" height="142" rx="22"/>
-            <path d="M151 62V15M497 62V15"/><circle cx="151" cy="8" r="7"/><circle cx="497" cy="8" r="7"/>
-          </g>
-          <g stroke="var(--signal)" stroke-width="2" stroke-dasharray="7 7" opacity=".8">
-            <path d="M95 83h112v100H95zM441 83h112v100H441z"/>
-          </g>
-          <path d="M271 315h106" stroke="currentColor" opacity=".4"/>
-          <rect x="298" y="292" width="52" height="46" rx="6" stroke="var(--accent)" stroke-width="2"/>
-          <path d="M324 292v-22M311 316h26" stroke="var(--accent)" stroke-width="2"/>
-          <g fill="currentColor" font-family="JetBrains Mono" font-size="14">
-            <text x="55" y="290">MODULAR LENS</text><text x="422" y="290">BINASAL CLIP</text><text x="270" y="370">EXTERNAL CONTROLLER</text>
-          </g>
-        </g>
-      </svg>
-      <figcaption><span>CONCEPT ARCHITECTURE / NOT TO SCALE</span><span>SHADESHIFT · EGR 555</span></figcaption>
-    </figure>
-
-    <div class="case-content">
-      <dl class="case-facts" aria-label="Project facts">
-        <div><dt>Role</dt><dd>Team lead · system direction</dd></div>
-        <div><dt>Partner context</dt><dd>Barrow / Dignity Health</dd></div>
-        <div><dt>Controller</dt><dd>ESP32 · external enclosure</dd></div>
-        <div><dt>Optical modes</dt><dd>Tint · color · strobe · binasal</dd></div>
-        <div><dt>Fabrication</dt><dd>Iterative PLA 3D printing</dd></div>
-        <div><dt>Stage</dt><dd>Non-clinical proof of concept</dd></div>
-      </dl>
-
-      <div class="case-story">
-        <section>
-        <h2>Adapt the visual environment to the patient.</h2>
-          <p>People recovering from traumatic brain injury can experience photophobia and visual-processing stress that varies with the environment. Static sunglasses address only one part of that problem. ShadeShift explored a modular platform able to alter tint, hue, stroboscopic training, and binasal occlusion from one wearable form.</p>
-        </section>
-
-        <section>
-        <h2>Separate the visual modes, unify the platform.</h2>
-          <ul>
-            <li>Electrochromic lenses provided gradable tint control.</li>
-            <li>Interchangeable color elements supported customizable hues.</li>
-            <li>PDLC film provided the stroboscopic training mode.</li>
-            <li>3D-printed magnetic attachments created modular binasal occlusion.</li>
-          </ul>
-          <p>An ESP32 controlled the electrochromic tint, while an external enclosure housed the battery, controls, and stroboscopic driver. Iterative 3D printing let the team adjust fit, attachment geometry, and component packaging quickly.</p>
-        </section>
-
-        <aside class="case-callout">The strongest design decisions came from refusing to hide prototype failures: weight moved the electronics off the frames, and inconsistent PNLC behavior drove a change to PDLC for the stroboscopic mode.</aside>
-
-        <section>
-        <h2>Reduce what the wearer has to carry.</h2>
-          <p>The first packaging direction put too much mass on the eyewear. The controller, battery, and controls moved to an external enclosure, leaving the frames focused on optics and lightweight attachments. The team also transitioned from PNLC to PDLC film when the original material did not produce the required switching behavior reliably.</p>
-        </section>
-
-        <section>
-        <h2>A prototype for evaluation, not a medical claim.</h2>
-          <p>The project demonstrated integration and design feasibility. It did not establish clinical efficacy, and the research paper explicitly places clinical trials, safety validation, miniaturization, and long-term wearability in future work.</p>
-        </section>
-
-        <section>
-        <h2>Original project material.</h2>
-          <div class="resource-links">
-            <a href="ShadeShift_%20Smart%20Modular%20Eyewear%20for%20Neurological%20Recovery%20and%20Visual%20Stress%20Alleviation.pdf" target="_blank" rel="noopener noreferrer">Research paper ↗</a>
-            <a href="https://youtu.be/Cl6hf7lQr3M" target="_blank" rel="noopener noreferrer">Prototype demo ↗</a>
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="case-page" id="case-microgrid" data-title="Critical-Facility Microgrid Study" hidden>
-  <div class="shell">
-    <a class="case-back" href="#work"><span aria-hidden="true">←</span> BACK TO WORK</a>
-    <header class="case-hero">
-      <h1 tabindex="-1">Question the optimum before defending the design.</h1>
-      <p class="case-lead">An independent XENDEE course study for a Level I trauma center in Honolulu, focused on the difference between a mathematically optimal result and a physically credible system.</p>
-      <div class="case-meta">
-        <span>Sole author</span>
-        <span>EGR 586</span>
-        <span>2025</span>
-        <span>Simulation study · not an implemented system</span>
-      </div>
-      <div class="case-proof" role="group" aria-label="Base-case unconstrained XENDEE result">
-        <div><strong>4.98 MW</strong><span>Base-case PV result</span></div>
-        <div><strong>12.3 MWh</strong><span>Base-case BESS result</span></div>
-        <div><strong>Level I</strong><span>Trauma-center context</span></div>
-        <div><strong>XENDEE</strong><span>Modeling platform</span></div>
-      </div>
-    </header>
-
-    <figure class="case-visual case-diagram" role="region" tabindex="0" aria-label="Microgrid architecture diagram. Scroll horizontally on small screens.">
-      <svg role="img" aria-labelledby="microgrid-diagram-title" viewBox="0 0 1000 430" fill="none">
-        <title id="microgrid-diagram-title">Conceptual microgrid architecture linking solar generation, battery storage, diesel backup, and critical hospital load</title>
-        <g transform="translate(70 72)">
-          <g stroke="currentColor" stroke-width="2">
-            <rect x="0" y="0" width="190" height="110" rx="8"/>
-            <rect x="335" y="0" width="190" height="110" rx="8"/>
-            <rect x="670" y="0" width="190" height="110" rx="8"/>
-            <rect x="335" y="210" width="190" height="110" rx="8"/>
-          </g>
-          <g stroke="var(--accent)" stroke-width="3">
-            <path d="M260 55h75M525 55h145M430 110v100"/>
-            <path d="m324 46 11 9-11 9M659 46l11 9-11 9M421 199l9 11 9-11"/>
-          </g>
-          <g fill="currentColor" font-family="JetBrains Mono">
-            <text x="42" y="47" font-size="18">SOLAR PV</text><text x="30" y="76" font-size="12" opacity=".62">VARIABLE GENERATION</text>
-            <text x="370" y="47" font-size="18">AC BUS</text><text x="362" y="76" font-size="12" opacity=".62">DISPATCH LAYER</text>
-            <text x="710" y="47" font-size="18">HOSPITAL</text><text x="708" y="76" font-size="12" opacity=".62">CRITICAL LOAD</text>
-            <text x="363" y="257" font-size="18">BESS</text><text x="362" y="286" font-size="12" opacity=".62">ENERGY STORAGE</text>
-          </g>
-          <g transform="translate(0 216)" stroke="var(--signal)" stroke-width="2">
-            <rect width="190" height="104" rx="8"/><path d="M30 70h130M42 56l20-20 20 20 20-20 20 20 20-20"/>
-          </g>
-          <text x="35" y="264" fill="currentColor" font-family="JetBrains Mono" font-size="18">DIESEL</text>
-          <text x="35" y="293" fill="currentColor" opacity=".62" font-family="JetBrains Mono" font-size="12">RESILIENCE BACKUP</text>
-          <path d="M190 268h145" stroke="var(--signal)" stroke-width="3"/><path d="m324 259 11 9-11 9" stroke="var(--signal)" stroke-width="3"/>
-        </g>
-      </svg>
-      <figcaption><span>CONCEPTUAL ARCHITECTURE / MODEL INPUTS</span><span>EGR 586 · XENDEE STUDY</span></figcaption>
-    </figure>
-
-    <div class="case-content">
-      <dl class="case-facts" aria-label="Study facts">
-        <div><dt>Role</dt><dd>Sole author</dd></div>
-        <div><dt>Site context</dt><dd>Queen’s Medical Center · Honolulu</dd></div>
-        <div><dt>Tool</dt><dd>XENDEE</dd></div>
-        <div><dt>Resources</dt><dd>PV · BESS · diesel</dd></div>
-        <div><dt>Focus</dt><dd>Techno-economic resilience</dd></div>
-        <div><dt>Boundary</dt><dd>Academic simulation</dd></div>
-      </dl>
-
-      <div class="case-story">
-        <section>
-        <h2>Model a critical load under outage conditions.</h2>
-          <p>The study built a techno-economic microgrid scenario around a major Pacific trauma center. Inputs included the load profile, tariff structure, capital assumptions, renewable generation, battery storage, backup generation, and resilience requirements.</p>
-        </section>
-
-        <section>
-        <h2>The first answer was too good.</h2>
-          <p>The unconstrained optimization returned roughly 4.98 MW of PV and 12.3 MWh of battery storage. The result minimized the modeled objective, but its footprint raised a practical question against the study’s assumed space limits.</p>
-          <p>That was the signal to inspect the assumptions rather than celebrate the score. An optimizer will use whatever capacity the model permits if space is never represented as a constraint.</p>
-        </section>
-
-        <aside class="case-callout">A simulation can be internally correct and still describe a system nobody can build. Physical constraints belong in the model, not in a disclaimer after the result.</aside>
-
-        <section>
-        <h2>Make the scenario answerable in the real world.</h2>
-          <p>The redesigned scenario applied assumed PV and battery space constraints and incorporated diesel generation for extended resilience. That changed the architecture from a PV-plus-storage optimum with no generator into a more physically grounded hybrid scenario.</p>
-        </section>
-
-        <section>
-        <h2>A disciplined study, not a commissioned design.</h2>
-          <p>This was an academic analysis, not an installed microgrid or a facilities-approved engineering package. Its value is the model-validation process: identify an implausible result, expose the missing constraints, and rebuild the scenario before communicating a recommendation.</p>
-        </section>
-
-        <section>
-        <h2>Supporting portfolio material.</h2>
-          <div class="resource-links">
-            <a href="Uriah%20Villa%20Portfolio%20MS%20in%20Engineering.pdf" target="_blank" rel="noopener noreferrer">Archived academic portfolio ↗</a>
-            <a href="Appendix%20for%20Portfolio_%20MS%20in%20Engineering.pdf" target="_blank" rel="noopener noreferrer">Evidence appendix ↗</a>
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
-</article>
-</div>
+  </section>
 </main>
-
-<footer class="site-footer">
-  <div class="shell footer-inner">
-    <span>© <span id="year">2026</span> URIAH VILLA · MESA, ARIZONA</span>
-    <span>HAND-BUILT · NO FRAMEWORK · ENGINEERED TO LOAD FAST</span>
-    <span class="footer-links"><button id="footerTop" type="button">Top ↑</button><a href="#archive">Archive</a><a href="mailto:uvilla11@gmail.com">Email</a></span>
-  </div>
-</footer>
-<script>
-(() => {
-  'use strict';
-
-  const root = document.documentElement;
-  const body = document.body;
-  const home = document.getElementById('home');
-  const pages = [...document.querySelectorAll('.case-page')];
-  const baseTitle = 'Uriah Villa — Embedded Systems & Robotics Engineer';
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let lastCaseTrigger = null;
-
-  const themeButton = document.getElementById('themeToggle');
-  const syncThemeButton = () => {
-    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    themeButton.setAttribute('aria-label', 'Switch to ' + next + ' theme');
-  };
-  syncThemeButton();
-
-  themeButton.addEventListener('click', () => {
-    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem('theme', root.dataset.theme); } catch (_) {}
-    syncThemeButton();
-  });
-
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileSummary = mobileMenu.querySelector('summary');
-  mobileMenu.addEventListener('toggle', () => {
-    mobileSummary.setAttribute('aria-label', mobileMenu.open ? 'Close navigation menu' : 'Open navigation menu');
-  });
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => mobileMenu.removeAttribute('open'));
-  });
-
-  document.querySelector('.skip-link').addEventListener('click', event => {
-    event.preventDefault();
-    const visiblePage = pages.find(page => !page.hidden);
-    const target = visiblePage ? visiblePage.querySelector('h1') : document.getElementById('hero-title');
-    if (!target) return;
-    target.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
-    target.focus({preventScroll: true});
-  });
-
-  document.addEventListener('click', event => {
-    const link = event.target.closest('a[href^="#case/"]');
-    if (link) lastCaseTrigger = link;
-  });
-
-  const focusHeading = container => {
-    const heading = container.querySelector('h1');
-    if (!heading) return;
-    setTimeout(() => heading.focus({preventScroll: true}), reduceMotion ? 0 : 180);
-  };
-
-  const showRoute = () => {
-    const match = location.hash.match(/^#case\/([a-z0-9-]+)$/i);
-    const slug = match ? match[1].toLowerCase() : '';
-    const page = match ? document.getElementById('case-' + slug) : null;
-    const wasInCase = body.classList.contains('in-case');
-
-    if (match && !page) {
-      location.replace('#work');
-      return;
-    }
-
-    pages.forEach(item => item.hidden = true);
-
-    if (page) {
-      home.hidden = true;
-      page.hidden = false;
-      body.classList.add('in-case');
-      document.title = page.dataset.title + ' — Uriah Villa';
-      scrollTo({top: 0, behavior: 'auto'});
-      focusHeading(page);
-      return;
-    }
-
-    home.hidden = false;
-    body.classList.remove('in-case');
-    document.title = baseTitle;
-
-    const targetId = location.hash.slice(1);
-    const target = (targetId && document.getElementById(targetId)) || document.getElementById('top');
-    requestAnimationFrame(() => {
-      if (target) target.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
-      if (wasInCase) {
-        const triggerBelongsToTarget = lastCaseTrigger && lastCaseTrigger.isConnected && target && target.contains(lastCaseTrigger);
-        const focusTarget = triggerBelongsToTarget
-          ? lastCaseTrigger
-          : target && (target.querySelector('h1, h2') || target);
-        if (focusTarget) {
-          if (!focusTarget.hasAttribute('tabindex') && !focusTarget.matches('a, button, input, textarea, select')) {
-            focusTarget.setAttribute('tabindex', '-1');
-          }
-          setTimeout(() => focusTarget.focus({preventScroll: true}), reduceMotion ? 0 : 260);
-        }
-        lastCaseTrigger = null;
-      }
-    });
-  };
-
-  addEventListener('hashchange', showRoute);
-  showRoute();
-
-  const progress = document.getElementById('scrollProgress');
-  let progressFrame = 0;
-  const updateProgress = () => {
-    progressFrame = 0;
-    const range = document.documentElement.scrollHeight - innerHeight;
-    const ratio = range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;
-    progress.style.transform = 'scaleX(' + ratio + ')';
-  };
-  addEventListener('scroll', () => {
-    if (!progressFrame) progressFrame = requestAnimationFrame(updateProgress);
-  }, {passive: true});
-  addEventListener('resize', updateProgress);
-  updateProgress();
-
-  document.getElementById('footerTop').addEventListener('click', () => {
-    const visiblePage = pages.find(page => !page.hidden);
-    const heading = visiblePage ? visiblePage.querySelector('h1') : document.getElementById('hero-title');
-    scrollTo({top: 0, behavior: reduceMotion ? 'auto' : 'smooth'});
-    if (heading) setTimeout(() => heading.focus({preventScroll: true}), reduceMotion ? 0 : 260);
-  });
-
-  const form = document.getElementById('contactForm');
-  const formStatus = document.getElementById('formStatus');
-  const submitButton = document.getElementById('submitButton');
-
-  form.addEventListener('submit', async event => {
-    event.preventDefault();
-    submitButton.disabled = true;
-    submitButton.textContent = 'Sending…';
-    formStatus.textContent = '';
-    formStatus.dataset.state = '';
-
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: {'Accept': 'application/json'}
-      });
-      if (!response.ok) throw new Error('Form submission failed: ' + response.status);
-      form.reset();
-      formStatus.dataset.state = 'success';
-      formStatus.textContent = 'Message sent. I’ll get back to you soon.';
-    } catch (_) {
-      formStatus.dataset.state = 'error';
-      formStatus.textContent = 'The form could not send. Please email me directly at uvilla11@gmail.com.';
-    } finally {
-      submitButton.disabled = false;
-      submitButton.innerHTML = 'Send message <span aria-hidden="true">↗</span>';
-    }
-  });
-
-  document.getElementById('year').textContent = new Date().getFullYear();
-})();
-</script>
+<footer class="footer"><div class="wrap footer-inner"><span>© <span id="year">2026</span> Uriah D. Villa</span><a href="#top">Back to top <svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></a></div></footer>
+<script src="main.js" defer></script>
 </body>
 </html>
