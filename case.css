@@ -318,3 +318,57 @@ a:hover {
     scroll-margin-top: 24px;
   }
 }
+@media print {
+  html {
+    scroll-behavior: auto;
+    background: #fff;
+  }
+  body {
+    background: #fff;
+    color: #172021;
+  }
+  .skip,
+  .nav,
+  .side {
+    display: none !important;
+  }
+  .wrap {
+    width: 100%;
+    max-width: none;
+  }
+  .case-grid {
+    display: block;
+  }
+  .case-hero,
+  .case-footer,
+  .evidence,
+  .measure {
+    background: #fff;
+    color: #172021;
+  }
+  .case-hero {
+    padding: 24px 0;
+  }
+  .case-hero h1 {
+    font-size: 3rem;
+  }
+  .case-hero .lead,
+  .case-hero a,
+  .case-footer a,
+  .evidence a {
+    color: #172021;
+  }
+  .case-main {
+    padding-block: 24px;
+  }
+  .measure,
+  figure {
+    break-inside: avoid;
+  }
+  main a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: .75em;
+    font-weight: 400;
+    overflow-wrap: anywhere;
+  }
+}

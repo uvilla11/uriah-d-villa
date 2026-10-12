@@ -4,14 +4,14 @@ Updated October 12, 2026. This is the local review handoff, not publication or d
 
 ## Candidate and References
 
-The user selected `FINAL` instead of rebuilding the older shell. `git fetch origin` confirmed the candidate and remote at `bcad74b076864141e22a5b5ad6c3dd04ea78c0e8`. That commit was already public before this pass. All changes from this pass remain local and uncommitted.
+The user selected `FINAL` instead of rebuilding the older shell. `git fetch origin` confirmed the remote at `bcad74b076864141e22a5b5ad6c3dd04ea78c0e8`. That commit was already public before this pass. The qualified candidate is committed locally as `448e9a0`; the transfer changes remain local. No new changes have been pushed.
 
 The eventual destination remains `https://uvilla11.github.io/uriah-d-villa/`. Both `main` and `origin/main` remain at `a6079577448cd60e0084baa81ab4918e8774f2fc`. No Pages settings or deployment workflow changed.
 
 | Reference | Branch or snapshot | Starting tip | Status before the candidate review | Use |
 | --- | --- | --- | --- | --- |
 | Candidate | `FINAL` | `bcad74b` | Clean; matched freshly fetched `origin/FINAL` | Candidate being reviewed. |
-| Split-assets reference | `refactor/split-assets` | `2b0a20b` | Modified homepage/CSS/JS and user-owned untracked files | Protected layout reference; local archival is handled separately. |
+| Split-assets reference | `archive/refactor-split-assets` | `2b0a20b` | Modified homepage/CSS/JS and user-owned untracked files | Preserved in local archive commit `56faa28` and a temporary backup; never push this archive. |
 | Legacy shell | `feature/copper-shell-review` | `0222a3c` | Clean | Legacy named routes and renamed asset paths. |
 | Evidence draft | `feature/copper-evidence-site` | `a607957` | Staged draft, not committed | Protected source reference; untouched. |
 | Published baseline | Detached `main` snapshot | `a607957` | Clean | Published-path and original-byte baseline. |
@@ -71,6 +71,7 @@ Every path below is relative to `/uriah-d-villa/`. The same relative links work 
 | None | `media/shadeshift-1600.webp` | `media/shadeshift-1600.webp` | Responsive homepage/case source | New display copy, 1600 x 1200, 130,212 bytes. |
 | None on `main` | `MIGRATION.md` | `MIGRATION.md` | No navigation link; review record | Revised from `FINAL`; this inventory. |
 | None | `CLAIMS.md` | `CLAIMS.md` | No navigation link; review record | New; source/ownership/qualification ledger. |
+| `README.md` (split-assets branch) | Same | `README.md` | Repository introduction; not site navigation | Rewritten for the four static cases, current contact, and PDF review boundary. |
 
 Responsive images derive only from existing academic artifacts. Photo derivatives use WebP quality 84. The CAD and poster use lossless encoding to preserve geometry and text. Originals remain unchanged. Images have intrinsic dimensions, lazy loading, async decoding, and viewport-aware `srcset`/`sizes` where needed.
 
@@ -88,7 +89,7 @@ The October 12 Phase 2 matrix passed 153 assertions with no console exceptions, 
 
 Separate failed-script tests pass with both ordinary and reduced-motion preferences. The four-second boot failsafe reveals the headline if script loading fails. Blocked fonts still render the copy and form with fallback fonts. These deliberate failed-request tests are separate from the clean-network console/asset pass.
 
-The raw browser report records SHA-256 hashes for every rendered HTML/CSS/JS/font/image input. The screenshots match those local files, not a new commit; none was made in this pass. Earlier candidate implementation and spec reviews are recorded as complete; the transfer-plan review remains a later gate. An initial Room Weather Control ledger mismatch was corrected against the public team's PIC18F27J53 component-selection source.
+The raw browser report records SHA-256 hashes for every rendered HTML/CSS/JS/font/image input. Phase 2 screenshots match the files committed as `448e9a0`. Earlier candidate implementation and spec reviews are recorded as complete; the transfer-plan review remains a later gate. An initial Room Weather Control ledger mismatch was corrected against the public team's PIC18F27J53 component-selection source.
 
 The independent implementation review found text-scaling reflow, wrapped case-navigation clearance, cancelled Hall-index feedback, and live reduced-motion issues. Corrected behavior passes targeted 200% text, anchor, animation-cancellation, and preference-change probes. On small screens the case header stays in normal document flow so wrapped navigation cannot obscure section headings.
 
@@ -110,8 +111,8 @@ Local source links and media return HTTP 200. Public source destinations were re
 
 ## Remaining Gates
 
-- Phase 2 cleanup and all five required harnesses passed on October 12. The candidate remains uncommitted for parent commit review; this pass does not authorize a commit or publication.
-- Phase 3 behavior ports and the README rewrite, followed by Phase 4 verification, remain pending and are outside this cleanup pass.
+- Phase 2 cleanup and all five required harnesses passed on October 12. The qualified candidate is committed locally as `448e9a0`.
+- Phase 3 behavior ports and the README rewrite are in progress. Phase 4 verification and the transfer review remain pending.
 - Content approval is pending. Review the four case drafts and `CLAIMS.md`, including project-reported figures and artifact reuse. Corrective edits do not substitute for owner approval.
 - Visual approval is pending. Automated checks and local screenshot inspection do not record the user's acceptance of desktop/mobile output.
 - Public push clearance is pending for these changes. The existing public `FINAL` commit does not authorize publishing its new local diff.

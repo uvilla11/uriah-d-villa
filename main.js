@@ -76,6 +76,30 @@
   });
   form.hidden = false;
 
+  /* ---------------- Nav scroll spy ---------------- */
+  const nav = $('.nav'), links = $$('.nav-links a[href^="#"], .mobile-panel a[href^="#"]'), ind = $('.nav-ind');
+  const SPY = [['work', '#work'], ['about', '#about'], ['experience', '#experience'], ['education', '#experience'], ['contact', '#contact']];
+  let spyCur = undefined;
+  function spy(force) {
+    let cur = null;
+    for (const [id, href] of SPY) { const s = document.getElementById(id); if (s && s.getBoundingClientRect().top <= innerHeight * .4) cur = href; }
+    if (cur === spyCur && !force) return;
+    spyCur = cur;
+    let target = null;
+    links.forEach(a => { const on = a.getAttribute('href') === cur; if (on) { a.setAttribute('aria-current', 'true'); if (a.closest('.nav-links')) target = a; } else a.removeAttribute('aria-current'); });
+    if (target && target.offsetParent) {
+      const pr = target.parentElement.getBoundingClientRect(), r = target.getBoundingClientRect();
+      ind.style.transform = `translateX(${r.left - pr.left}px) scaleX(${r.width})`; ind.style.opacity = '1';
+    } else ind.style.opacity = '0';
+  }
+  const syncOffset = () => { root.style.setProperty('--scroll-offset', nav.getBoundingClientRect().height + 16 + 'px'); spy(true); };
+  new ResizeObserver(syncOffset).observe(nav, { box: 'border-box' });
+  syncOffset();
+  let spyTicking = false;
+  addEventListener('scroll', () => { if (spyTicking) return; spyTicking = true; requestAnimationFrame(() => { spyTicking = false; if (menu.open) menu.open = false; spy(); }); }, { passive: true });
+  addEventListener('resize', () => spy(true));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncOffset);
+
   /* ---------------- Seven-segment meters ---------------- */
   const DIGITS = [[1,1,1,1,1,1,0],[0,1,1,0,0,0,0],[1,1,0,1,1,0,1],[1,1,1,1,0,0,1],[0,1,1,0,0,1,1],[1,0,1,1,0,1,1],[1,0,1,1,1,1,1],[1,1,1,0,0,0,0],[1,1,1,1,1,1,1],[1,1,1,1,0,1,1]];
   const hSeg = y => `3.5,${y} 6,${y - 2.5} 24,${y - 2.5} 26.5,${y} 24,${y + 2.5} 6,${y + 2.5}`;
@@ -748,12 +772,19 @@
     svg.getAnimations({ subtree: true }).forEach(a => a.cancel());
     svg.classList.remove('is-live'); card.classList.remove('is-live');
     RIGS[svg.dataset.rig].stop(svg);
+    svg.getAnimations({ subtree: true }).forEach(a => a.cancel());
   }
   function pickCard() {
+    if (document.hidden) { if (activeCard) stopRig(activeCard); activeCard = null; return; }
     if (reduce) return;
-    let best = hovered;
+    let best = null; const vh = innerHeight;
+    if (hovered) {
+      const r = hovered.querySelector('.art').getBoundingClientRect();
+      const vis = Math.min(r.bottom, vh) - Math.max(r.top, 0);
+      if (vis >= Math.min(r.height, vh) * .55) best = hovered;
+    }
     if (!best) {
-      let bd = Infinity; const vh = innerHeight;
+      let bd = Infinity;
       for (const c of cards) {
         const r = c.querySelector('.art').getBoundingClientRect();
         const vis = Math.min(r.bottom, vh) - Math.max(r.top, 0);
@@ -764,6 +795,7 @@
     }
     if (best !== activeCard) { if (activeCard) stopRig(activeCard); activeCard = best; if (best) startRig(best); }
   }
+  document.addEventListener('visibilitychange', pickCard);
   cards.forEach(c => {
     c.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && canHover.matches) { hovered = c; pickCard(); } });
     c.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && hovered === c) { hovered = null; pickCard(); } });
@@ -783,23 +815,6 @@
     }
   });
 
-  /* ---------------- Nav scroll spy ---------------- */
-  const links = $$('.nav-links a[href^="#"]'), ind = $('.nav-ind');
-  const SPY = [['work', '#work'], ['about', '#about'], ['experience', '#experience'], ['education', '#experience'], ['contact', '#contact']];
-  let spyCur = undefined;
-  function spy(force) {
-    let cur = null;
-    for (const [id, href] of SPY) { const s = document.getElementById(id); if (s && s.getBoundingClientRect().top <= innerHeight * .4) cur = href; }
-    if (cur === spyCur && !force) return;
-    spyCur = cur;
-    let target = null;
-    links.forEach(a => { const on = a.getAttribute('href') === cur; if (on) { a.setAttribute('aria-current', 'true'); target = a; } else a.removeAttribute('aria-current'); });
-    if (target && target.offsetParent) {
-      const pr = target.parentElement.getBoundingClientRect(), r = target.getBoundingClientRect();
-      ind.style.transform = `translateX(${r.left - pr.left}px) scaleX(${r.width})`; ind.style.opacity = '1';
-    } else ind.style.opacity = '0';
-  }
-
   /* ---------------- Scroll-driven signal morph ---------------- */
   let scrollMode = -1;
   function scrollMorph() {
@@ -809,17 +824,17 @@
   }
 
   let ticking = false;
-  const onScroll = () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; if (menu.open) menu.open = false; spy(); scrollMorph(); pickCard(); }); };
+  const onScroll = () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; scrollMorph(); pickCard(); }); };
   addEventListener('scroll', onScroll, { passive: true });
   let rt = 0;
-  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { resize(); fitBars(); spy(true); pickCard(); }, 120); });
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { resize(); fitBars(); pickCard(); }, 120); });
 
   /* ---------------- Init ---------------- */
   const init = () => {
     resize();
     if (reduce) { setRunning(false); hero.classList.add('is-booted'); runMeters(); }
     else wake();
-    fitBars(); scrollMorph(); spy(true); pickCard();
+    fitBars(); scrollMorph(); pickCard();
     setTimeout(() => { if (S.booting) { finishBoot(); trigger(0); fillAll(); } }, 3400);
   };
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(init); else init();
