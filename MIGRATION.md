@@ -4,7 +4,7 @@ Updated October 12, 2026. This is the local review handoff, not publication or d
 
 ## Candidate and References
 
-The user selected `FINAL` instead of rebuilding the older shell. `git fetch origin` confirmed the remote at `bcad74b076864141e22a5b5ad6c3dd04ea78c0e8`. That commit was already public before this pass. The qualified candidate is committed locally as `448e9a0`; the transfer changes remain local. No new changes have been pushed.
+The user selected `FINAL` instead of rebuilding the older shell. `git fetch origin` confirmed the remote at `bcad74b076864141e22a5b5ad6c3dd04ea78c0e8`. That commit was already public before this pass. The qualified candidate is committed locally as `448e9a0`. Commit `b794634` adds the approved transfer changes. No new changes have been pushed.
 
 The eventual destination remains `https://uvilla11.github.io/uriah-d-villa/`. Both `main` and `origin/main` remain at `a6079577448cd60e0084baa81ab4918e8774f2fc`. No Pages settings or deployment workflow changed.
 
@@ -85,13 +85,17 @@ The QA tooling, raw reports, and screenshots remain outside the repository in th
 
 The browser matrix covers all five pages at desktop 1440 x 900 and mobile 390 x 844, both at root and at the Pages prefix. It also checks 320 px and 768 px layouts, script-free pages, canvas failure, keyboard controls, legacy direct/hash-change/reload/Back behavior, visible form errors, mailto encoding, local links, and unchanged original bytes.
 
-The October 12 Phase 2 matrix passed 153 assertions with no console exceptions, broken local URLs, or automated WCAG violations. It audited 280 local link/asset references across both bases. Earlier manual scope-overlay color checks passed AA, with the smallest measured text ratio 4.9:1 against the lightest dark-surface glow. Live pause and the three bounded project illustrations passed separate motion checks in the Phase 2 rerun.
+The October 12 matrix passed 153 assertions before and after the behavior ports. It found no console exceptions, broken local URLs, or automated WCAG violations. It audited 280 local link/asset references across both bases. Earlier manual scope-overlay color checks passed AA, with the smallest measured text ratio 4.9:1 against the lightest dark-surface glow. Live pause and the three bounded project illustrations passed separate motion checks in both reruns.
 
 Separate failed-script tests pass with both ordinary and reduced-motion preferences. The four-second boot failsafe reveals the headline if script loading fails. Blocked fonts still render the copy and form with fallback fonts. These deliberate failed-request tests are separate from the clean-network console/asset pass.
 
-The raw browser report records SHA-256 hashes for every rendered HTML/CSS/JS/font/image input. Phase 2 screenshots match the files committed as `448e9a0`. Earlier candidate implementation and spec reviews are recorded as complete; the transfer-plan review remains a later gate. An initial Room Weather Control ledger mismatch was corrected against the public team's PIC18F27J53 component-selection source.
+The raw browser report records SHA-256 hashes for every rendered HTML/CSS/JS/font/image input. The final screen audit matches the files committed as `b794634`. Independent read-only implementation and spec reviews found no actionable defects in `origin/FINAL..FINAL` against both supplied plans. An initial Room Weather Control ledger mismatch was corrected against the public team's PIC18F27J53 component-selection source.
 
-The independent implementation review found text-scaling reflow, wrapped case-navigation clearance, cancelled Hall-index feedback, and live reduced-motion issues. Corrected behavior passes targeted 200% text, anchor, animation-cancellation, and preference-change probes. On small screens the case header stays in normal document flow so wrapped navigation cannot obscure section headings.
+The earlier implementation review found text-scaling reflow, wrapped case-navigation clearance, cancelled Hall-index feedback, and live reduced-motion issues. Corrected behavior passes targeted 200% text, anchor, animation-cancellation, and preference-change probes. On small screens the case header stays in normal document flow so wrapped navigation cannot obscure section headings. The cancellation regression now scrolls to a visible replacement card instead of relying on offscreen hover.
+
+The transfer adds measured homepage header offsets, shared desktop/mobile scroll spy, hidden-tab and offscreen rig guards, sourced Room Weather detail, README, and print styles. Both reviewers confirmed anchor clearance at 200% mobile text with canvas disabled. Hidden-tab simulation leaves no live rigs or running animations. The expanded transfer harness passed all 183 checks at both URL bases. It generated 20 genuine PDFs and matching screen/print screenshots across all five pages and both viewport sizes. README lint reports zero violations, matching the archived baseline without category regressions.
+
+Native PDF export uses a fresh Chromium print browser with GPU acceleration disabled. Separate screen pages avoid a reproducible print-to-screen browser hang. The harness accepts normal block flow as one-column layout and checks every eligible text node without an arbitrary minimum count. PDF output is mandatory, not bypassed. Large homepage cards can span pages when they exceed a sheet despite break-avoidance rules.
 
 Browser coverage is Chromium only. Firefox and WebKit runtimes are not installed, and no real screen-reader or physical-phone pass was run. Automated checks are not a WCAG certification. These are review limitations, not claims that every assistive/browser environment was verified.
 
@@ -112,7 +116,8 @@ Local source links and media return HTTP 200. Public source destinations were re
 ## Remaining Gates
 
 - Phase 2 cleanup and all five required harnesses passed on October 12. The qualified candidate is committed locally as `448e9a0`.
-- Phase 3 behavior ports and the README rewrite are in progress. Phase 4 verification and the transfer review remain pending.
+- Phase 3 ports and README are committed locally as `b794634`. All five existing harnesses pass after the ports. Both independent reviews report no actionable findings.
+- Phase 4 is complete: 153 full-audit checks and 183 expanded transfer checks pass, with zero axe violations. Native PDF export passed. The full audit was rerun after both independent reviews.
 - Content approval is pending. Review the four case drafts and `CLAIMS.md`, including project-reported figures and artifact reuse. Corrective edits do not substitute for owner approval.
 - Visual approval is pending. Automated checks and local screenshot inspection do not record the user's acceptance of desktop/mobile output.
 - Public push clearance is pending for these changes. The existing public `FINAL` commit does not authorize publishing its new local diff.
