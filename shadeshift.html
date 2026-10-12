@@ -1,13 +1,191 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0d1213"><title>ShadeShift | Uriah D. Villa</title><meta name="description" content="ShadeShift modular eyewear prototype: PNLC switching constraints, external electronics, 3D-printed frame, and limits of the academic build."><link rel="canonical" href="https://uvilla11.github.io/uriah-d-villa/shadeshift.html"><meta property="og:type" content="article"><meta property="og:title" content="ShadeShift | Uriah D. Villa"><meta property="og:description" content="A modular eyewear prototype and the limits of its PNLC switching behavior."><meta property="og:image" content="https://uvilla11.github.io/uriah-d-villa/og-image.png"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="stylesheet" href="case.css"></head>
-<body><a class="skip" href="#main">Skip to case study</a><header class="nav"><div class="wrap"><a class="brand" href="index.html">URIAH <span>VILLA.</span></a><nav class="nav-links" aria-label="Main navigation"><a href="index.html#work">Work</a><a href="index.html#experience">Experience</a><a href="index.html#contact">Contact</a></nav></div></header>
-<main id="main"><header class="case-hero"><div class="wrap"><h1>ShadeShift</h1><p class="lead">A modular eyewear prototype explored tint, hue, strobe, and binasal occlusion. Material response and wearability remained design constraints, not solved clinical outcomes.</p><ul class="metadata"><li>ASU team project · 2025</li><li>ESP32 · PNLC prototype · 3D printing</li><li><a href="https://youtu.be/Cl6hf7lQr3M">Team prototype demo</a></li></ul></div></header>
-<div class="wrap case-main case-grid"><nav class="side" aria-label="On this page"><a href="#problem">Problem</a><a href="#role">Role and team</a><a href="#decision">Design decisions</a><a href="#implementation">Implementation</a><a href="#validation">Validation</a><a href="#limits">Limits</a><a href="#sources">Sources</a></nav><div class="story">
-<section id="problem"><h2>Problem</h2><p>Bring several visual modes into a wearable proof of concept without putting all the electronics on the frame. The liquid-crystal film's response varied with temperature and voltage, limiting reliable stroboscopic switching.</p></section>
-<section id="role"><h2>Role and team outcome</h2><div class="role-pair"><div><h3>My role</h3><p>Led the five-author project team and worked on electronics integration, enclosure direction, and modular prototyping. The demo was published under my account.</p></div><div><h3>Team outcome</h3><p>The team assembled and demonstrated printed eyewear with interchangeable attachments. The paper documents the prototype and its unresolved response and testing limits; this was not a clinical study.</p></div></div></section>
-<section id="decision"><h2>Constraint and decision</h2><p>Move the electronics to an external enclosure to limit frame weight. Use interchangeable 3D-printed attachments for the optical modes. Keep switching-speed optimization an open engineering problem rather than reporting a later PDLC result not established by the documented prototype.</p></section>
-<section id="implementation"><h2>Implementation</h2><p>Prototyped with PNLC film, an ESP32 breadboard setup, printed frame components, and a separate control enclosure. The available paper and photograph show build stages and assembled hardware, not verified clinical effects.</p><figure class="evidence"><img src="ShadeShift-prototype.jpg" alt="White ShadeShift prototype frames with wiring and colored modular inserts" width="1600" height="1200" loading="lazy"><figcaption>Photographed prototype and interchangeable attachments, not a clinically validated device.</figcaption></figure></section>
-<section id="validation"><h2>Validation</h2><p>The team demonstrated the four-mode concept and documented film latency as a challenge. No project-specific, instrument-verified switching-time or clinical-efficacy figure from the paper is presented as a passed result.</p></section>
-<section id="limits"><h2>Limits</h2><p>The paper's prototype used PNLC film and lists response improvements as future work. This page does not assert a completed PDLC switch or a 10 Hz validation result. Clinical efficacy, electrical safety, long-term wearability, and trials were not established.</p></section>
-<section id="sources"><h2>Inspect the evidence</h2><ul class="source-list"><li><a href="https://youtu.be/Cl6hf7lQr3M">ShadeShift project demonstration video</a></li><li><a href="ShadeShift-prototype.jpg">Prototype photograph (image)</a></li></ul></section>
-</div></div></main><footer class="case-footer"><div class="wrap"><a href="index.html#work">Back to selected work</a><a href="mailto:uriah.villa2023@gmail.com">Contact Uriah</a></div></footer></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0d1213" />
+    <title>ShadeShift | Uriah D. Villa</title>
+    <meta
+      name="description"
+      content="ShadeShift's PNLC prototype phase: modular eyewear, an external-electronics design, unresolved switching response, and evidence limits."
+    />
+    <link
+      rel="canonical"
+      href="https://uvilla11.github.io/uriah-d-villa/shadeshift.html"
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://uvilla11.github.io/uriah-d-villa/shadeshift.html"
+    />
+    <meta property="og:title" content="ShadeShift | Uriah D. Villa" />
+    <meta
+      property="og:description"
+      content="A modular eyewear prototype and the limits of its PNLC switching behavior."
+    />
+    <meta
+      property="og:image"
+      content="https://uvilla11.github.io/uriah-d-villa/og-image.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="case.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to case study</a>
+    <header class="nav">
+      <div class="wrap">
+        <a class="brand" href="index.html">URIAH <span>VILLA.</span></a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="index.html#work">Work</a
+          ><a href="index.html#experience">Experience</a
+          ><a href="index.html#about">About</a
+          ><a href="index.html#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <header class="case-hero">
+        <div class="wrap">
+          <h1>ShadeShift</h1>
+          <p class="lead">
+            This case covers the PNLC prototype phase of modular eyewear
+            exploring tint, hue, strobe, and binasal occlusion. Material
+            response and wearability remained constraints, not validated
+            clinical outcomes.
+          </p>
+          <ul class="metadata">
+            <li>ASU team project · 2025</li>
+            <li>ESP32 · PNLC prototype · 3D printing</li>
+            <li>
+              <a href="https://youtu.be/Cl6hf7lQr3M">Team prototype demo</a>
+            </li>
+          </ul>
+        </div>
+      </header>
+      <div class="wrap case-main case-grid">
+        <nav class="side" aria-label="On this page">
+          <a href="#problem">Problem</a><a href="#role">Role and team</a
+          ><a href="#decision">Design decisions</a
+          ><a href="#implementation">Implementation</a
+          ><a href="#validation">Validation</a><a href="#limits">Limits</a
+          ><a href="#sources">Sources</a>
+        </nav>
+        <div class="story">
+          <section id="problem">
+            <h2>Problem</h2>
+            <p>
+              Bring several visual modes into a wearable proof of concept
+              without putting all the electronics on the frame. The
+              liquid-crystal film's response varied with temperature and
+              voltage, limiting reliable stroboscopic switching.
+            </p>
+          </section>
+          <section id="role">
+            <h2>Role and team outcome</h2>
+            <div class="role-pair">
+              <div>
+                <h3>My role</h3>
+                <p>
+                  Led the five-author project team and worked on electronics
+                  integration, enclosure direction, and modular prototyping. The
+                  demo was published under my account.
+                </p>
+              </div>
+              <div>
+                <h3>Team outcome</h3>
+                <p>
+                  The team assembled and demonstrated printed eyewear with
+                  interchangeable attachments. The paper documents the prototype
+                  and its unresolved response and testing limits; this was not a
+                  clinical study.
+                </p>
+              </div>
+            </div>
+          </section>
+          <section id="decision">
+            <h2>Constraint and decision</h2>
+            <p>
+              Use a tethered external-electronics design because the temple arms
+              lacked space for all the components. This limits frame load but
+              adds cable-management constraints. Use interchangeable printed
+              attachments for the optical modes.
+            </p>
+          </section>
+          <section id="implementation">
+            <h2>Implementation</h2>
+            <p>
+              The project explored liquid-crystal switching, ESP32 tint
+              prototyping, an external strobe controller, and printed modular
+              frame parts. The paper includes external-enclosure CAD. That
+              design is distinct from a demonstrated assembled control box,
+              which is not visible in the photograph.
+            </p>
+            <figure class="evidence">
+              <img
+                src="media/shadeshift-960.webp"
+                srcset="
+                  media/shadeshift-480.webp   480w,
+                  media/shadeshift-960.webp   960w,
+                  media/shadeshift-1600.webp 1600w
+                "
+                sizes="(max-width: 720px) calc(100vw - 40px), (max-width: 1140px) calc(100vw - 380px), 760px"
+                alt="White printed ShadeShift frames with wiring, binasal pieces, and green, blue, and rose inserts"
+                width="1600"
+                height="1200"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>
+                Team prototype photograph and interchangeable attachments. It
+                shows no external enclosure and cannot establish film identity,
+                switching speed, or clinical efficacy.
+              </figcaption>
+            </figure>
+          </section>
+          <section id="validation">
+            <h2>Validation</h2>
+            <p>
+              The team demonstrated the four-mode concept and documented film
+              latency as a challenge. No project-specific, instrument-verified
+              switching-time or clinical-efficacy figure from the paper is
+              presented as a passed result.
+            </p>
+          </section>
+          <section id="limits">
+            <h2>Limits</h2>
+            <p>
+              The paper uses both PNLC and PDLC terminology without resolving
+              the phase chronology. This case therefore stays within the PNLC
+              account and unresolved latency. It does not claim a validated
+              later material change or a 10 Hz result. The supplied sources do
+              not establish clinical efficacy, electrical safety, long-term
+              wearability, or clinical trials.
+            </p>
+          </section>
+          <section id="sources">
+            <h2>Inspect the evidence</h2>
+            <ul class="source-list">
+              <li>
+                <a href="https://youtu.be/Cl6hf7lQr3M"
+                  >ShadeShift project demonstration video</a
+                >
+              </li>
+              <li>
+                <a href="ShadeShift-prototype.jpg"
+                  >Prototype photograph (image)</a
+                >
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="case-footer">
+      <div class="wrap">
+        <a href="index.html#work">Back to selected work</a
+        ><a href="mailto:uriah.villa2023@gmail.com">Contact Uriah</a>
+      </div>
+    </footer>
+  </body>
+</html>

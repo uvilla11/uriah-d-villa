@@ -3,7 +3,8 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const root = document.documentElement;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+  let reduce = motionPreference.matches;
   const canHover = matchMedia('(hover: hover) and (pointer: fine)');
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -12,13 +13,68 @@
   const NS = 'http://www.w3.org/2000/svg';
 
   $('#year').textContent = new Date().getFullYear();
-  const oldCases = { psyche: 'psyche.html', solarsense: 'solarsense.html', shadeshift: 'shadeshift.html', microgrid: 'index.html#microgrid' };
-  const legacy = location.hash.match(/^#case\/([a-z-]+)$/i);
-  if (legacy && oldCases[legacy[1].toLowerCase()]) {
-    const target = oldCases[legacy[1].toLowerCase()];
-    if (target.startsWith('index.html#')) history.replaceState(null, '', '#' + target.split('#')[1]);
-    else location.replace(target);
+  const oldCases = { psyche: 'psyche.html', solarsense: 'solarsense.html', shadeshift: 'shadeshift.html', microgrid: '#microgrid' };
+  function forwardLegacyCase() {
+    const legacy = location.hash.match(/^#case\/([a-z-]+)$/i);
+    if (!legacy) return false;
+    const slug = legacy[1].toLowerCase();
+    const target = Object.hasOwn(oldCases, slug) ? oldCases[slug] : '#work';
+    if (target.startsWith('#')) {
+      history.replaceState(history.state, '', target);
+      document.getElementById(target.slice(1)).scrollIntoView({ behavior: 'instant' });
+      return false;
+    }
+    location.replace(target);
+    return true;
   }
+  addEventListener('hashchange', forwardLegacyCase);
+  addEventListener('pageshow', forwardLegacyCase);
+  if (forwardLegacyCase()) return;
+
+  /* Navigation and contact must work even when canvas is unavailable. */
+  const menu = $('#mobileMenu');
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.open = false; }));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
+  document.addEventListener('click', e => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+
+  const form = $('#contactForm'), note = $('#formNote'), submitLbl = $('.submit-label', form);
+  const NOTE = note.textContent;
+  const FIELDS = [
+    { el: form.elements.name, err: $('#senderError'), empty: 'Enter your name.' },
+    { el: form.elements.email, err: $('#senderEmailError'), empty: 'Enter your email.', type: 'Enter a valid email address.' },
+    { el: form.elements.message, err: $('#messageError'), empty: 'Enter your message.' }
+  ];
+  function fieldMessage(f) {
+    if (f.el.validity.valueMissing || !f.el.value.trim()) return f.empty;
+    if (f.type && f.el.validity.typeMismatch) return f.type;
+    return '';
+  }
+  function validateField(f) {
+    const msg = fieldMessage(f);
+    f.err.textContent = msg;
+    if (msg) f.el.setAttribute('aria-invalid', 'true'); else f.el.removeAttribute('aria-invalid');
+    return !msg;
+  }
+  FIELDS.forEach(f => {
+    f.el.addEventListener('input', () => { if (f.el.getAttribute('aria-invalid') === 'true') validateField(f); });
+    f.el.addEventListener('blur', () => validateField(f));
+  });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const valid = FIELDS.map(validateField);
+    if (valid.includes(false)) {
+      note.textContent = 'Fix the fields with error messages, then try again.';
+      FIELDS[valid.indexOf(false)].el.focus();
+      return;
+    }
+    const name = form.elements.name.value.trim(), email = form.elements.email.value.trim(), message = form.elements.message.value.trim();
+    const subject = encodeURIComponent('Portfolio inquiry from ' + name);
+    const body = encodeURIComponent(message + '\n\nFrom: ' + name + ' <' + email + '>');
+    submitLbl.textContent = 'Opening your email app...'; note.textContent = NOTE;
+    setTimeout(() => { submitLbl.textContent = 'Compose email'; }, 2600);
+    window.location.href = 'mailto:uriah.villa2023@gmail.com?subject=' + subject + '&body=' + body;
+  });
+  form.hidden = false;
 
   /* ---------------- Seven-segment meters ---------------- */
   const DIGITS = [[1,1,1,1,1,1,0],[0,1,1,0,0,0,0],[1,1,0,1,1,0,1],[1,1,1,1,0,0,1],[0,1,1,0,0,1,1],[1,0,1,1,0,1,1],[1,0,1,1,1,1,1],[1,1,1,0,0,0,0],[1,1,1,1,1,1,1],[1,1,1,1,0,1,1]];
@@ -78,6 +134,16 @@
   const hero = $('.hero'), band = $('.scope-band'), trace = $('.scope-trace'), gridCv = $('.scope-grid');
   const scan = $('.scope-scan'), title = $('.hero-title');
   const ctx = trace.getContext('2d'), gctx = gridCv.getContext('2d');
+  if (!ctx || !gctx) {
+    root.classList.remove('js-boot');
+    hero.classList.add('is-booted');
+    runMeters();
+    return;
+  }
+  hero.classList.add('scope-ready');
+  $('.scope-status').hidden = false;
+  band.tabIndex = 0;
+  $('.trig-handle').hidden = false;
   const chEls = $$('.ch', band), probeEl = $('.probe', band), probeTxt = textNode($('.probe-text', band));
   const out = {};
   ['vdiv', 'vunit', 'tlabel', 'tdiv', 'tunit', 'triglabel', 'trig', 'caption', 'ca', 'cb', 'dl', 'cd', 'cf'].forEach(k => { out[k] = textNode($(`[data-out="${k}"]`)); });
@@ -548,7 +614,8 @@
     const step = e.shiftKey ? .2 : .05; let L = S.trigL;
     if (e.key === 'ArrowUp' || e.key === 'ArrowRight') L += step;
     else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') L -= step;
-    else if (e.key === 'Home') L = 0; else return;
+    else if (e.key === 'Home') L = -1.3;
+    else if (e.key === 'End') L = 1.3; else return;
     e.preventDefault(); S.trigL = clamp(L, -1.3, 1.3); S.trigHold = 1.5; wake(); announce(trigSpeech);
   });
 
@@ -575,8 +642,9 @@
   band.addEventListener('focus', e => { if (e.target === band) S.focusProbe = true; });
   band.addEventListener('blur', e => { if (e.target === band) { S.focusProbe = false; S.probeOn = false; wake(); } });
 
-  new IntersectionObserver(([en]) => { S.visible = en.isIntersecting && !document.hidden; hero.classList.toggle('is-paused', !S.visible || !S.running); wake(); }).observe(hero);
-  document.addEventListener('visibilitychange', () => { S.visible = !document.hidden; wake(); });
+  let heroVisible = true;
+  new IntersectionObserver(([en]) => { heroVisible = en.isIntersecting; S.visible = heroVisible && !document.hidden; hero.classList.toggle('is-paused', !S.visible || !S.running); wake(); }).observe(hero);
+  document.addEventListener('visibilitychange', () => { S.visible = heroVisible && !document.hidden; wake(); });
 
 
   /* ---------------- Project rigs ---------------- */
@@ -609,15 +677,20 @@
             { transform: `rotate(${to}deg)` }
           ], { duration: 1000, fill: 'forwards' });
           a.onfinish = () => {
+            if (!st.alive) return;
             rotor.style.transform = `rotate(${next * 60}deg)`; a.cancel();
             svg.dataset.idx = next; halls[next].setAttribute('data-on', '1');
             pos.textContent = `D${next + 1} · ${String(next * 60).padStart(3, '0')}°`;
-            later(st, step, 650);
           };
         };
         later(st, step, 250);
       },
-      stop() {}
+      stop(svg) {
+        const idx = +(svg.dataset.idx || 0);
+        svg.querySelector('.rotor').style.transform = `rotate(${idx * 60}deg)`;
+        $$('.hall', svg).forEach((h, i) => { if (i === idx) h.setAttribute('data-on', '1'); else h.removeAttribute('data-on'); });
+        svg.querySelector('[data-out="pos"]').textContent = `D${idx + 1} · ${String(idx * 60).padStart(3, '0')}°`;
+      }
     },
     soil: {
       start(svg, st) {
@@ -625,19 +698,18 @@
         const run = () => {
           svg.dataset.phase = 'sense'; out.textContent = 'Sampling…';
           later(st, () => { svg.dataset.phase = 'send'; out.textContent = 'Classifying…'; }, 1300);
-          later(st, () => { svg.dataset.phase = 'show'; out.textContent = 'Healthy'; }, 2300);
-          later(st, run, 5400);
+          later(st, () => { svg.dataset.phase = 'show'; out.textContent = 'Example'; }, 2300);
         };
         run();
       },
-      stop(svg) { svg.dataset.phase = 'idle'; svg.querySelector('[data-out="infer"]').textContent = 'Healthy'; }
+      stop(svg) { svg.dataset.phase = 'idle'; svg.querySelector('[data-out="infer"]').textContent = 'Example'; }
     },
     optics: {
       start(svg, st) {
         const out = svg.querySelector('[data-out="mode"]'), labels = ['Tint', 'Hue', 'Strobe', 'Occlusion'], names = ['tint', 'hue', 'strobe', 'occlusion'];
         svg.querySelector('.pod').animate([{ transform: 'translateX(28px)', opacity: .3 }, { transform: 'translateX(-2px)', opacity: 1, offset: .8 }, { transform: 'translateX(0)' }], { duration: 650, easing: 'cubic-bezier(.16,1,.3,1)' });
         let k = 0;
-        const cycle = () => { svg.dataset.mode = names[k]; out.textContent = labels[k]; moveBar(svg, k); k = (k + 1) % 4; later(st, cycle, 1700); };
+        const cycle = () => { svg.dataset.mode = names[k]; out.textContent = labels[k]; moveBar(svg, k); k++; if (k < names.length) later(st, cycle, 1300); };
         later(st, cycle, 450);
       },
       stop(svg) { svg.dataset.mode = 'tint'; svg.querySelector('[data-out="mode"]').textContent = 'Tint'; moveBar(svg, 0); }
@@ -673,6 +745,7 @@
   function stopRig(card) {
     const svg = card.querySelector('.rig'), st = rigState.get(svg);
     if (st) { st.alive = false; st.timers.forEach(clearTimeout); }
+    svg.getAnimations({ subtree: true }).forEach(a => a.cancel());
     svg.classList.remove('is-live'); card.classList.remove('is-live');
     RIGS[svg.dataset.rig].stop(svg);
   }
@@ -696,6 +769,18 @@
     c.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && hovered === c) { hovered = null; pickCard(); } });
     c.addEventListener('focusin', () => { hovered = c; pickCard(); });
     c.addEventListener('focusout', e => { if (!c.contains(e.relatedTarget) && hovered === c) { hovered = null; pickCard(); } });
+  });
+  motionPreference.addEventListener('change', e => {
+    reduce = e.matches;
+    if (reduce) {
+      if (S.booting) finishBoot();
+      setRunning(false);
+      cards.forEach(card => {
+        stopRig(card);
+        card.querySelector('.rig').getAnimations({ subtree: true }).forEach(a => a.cancel());
+      });
+      activeCard = null;
+    }
   });
 
   /* ---------------- Nav scroll spy ---------------- */
@@ -728,54 +813,6 @@
   addEventListener('scroll', onScroll, { passive: true });
   let rt = 0;
   addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { resize(); fitBars(); spy(true); pickCard(); }, 120); });
-
-  /* ---------------- Menu + form ---------------- */
-  const menu = $('#mobileMenu');
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.open = false; }));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
-  document.addEventListener('click', e => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
-
-  const form = $('#contactForm'), note = $('#formNote'), submitLbl = $('.submit-label', form);
-  const NOTE = note.textContent;
-
-  /* Inline, accessible field errors: never color-only, always text + aria-invalid. */
-  const FIELDS = [
-    { el: form.elements.name, err: $('#senderError'), empty: 'Enter your name.' },
-    { el: form.elements.email, err: $('#senderEmailError'), empty: 'Enter your email.', type: 'Enter a valid email address.' },
-    { el: form.elements.message, err: $('#messageError'), empty: 'Enter your message.' }
-  ];
-  function fieldMessage(f) {
-    if (f.el.validity.valueMissing || !f.el.value.trim()) return f.empty;
-    if (f.type && f.el.validity.typeMismatch) return f.type;
-    return '';
-  }
-  function validateField(f) {
-    const msg = fieldMessage(f);
-    f.err.textContent = msg;
-    if (msg) f.el.setAttribute('aria-invalid', 'true'); else f.el.removeAttribute('aria-invalid');
-    return !msg;
-  }
-  FIELDS.forEach(f => {
-    f.el.addEventListener('input', () => { if (f.el.getAttribute('aria-invalid') === 'true') validateField(f); });
-    f.el.addEventListener('blur', () => validateField(f));
-  });
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const valid = FIELDS.map(validateField);
-    if (valid.includes(false)) {
-      note.textContent = 'Fix the highlighted fields, then try again.';
-      FIELDS[valid.indexOf(false)].el.focus();
-      return;
-    }
-    const name = form.elements.name.value.trim(), email = form.elements.email.value.trim(), message = form.elements.message.value.trim();
-    const subject = encodeURIComponent('Portfolio inquiry from ' + name);
-    const body = encodeURIComponent(message + '\n\nFrom: ' + name + ' <' + email + '>');
-    submitLbl.textContent = 'Opening your email app…'; note.textContent = NOTE;
-    setTimeout(() => { submitLbl.textContent = 'Compose email'; }, 2600);
-    window.location.href = 'mailto:uriah.villa2023@gmail.com?subject=' + subject + '&body=' + body;
-  });
-  form.hidden = false;
 
   /* ---------------- Init ---------------- */
   const init = () => {

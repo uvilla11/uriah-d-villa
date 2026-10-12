@@ -58,12 +58,12 @@
   </div>
 </header>
 
-<main id="main">
+<main id="main" tabindex="-1">
   <section class="hero" id="top" aria-labelledby="hero-title" data-mode="0">
     <canvas class="scope-grid" aria-hidden="true"></canvas>
     <div class="scope-scan" aria-hidden="true"></div>
     <div class="hero-inner">
-      <div class="scope-status">
+      <div class="scope-status" hidden>
         <dl class="scope-settings" aria-label="Scope settings">
           <div><dt class="ch1">CH1</dt><dd><span data-out="vdiv">1.43</span><span data-out="vunit">&nbsp;V/div</span></dd></div>
           <div><dt data-out="tlabel">Time</dt><dd><span data-out="tdiv">0.21 ms</span><span data-out="tunit">/div</span></dd></div>
@@ -85,7 +85,8 @@
 
       <h1 class="hero-title" id="hero-title"><span class="line">From silicon</span> <span class="line">to <em>motion.</em></span></h1>
 
-      <div class="scope-band" tabindex="0" role="group" aria-roledescription="oscilloscope" aria-label="Oscilloscope screen" aria-describedby="scopeHelp">
+      <div class="scope-band" tabindex="-1" role="group" aria-roledescription="oscilloscope" aria-label="Simulated oscilloscope screen" aria-describedby="scopeHelp">
+        <p class="scope-fallback">The interactive signal model needs JavaScript and canvas support. <a href="pic32cm.html">Read the actual low-power measurements</a>.</p>
         <canvas class="scope-trace" aria-hidden="true"></canvas>
         <span class="ch" aria-hidden="true">1</span><span class="ch" aria-hidden="true">2</span><span class="ch" aria-hidden="true">3</span>
         <div class="probe" aria-hidden="true"><span class="probe-text"></span></div>
@@ -97,16 +98,17 @@
         </div>
         <div class="handle cursor-handle" data-c="0" role="slider" tabindex="0" aria-label="Cursor A" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" hidden><span class="tab">A</span></div>
         <div class="handle cursor-handle" data-c="1" role="slider" tabindex="0" aria-label="Cursor B" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80" hidden><span class="tab">B</span></div>
-        <div class="handle trig-handle" role="slider" tabindex="0" aria-label="Trigger level" aria-orientation="vertical" aria-valuemin="-0.5" aria-valuemax="3.8" aria-valuenow="1.65" aria-valuetext="1.65 volts, triggered"><span class="tab">T</span></div>
+        <div class="handle trig-handle" role="slider" tabindex="0" aria-label="Trigger level" aria-orientation="vertical" aria-valuemin="-0.5" aria-valuemax="3.8" aria-valuenow="1.65" aria-valuetext="1.65 volts, triggered" hidden><span class="tab">T</span></div>
         <p class="band-caption" data-out="caption">Sense · analog sensor input</p>
-        <p class="scope-hint" aria-hidden="true">← → time · ↑ ↓ amplitude</p>
-        <p class="sr-only" id="scopeHelp">Live oscilloscope trace. With the screen focused, Left and Right arrows change the time scale and Up and Down change the amplitude. In FFT view, Left and Right move the frequency probe. The trigger and cursor handles are sliders.</p>
+        <p class="scope-hint" aria-hidden="true">Left/Right: time · Up/Down: amplitude</p>
+        <p class="sr-only" id="scopeHelp">Interactive signal model, not a captured hardware measurement. With the screen focused, Left and Right arrows change the time scale and Up and Down change the amplitude. In FFT view, Left and Right move the frequency probe. The trigger and cursor handles are separate sliders.</p>
       </div>
       <div class="sr-only" id="scopeLive" aria-live="polite"></div>
 
       <div class="hero-foot">
         <div class="hero-copy">
           <p class="hero-lead">I'm <strong>Uriah Villa</strong>, an embedded firmware engineer at Microchip Technology. I work on low-power MCU applications and connect firmware with the electronics, sensors, and physical systems around it.</p>
+          <p class="hero-scope-note">The scope uses simulated signals, not project captures.</p>
           <div class="actions">
             <a class="button button-primary" href="#work">Explore selected work <svg class="icon" aria-hidden="true"><use href="#i-dr"/></svg></a>
             <a class="button button-ghost go-up" href="#contact">Get in touch <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
@@ -126,7 +128,7 @@
       <div class="projects">
 
         <article class="project feature" id="pic32cm">
-          <figure class="art lab-art"><div class="lab-art-inner" role="img" aria-label="Progression from active MCU polling through standby to event-driven SleepWalking on PIC32CM PL10"><span>ACTIVE · 3.02 mA</span><span>RTC → EVSYS → ADC → DMA</span><strong>SLEEPWALKING · 559 µA</strong><small>Ch4 · Curiosity Nano Explorer / PAC1944</small></div></figure>
+          <figure class="art lab-art"><div class="lab-art-inner"><span>LAB 2 ACTIVE · ~3.02 mA</span><span>RTC &gt; EVSYS &gt; ADC &gt; DMA</span><strong>LAB 4 SLEEPWALKING · ~559 µA</strong><small>Ch4 · Curiosity Nano Explorer / PAC1944</small></div><figcaption>Illustrated peripheral chain, not a capture. Repository Ch4 averages compare an 8 MHz active baseline with SleepWalking in cursor-selected windows. <a href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode">Source: public labs</a>.</figcaption></figure>
           <div class="project-body">
             <h3 class="project-title">PIC32CM low-power labs</h3>
             <p class="project-kind">MCU applications · Microchip Technology</p>
@@ -158,10 +160,11 @@
                 <circle cx="320" cy="200" r="24" fill="none" stroke="#e59663" stroke-width="2"/><circle cx="320" cy="200" r="7" fill="#efad83"/>
               </g>
               <text class="hud-dim" x="28" y="40">POSITION</text><text class="hud" x="28" y="62" data-out="pos">D1 · 000°</text>
-              <text class="hud-dim" x="28" y="352">TOLERANCE</text><text class="hud" x="28" y="374">±2°</text>
+              <text class="hud-dim" x="28" y="352">REFERENCE</text><text class="hud" x="28" y="374">SIX EXIT POSITIONS</text>
               <text class="hud-dim" x="612" y="40" text-anchor="end">INDEXING</text><text class="hud" x="612" y="62" text-anchor="end">HALL-EFFECT</text>
               <text class="hud-dim" x="612" y="352" text-anchor="end">CONTROL</text><text class="hud" x="612" y="374" text-anchor="end">PIC18 + PSOC</text>
             </svg>
+            <figcaption>Concept illustration of six-position indexing. The animation is not a positioning test or flight-hardware demonstration.</figcaption>
           </figure>
           <div class="project-body">
             <h3 class="project-title">Hephaestus Landing System</h3>
@@ -194,12 +197,13 @@
               <text class="hud" x="380" y="194">Salinity</text><rect x="380" y="204" width="212" height="8" rx="4" fill="#243030"/><rect class="bar" x="380" y="204" width="212" height="8" rx="4" fill="#cfc3b2" style="--lv:.38"/>
               <path d="M380 234h212" stroke="#2c3736"/>
               <text class="hud-dim" x="380" y="258">ON-DEVICE INFERENCE</text>
-              <text class="infer" x="380" y="296" data-out="infer">Healthy</text>
+              <text class="infer" x="380" y="296" data-out="infer">Example</text>
               <text class="hud-dim" x="28" y="40">LILYGO T-HIGROW · ESP32</text>
               <text class="hud-dim" x="28" y="380" fill="#b9a893">MOISTURE + SALINITY</text>
-             </svg>
+              </svg>
+              <figcaption>Illustrative data flow. The displayed values and inference label are simulated, not validation results.</figcaption>
            </figure>
-           <figure class="project-photo"><img src="EGR%20598%20SolarSPELL.jpeg" alt="SolarSENSE team with potted-soil sensing demo at the ASU Innovation Showcase" width="2048" height="1536" loading="lazy"><figcaption>SolarSENSE at the ASU Innovation Showcase · 2025</figcaption></figure>
+           <figure class="project-photo"><img src="media/solarsense-960.webp" srcset="media/solarsense-480.webp 480w, media/solarsense-960.webp 960w, media/solarsense-1440.webp 1440w" sizes="(max-width: 860px) calc(100vw - 40px), (max-width: 1284px) calc((100vw - 64px) / 2), 590px" alt="SolarSENSE showcase group beside four potted samples, sensor hardware, and a laptop" width="2048" height="1536" loading="lazy" decoding="async"><figcaption>Team prototype at the ASU Innovation Showcase · 2025. The photograph shows the demonstration setting, not model accuracy.</figcaption></figure>
            <div class="project-body">
              <h3 class="project-title">SolarSENSE</h3>
              <p class="project-kind">Edge AI · Firmware integration</p>
@@ -211,7 +215,7 @@
 
         <article class="project" id="case/shadeshift">
           <figure class="art">
-            <svg class="rig" data-rig="optics" data-mode="tint" viewBox="0 0 640 400" role="img" aria-label="Modular therapeutic eyewear cycling through tint, hue, strobe, and occlusion lens modes">
+            <svg class="rig" data-rig="optics" data-mode="tint" viewBox="0 0 640 400" role="img" aria-label="Concept illustration of modular eyewear exploring tint, hue, strobe, and occlusion">
               <rect width="640" height="400" fill="#111719"/><rect width="640" height="400" fill="url(#benchGrid)"/>
               <path class="film l" d="M136 156H300c4 0 6 4 5 10-5 48-25 80-73 82h-26c-42-2-66-34-72-82-1-6-2-10 2-10z"/>
               <path class="film r" d="M504 156H340c-4 0-6 4-5 10 5 48 25 80 73 82h26c42-2 66-34 72-82 1-6 2-10-2-10z"/>
@@ -228,13 +232,14 @@
               <g text-anchor="middle"><text class="mode-lbl m0" x="160" y="326">TINT</text><text class="mode-lbl m1" x="248" y="326">HUE</text><text class="mode-lbl m2" x="346" y="326">STROBE</text><text class="mode-lbl m3" x="466" y="326">OCCLUSION</text></g>
               <path d="M110 338H520" stroke="#2c3736"/>
               <rect class="mode-bar" x="0" y="0" width="1" height="2" style="transform:translate(143px,337px) scaleX(34)"/>
-            </svg>
+             </svg>
+             <figcaption>Concept illustration, not an as-built electronics layout or measured switching response.</figcaption>
            </figure>
-           <figure class="project-photo"><img src="ShadeShift-prototype.jpg" alt="White ShadeShift eyewear prototypes with modular attachments and colored inserts" width="1600" height="1200" loading="lazy"><figcaption>ShadeShift prototype and interchangeable attachments · 2025</figcaption></figure>
+           <figure class="project-photo"><img src="media/shadeshift-960.webp" srcset="media/shadeshift-480.webp 480w, media/shadeshift-960.webp 960w, media/shadeshift-1600.webp 1600w" sizes="(max-width: 860px) calc(100vw - 40px), (max-width: 1284px) calc((100vw - 64px) / 2), 590px" alt="White ShadeShift frames with visible wiring, binasal pieces, and colored inserts" width="1600" height="1200" loading="lazy" decoding="async"><figcaption>Team prototype and interchangeable attachments · 2025. The photograph does not establish film identity or switching speed.</figcaption></figure>
            <div class="project-body">
             <h3 class="project-title">ShadeShift</h3>
-            <p class="project-kind">Medical wearables · Team lead</p>
-             <p class="project-text">Led a team building modular eyewear for tint, hue, strobe, and binasal occlusion. The documented prototype used PNLC film and external electronics; switching latency remained an open issue. This was not clinically validated.</p>
+            <p class="project-kind">Wearable prototype · Team lead</p>
+             <p class="project-text">Led a team exploring modular eyewear for tint, hue, strobe, and binasal occlusion. This case covers the PNLC prototype phase and an external-electronics design; switching latency remained an open issue. No clinical efficacy is established.</p>
              <ul class="tags"><li>ESP32</li><li>PNLC prototype</li><li>3D printing</li></ul>
              <a class="text-link" href="shadeshift.html">Read the case study <svg class="icon" aria-hidden="true"><use href="#i-ur"/></svg></a>
           </div>
@@ -266,7 +271,7 @@
       <div class="about-main">
           <p class="about-copy">I'm Uriah, an embedded firmware engineer focused on microcontrollers, low-power design, and robotics. My work connects firmware with the circuits, sensors, actuators, and people around it.</p>
           <p class="about-copy secondary">I started at sixteen in Chinle, Arizona, repairing phones and laptops. Five years of finding hardware faults taught me to isolate one subsystem at a time and check the behavior on the bench.</p>
-         <p class="about-copy secondary">At Microchip Technology, I moved from applications support and automation to PIC18 examples and PIC32CM PL10 low-power labs. At ASU, I integrated an edge-AI soil monitor, led a therapeutic eyewear team, and analyzed a critical-facility microgrid. I test assumptions against the hardware and constraints at hand.</p>
+          <p class="about-copy secondary">At Microchip Technology, I moved from applications support and automation to PIC18 examples and PIC32CM PL10 low-power labs. At ASU, I integrated an edge-AI soil monitor, led a modular eyewear team, and analyzed a critical-facility microgrid. I test assumptions against the hardware and constraints at hand.</p>
          <section class="skill-group" aria-labelledby="sk1"><h3 id="sk1">Firmware &amp; software</h3><ul class="pills"><li>C / C++</li><li>Python</li><li>PIC18 / PIC32CM</li><li>dsPIC33</li><li>ESP32</li><li>Edge Impulse</li></ul></section>
         <section class="skill-group" aria-labelledby="sk2"><h3 id="sk2">Hardware &amp; tools</h3><ul class="pills"><li>PCB layout</li><li>KiCad</li><li>Cadence</li><li>Motor control</li><li>Oscilloscopes</li><li>Logic analyzers</li><li>MATLAB / Simulink</li></ul></section>
       </div>
@@ -286,7 +291,7 @@
             <li><div class="career-role-head"><h4>Corporate Applications Engineer Intern</h4><time>Aug 2023 – Aug 2024</time></div><p>Handled an estimated 100+ support cases and built a dsPIC33 BLDC motor-control project using bench instrumentation.</p></li>
           </ol>
         </article>
-        <div class="education-stack" id="education" aria-label="Education">
+        <div class="education-stack" id="education" role="group" aria-label="Education">
           <article class="education-panel"><p class="degree-label">M.S. / Engineering</p><h3>Arizona State University</h3><p>Accelerated 4+1 program · systems, mechatronics, and power</p><strong>4.0 GPA · With Distinction · Dec 2025</strong></article>
           <article class="education-panel"><p class="degree-label">B.S.E. / Robotics</p><h3>Arizona State University</h3><p>Embedded systems, computational modeling, and robotics</p><strong>Cum laude · 2024</strong></article>
         </div>

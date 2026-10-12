@@ -1,13 +1,289 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0d1213"><title>PIC32CM low-power labs | Uriah D. Villa</title><meta name="description" content="Four public PIC32CM PL10 firmware labs and the follow-up TB3388 technical brief, with separate measurement setups and results."><link rel="canonical" href="https://uvilla11.github.io/uriah-d-villa/pic32cm.html"><meta property="og:type" content="article"><meta property="og:title" content="PIC32CM low-power labs | Uriah D. Villa"><meta property="og:description" content="Four public PIC32CM PL10 labs and TB3388, with separate measurement setups."><meta property="og:image" content="https://uvilla11.github.io/uriah-d-villa/og-image.png"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="stylesheet" href="case.css"></head>
-<body><a class="skip" href="#main">Skip to case study</a><header class="nav"><div class="wrap"><a class="brand" href="index.html">URIAH <span>VILLA.</span></a><nav class="nav-links" aria-label="Main navigation"><a href="index.html#work">Work</a><a href="index.html#experience">Experience</a><a href="index.html#contact">Contact</a></nav></div></header>
-<main id="main"><header class="case-hero"><div class="wrap"><h1>PIC32CM low-power labs</h1><p class="lead">From a standby baseline to event-driven light sensing. The public four-lab example and follow-up technical brief use different measurement setups; each tells a separate part of the power story.</p><ul class="metadata"><li>Microchip Technology · MCU applications</li><li>PIC32CM6408PL10048 · firmware in C</li><li><a href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode">Public lab repository</a></li></ul></div></header>
-<div class="wrap case-main case-grid"><nav class="side" aria-label="On this page"><a href="#problem">Problem</a><a href="#role">Role and team</a><a href="#decision">Design decisions</a><a href="#implementation">Implementation</a><a href="#validation">Validation</a><a href="#limits">Limits</a><a href="#sources">Sources</a></nav><div class="story">
-<section id="problem"><h2>Problem</h2><p>Show what standby alone saves, then remove periodic CPU work from a sensor application without hiding the measurement conditions. The labs progress from a bare standby baseline through an active implementation and standby with interrupts to autonomous peripheral operation.</p></section>
-<section id="role"><h2>Role and team outcome</h2><div class="role-pair"><div><h3>My role</h3><p>Built out the four firmware labs, documentation, and Lab 4 power-configuration revision. The public commit history attributes the lab additions and later revision to Uriah Villa.</p></div><div><h3>Team outcome</h3><p>Microchip published the lab repository and companion technical brief. A colleague created the initial repository and CI scaffold; this is not presented as a solo company release.</p></div></div></section>
-<section id="decision"><h2>Constraint and decision</h2><p>The sensor still has to sample ambient light and report a threshold event. Periodically waking the CPU to orchestrate sampling defeats much of the intended standby saving. Move the timing, trigger, conversion, and transfer chain to peripherals; reserve a CPU wake for the window-comparator event and UART output.</p></section>
-<section id="implementation"><h2>Implementation</h2><p>The published sequence uses RTC, the event system, timers, ADC, DMA, and UART. Lab 2 is the active-mode reference; Lab 3 adds standby with interrupts; Lab 4 lets the peripheral chain do repeated sampling while the CPU sleeps. The repository's March revision explicitly updates Lab 4 configuration to improve power consumption. TB3388 later explains the same architectural progression as a companion brief.</p></section>
-<section id="validation"><h2>Validation, by setup</h2><div class="measure"><strong>82%</strong><span>lower Lab 4 Ch4 average current than Lab 2 active mode without CPU scaling</span><small>Public repository: ~3.02 mA → ~559 µA, Curiosity Nano Explorer's onboard PAC1944 monitor via MCP2221A, MPLAB Data Visualizer cursor-selected capture region. The active lab runs at 8 MHz.</small></div><p>For TB3388, the test used an Atmel Power Debugger and a 24 MHz active-mode reference. Table 3-1 reports the following results within that setup:</p><div class="measure"><strong>~9.91 µA</strong><span>below-threshold SleepWalking application average</span><small>TB3388 Table 3-1, measured with the Atmel Power Debugger; relative to its own ~6.18 mA active-mode baseline.</small></div><div class="measure"><strong>~2.39 µA</strong><span>deep-standby current in a 78.7 ms interval between two CPU wake events</span><small>This is an isolated between-wake window, not the sustained application average. Above threshold with UART output, the brief reports ~159 µA average.</small></div></section>
-<section id="limits"><h2>Limits and comparability</h2><p>The repository's ~559 µA is a blended average; the brief separates below-threshold, above-threshold, and between-wake windows. The active-mode clocks and measurement hardware also differ. The public sources do not isolate which setup or firmware difference accounts for the gap, so these readings are not a controlled before-and-after instrument comparison. Within the brief, one Atmel Power Debugger setup measures the firmware architecture's Active-to-SleepWalking reduction.</p></section>
-<section id="sources"><h2>Inspect the evidence</h2><ul class="source-list"><li><a href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode">Microchip's four-lab repository and power-capture images</a></li><li><a href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode/commit/d01c8a45">March Lab 4 power-configuration revision</a></li><li><a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU32/ProductDocuments/SupportingCollateral/SleepWalking-Reducing-Power-Consumption-in-Arm-Cortex-M-based-MCUs-DS90003388.pdf">Microchip TB3388 (public technical brief; Table 3-1 and section 6)</a></li></ul></section>
-</div></div></main><footer class="case-footer"><div class="wrap"><a href="index.html#work">Back to selected work</a><a href="mailto:uriah.villa2023@gmail.com">Contact Uriah</a></div></footer></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0d1213" />
+    <title>PIC32CM low-power labs | Uriah D. Villa</title>
+    <meta
+      name="description"
+      content="Four public PIC32CM PL10 firmware labs and the follow-up TB3388 technical brief, with separate measurement setups and results."
+    />
+    <link
+      rel="canonical"
+      href="https://uvilla11.github.io/uriah-d-villa/pic32cm.html"
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://uvilla11.github.io/uriah-d-villa/pic32cm.html"
+    />
+    <meta
+      property="og:title"
+      content="PIC32CM low-power labs | Uriah D. Villa"
+    />
+    <meta
+      property="og:description"
+      content="Four public PIC32CM PL10 labs and TB3388, with separate measurement setups."
+    />
+    <meta
+      property="og:image"
+      content="https://uvilla11.github.io/uriah-d-villa/og-image.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="case.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to case study</a>
+    <header class="nav">
+      <div class="wrap">
+        <a class="brand" href="index.html">URIAH <span>VILLA.</span></a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="index.html#work">Work</a
+          ><a href="index.html#experience">Experience</a
+          ><a href="index.html#about">About</a
+          ><a href="index.html#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <header class="case-hero">
+        <div class="wrap">
+          <h1>PIC32CM low-power labs</h1>
+          <p class="lead">
+            From a standby baseline to event-driven light sensing. The public
+            four-lab example and follow-up technical brief use different
+            measurement setups; each tells a separate part of the power story.
+          </p>
+          <ul class="metadata">
+            <li>Microchip Technology · MCU applications</li>
+            <li>PIC32CM6408PL10048 · firmware in C</li>
+            <li>
+              <a
+                href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode"
+                >Public lab repository</a
+              >
+            </li>
+          </ul>
+        </div>
+      </header>
+      <div class="wrap case-main case-grid">
+        <nav class="side" aria-label="On this page">
+          <a href="#problem">Problem</a><a href="#role">Role and team</a
+          ><a href="#decision">Design decisions</a
+          ><a href="#implementation">Implementation</a
+          ><a href="#validation">Validation</a><a href="#limits">Limits</a
+          ><a href="#sources">Sources</a>
+        </nav>
+        <div class="story">
+          <section id="problem">
+            <h2>Problem</h2>
+            <p>
+              Show what standby alone saves, then remove periodic CPU work from
+              a sensor application without hiding the measurement conditions.
+              The labs progress from a bare standby baseline through an active
+              implementation and standby with interrupts to autonomous
+              peripheral operation.
+            </p>
+          </section>
+          <section id="role">
+            <h2>Role and team outcome</h2>
+            <div class="role-pair">
+              <div>
+                <h3>My role</h3>
+                <p>
+                  Built out the four firmware labs, documentation, and Lab 4
+                  power-configuration revision. Public commits record my initial
+                  Lab 1 project on January 22, 2026, Labs 2-4 on February 10,
+                  and the power revision on March 25. I also authored the
+                  follow-up TB3388 brief.
+                </p>
+              </div>
+              <div>
+                <h3>Team outcome</h3>
+                <p>
+                  Microchip published the lab repository and companion technical
+                  brief. A colleague created the initial repository and
+                  <a
+                    href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode/commit/d263974febf9f3567fde8c6edf91d6f5544851e6"
+                    >CI scaffold</a
+                  >. This is not presented as a solo company release.
+                </p>
+              </div>
+            </div>
+          </section>
+          <section id="decision">
+            <h2>Constraint and decision</h2>
+            <p>
+              The sensor still has to sample ambient light and report a
+              threshold event. Periodically waking the CPU to orchestrate
+              sampling defeats much of the intended standby saving. Move the
+              timing, trigger, conversion, and transfer chain to peripherals.
+              Minimize CPU work and qualify UART reporting against the light
+              threshold. The intended wake policy is distinct from proving the
+              wake cadence of a specific checked-in revision.
+            </p>
+          </section>
+          <section id="implementation">
+            <h2>Implementation</h2>
+            <p>
+              The published sequence uses RTC, the event system, timers, ADC,
+              DMA, and UART. Lab 2 is the active-mode reference; Lab 3 adds
+              standby with interrupts; Lab 4 lets the peripheral chain do
+              repeated sampling while the CPU sleeps. The repository's March
+              revision explicitly updates Lab 4 configuration to improve power
+              consumption. After the first lab iteration, I pursued lower
+              current in the working light-sensing application for the follow-up
+              brief. It still prints threshold events to a terminal. That Atmel
+              Power Debugger setup is reported separately from the repository
+              monitor.
+            </p>
+          </section>
+          <section id="validation">
+            <h2>Validation, by setup</h2>
+            <div class="measure">
+              <strong>82%</strong
+              ><span
+                >lower Lab 4 Ch4 average current than Lab 2 active mode without
+                CPU scaling</span
+              ><small
+                >Source:
+                <a
+                  href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode/blob/923d09a2c8734836e1b76f547201aaaaa9bd7021/README.md#summary"
+                  >repository comparison</a
+                >. About 3.02 mA to 559 µA, Curiosity Nano Explorer's onboard
+                PAC1944 monitor via MCP2221A, MPLAB Data Visualizer
+                cursor-selected capture regions. The active baseline runs at 8
+                MHz, with sampling and conditional UART bursts. This is the
+                source's reported 82%, not a recalculated headline.</small
+              >
+            </div>
+            <p>
+              For TB3388, the test used an Atmel Power Debugger and a 24 MHz
+              active-mode reference. Table 3-1 reports the following results
+              within that setup:
+            </p>
+            <div class="measure">
+              <strong>~9.91 µA</strong
+              ><span>below-threshold SleepWalking application average</span
+              ><small
+                >Source:
+                <a
+                  href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU32/ProductDocuments/SupportingCollateral/SleepWalking-Reducing-Power-Consumption-in-Arm-Cortex-M-based-MCUs-DS90003388.pdf#page=17"
+                  >TB3388 section 3.3, Figure 3-7</a
+                >
+                and Table 3-1. Atmel Power Debugger / MPLAB Data Visualizer,
+                PIC32CM PL10 Curiosity Nano at VDDIO = AVDD = 3.3 V. Average
+                across the below-threshold capture, including periodic sampling
+                bursts but no UART activity.</small
+              >
+            </div>
+            <div class="measure">
+              <strong>~2.39 µA</strong
+              ><span
+                >deep-standby current in a 78.7 ms interval between two CPU wake
+                events</span
+              ><small
+                >Source:
+                <a
+                  href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU32/ProductDocuments/SupportingCollateral/SleepWalking-Reducing-Power-Consumption-in-Arm-Cortex-M-based-MCUs-DS90003388.pdf#page=18"
+                  >TB3388 Figure 3-9</a
+                >, Atmel Power Debugger / Data Visualizer, same 3.3 V board
+                setup. Average within the isolated 78.7 ms interval. This is not
+                a sustained light-sensing application average.</small
+              >
+            </div>
+            <div class="measure">
+              <strong>~159 µA</strong>
+              <span>above-threshold SleepWalking average with UART output</span>
+              <small
+                >Source:
+                <a
+                  href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU32/ProductDocuments/SupportingCollateral/SleepWalking-Reducing-Power-Consumption-in-Arm-Cortex-M-based-MCUs-DS90003388.pdf#page=17"
+                  >TB3388 Figure 3-8</a
+                >, Atmel Power Debugger / Data Visualizer, same 3.3 V board
+                setup. This window includes CPU wake and transmission events,
+                unlike the below-threshold capture.</small
+              >
+            </div>
+            <div class="measure">
+              <strong>~6.18 mA</strong>
+              <span>TB3388's continuous 24 MHz active reference</span>
+              <small
+                >Source:
+                <a
+                  href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU32/ProductDocuments/SupportingCollateral/SleepWalking-Reducing-Power-Consumption-in-Arm-Cortex-M-based-MCUs-DS90003388.pdf#page=11"
+                  >TB3388 Figure 3-2 and section 3.1</a
+                >, Atmel Power Debugger / Data Visualizer, same 3.3 V board
+                setup. Average across the active capture, not the repository's 8
+                MHz reference.</small
+              >
+            </div>
+          </section>
+          <section id="limits">
+            <h2>Limits and comparability</h2>
+            <p>
+              The repository's ~559 µA is a blended average; the brief separates
+              below-threshold, above-threshold, and between-wake windows. The
+              active-mode clocks and measurement hardware also differ. The
+              public sources do not isolate which setup or firmware difference
+              accounts for the gap, so these readings are not a controlled
+              before-and-after instrument comparison. Within the brief, one
+              Atmel Power Debugger setup measures the firmware architecture's
+              Active-to-SleepWalking reduction.
+            </p>
+            <p>
+              The README and brief mix an ADC result-ready/TC2 wake description
+              with threshold-only language. A chosen firmware revision needs a
+              wake-cadence check; the published average alone does not establish
+              that every below-threshold sample avoids a CPU wake.
+            </p>
+          </section>
+          <section id="sources">
+            <h2>Inspect the evidence</h2>
+            <ul class="source-list">
+              <li>
+                <a
+                  href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode"
+                  >Microchip's four-lab repository and power-capture images</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode/commit/a518ff6b90b6d0a1d42c2ee8fd1dbd743682b9d4"
+                  >January 22 initial Lab 1 project by Uriah Villa</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode/commit/e5826b3ff741ee67b5bc9b7aab53fe14b9e20c58"
+                  >February 10 Labs 2-4 addition by Uriah Villa</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/microchip-pic-avr-examples/pic32cm6408pl10048-low-power-design-vscode/commit/d01c8a457743358d36f4e71afa14f156f77c6fa8"
+                  >March 25 Lab 4 power-configuration revision by Uriah Villa</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU32/ProductDocuments/SupportingCollateral/SleepWalking-Reducing-Power-Consumption-in-Arm-Cortex-M-based-MCUs-DS90003388.pdf"
+                  >Microchip TB3388 (public technical brief; Table 3-1 and
+                  section 6)</a
+                >
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="case-footer">
+      <div class="wrap">
+        <a href="index.html#work">Back to selected work</a
+        ><a href="mailto:uriah.villa2023@gmail.com">Contact Uriah</a>
+      </div>
+    </footer>
+  </body>
+</html>
